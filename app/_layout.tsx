@@ -9,6 +9,7 @@ export default function RootLayout() {
       {/* <Stack.Screen name="bast" options={{ headerShown: false }} /> */}
       <Stack.Screen name="bast" />
       <Stack.Screen name="login" options={{ headerShown: false }} />
+      <Stack.Screen name="forgot-password" options={{ headerShown: false }} />
       <Stack.Screen name="sp" />
       <Stack.Screen name="cc" />
       <Stack.Screen name="pcard" />

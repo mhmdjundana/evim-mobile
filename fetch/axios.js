@@ -3,10 +3,11 @@ import axios from "axios";
 import * as Keychain from "react-native-keychain";
 import { resetTokenKeychain, storeAccessToken } from "./auth";
 import { Alert } from "react-native";
+import { API_URI } from "@/constants/variables";
 
 // Create an instance of Axios (optional but recommended for better organization)
 const api = axios.create({
-  baseURL: "http://evimdevbackend.sumbawatimurmining.com/mobile/", // Your API base URL
+  baseURL: API_URI, // Your API base URL
 
   timeout: 30000,
   headers: {
@@ -17,7 +18,7 @@ const api = axios.create({
   },
 });
 
-api.defaults.baseURL = "http://evimdevbackend.sumbawatimurmining.com/mobile/";
+api.defaults.baseURL = API_URI;
 
 api.interceptors.request.use(
   async (config) => {

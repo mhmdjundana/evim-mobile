@@ -9,7 +9,7 @@ const FilterButton = ({ onPress = () => {}, module = "bast" }: any) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.filterButton} onPress={() => {
-        router.push({ pathname: `/filter`, params: { module: module } })
+        router.push({ pathname: `/filter`, params: { module: module }})
       }}>
         <View style={styles.buttonContent}>
           <Ionicons name="filter" size={18} color="gray" style={styles.icon} />

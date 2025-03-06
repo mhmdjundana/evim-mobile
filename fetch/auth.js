@@ -1,6 +1,8 @@
 import * as Keychain from "react-native-keychain";
 import api from "@/fetch/axios";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import { API_URI_WEB } from "@/constants/variables";
 
 export const login = async (email, password) => {
   await saveEmailPassword(email, password)
@@ -31,6 +33,24 @@ export const login = async (email, password) => {
     return error;
     // return new Error(error);
     // throw new Error(error)
+  }
+};
+
+export const forgotPassword = async (email) => {
+  try {
+    const response = await axios({
+      method: "POST",
+      url: API_URI_WEB + "password/email?email=" + email,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+    // console.log(response, 'respose forgot password')
+    return response
+  } catch (error) {
+    console.error("Error request forgot password:", error);
   }
 };
 

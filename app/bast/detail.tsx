@@ -1,4 +1,5 @@
 import BastDetail from "@/components/detail/BastDetail";
+import BastDetailNew from "@/components/detail/BastDetailNew";
 import { Text, View, ScrollView, StyleSheet } from "react-native";
 
 export default function Detail() {
@@ -26,7 +27,8 @@ export default function Detail() {
     >
       {/* <Text>Bast Detail</Text> */}
       {/* <Detail logoTitle={logoTitle} /> */}
-      <BastDetail />
+      {/* <BastDetail /> */}
+      <BastDetailNew />
     </ScrollView>
   )
 }

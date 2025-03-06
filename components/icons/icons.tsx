@@ -23,20 +23,34 @@ const IconDemo = () => {
         <FontAwesome6 name="box-archive" size={20} color="#757575" />
         <FontAwesome5 name="folder" size={20} color="#757575" />
         <FontAwesome name="folder" size={20} color="#757575" />
+        <FontAwesome6 name="check" size={20} color="#757575" />
+        <FontAwesome6 name="xmark" size={20} color="#757575" />
       </View>
       <View>
-        <FontAwesome name="box-archive" size={30} color="#900" />
-        <FontAwesome5 name="box-archive" size={30} color="#900" />
-        <FontAwesome6 name="box-archive" size={30} color="#900" />
-        <Ionicons name="file-edit" size={30} color="#900" />
-        <MaterialIcons name="file-edit" size={30} color="#900" />
-        <Entypo name="file-edit" size={30} color="#900" />
-        <AntDesign name="file-edit" size={30} color="#900" />
-        <EvilIcons name="file-edit" size={30} color="#900" />
-        <Feather name="file-edit" size={30} color="#900" />
-        <FontAwesome name="heart" size={20} color="red" />
-        <FontAwesome name="bars" size={40} color="blue" />
-        <FontAwesome name="house" size={40} />
+        <Text>1</Text>
+        <FontAwesome name="xmark" size={30} color="#900" />
+        <Text>2</Text>
+        <FontAwesome5 name="xmark" size={30} color="#900" />
+        <Text>3</Text>
+        <FontAwesome6 name="xmark" size={30} color="#900" />
+        <Text>4</Text>
+        <Ionicons name="xmark" size={30} color="#900" />
+        <Text>5</Text>
+        <MaterialIcons name="xmark" size={30} color="#900" />
+        <Text>6</Text>
+        <Entypo name="xmark" size={30} color="#900" />
+        <Text>7</Text>
+        <AntDesign name="xmark" size={30} color="#900" />
+        <Text>8</Text>
+        <EvilIcons name="xmark" size={30} color="#900" />
+        <Text>9</Text>
+        <Feather name="xmark" size={30} color="#900" />
+        <Text>10</Text>
+        <FontAwesome name="xmark" size={20} color="red" />
+        <Text>11</Text>
+        <FontAwesome name="xmark" size={40} color="blue" />
+        <Text>12</Text>
+        <FontAwesome name="xmark" size={40} />
       </View>
 
     </ScrollView>

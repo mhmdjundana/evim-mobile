@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ScrollView, StyleSheet, TouchableOpacity, TouchableHighlight, RefreshControl, ActivityIndicator } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Or your preferred icon library
 import HeaderTitle from '../HeaderTitle';
 import FilterButton from '../filter/Filter';
 import api from '@/fetch/axios';
@@ -8,10 +7,12 @@ import axios from 'axios';
 import { router } from 'expo-router';
 import { mockDataBastList } from '../bastMockData';
 import { login, relogin, retrieveEmailPassword, retriveAccessToken } from '@/fetch/auth';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 import { getBastList } from '@/fetch/bast';
 import { displayDate } from '@/utils/utils';
 import { useGetUserData } from '@/hooks/useGetUserData';
+import { handleApproveButton, handleRejectButton } from './utils';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 
 interface RowData {
   id: string;
@@ -73,52 +74,20 @@ const ListRow: React.FC<{ item: RowData, userData: any }> = ({ item, userData })
     <View style={[styles.actionContainer]}>
       {
         item.action?.is_approve && (
-          <TouchableOpacity onPress={() => {
-            console.log("approve")
-            router.push({
-              pathname: `/confirmation`,
-              params: {
-                id: item.id,
-                type: "approval",
-                data: JSON.stringify([{
-                  // "bast_id": item?.id,
-                  "id": item?.id,
-                  // "approval_status_id": item?.approval_status?.id,
-                  "module_id": 1,
-                  // "user_id": userData?.data?.id,
-                  // "vendor_code": item?.vendor_code,
-                  "type": "approve"
-                }]),
-                module: "bast"
-              }
-            })
-          }}>
+          <TouchableOpacity onPress={() => handleApproveButton({
+            item: item,
+            router: router
+          })}>
             <Icon name="check" size={20} color="#228B22" />
           </TouchableOpacity>
         )
       }
       {
         item.action?.is_reject && (
-          <TouchableOpacity onPress={() => {
-            console.log("reject")
-            router.push({
-              pathname: `/confirmation`,
-              params: {
-                id: item.id,
-                type: "rejection",
-                data: JSON.stringify([{
-                  // "bast_id": item?.id,
-                  "id": item?.id,
-                  // "approval_status_id": item?.approval_status?.id,
-                  "module_id": 1,
-                  // "user_id": userData?.data?.id,
-                  // "vendor_code": item?.vendor_code,
-                  "type": "reject",
-                }]),
-                module: "bast"
-              }
-            })
-          }}>
+          <TouchableOpacity onPress={() => handleRejectButton({
+            item: item,
+            router: router
+          })}>
             <Icon name="close" size={20} color="#DC143C" />
           </TouchableOpacity>
         )

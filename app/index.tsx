@@ -6,6 +6,7 @@ import { resetTokenKeychain, retriveAccessToken } from "@/fetch/auth";
 import TopBarNavigation from "@/components/navigation/TopBarNavigation";
 import DemoUi from "@/components/demo";
 import Menu from "./menu";
+import IconDemo from "@/components/icons/icons";
 
 const ScrollDiv = () => {
   return (
@@ -29,14 +30,14 @@ const ScrollDiv = () => {
 
         {/* <IconDemo /> */}
 
-        <Menu />
+        {/* <Menu /> */}
         {/* <BastDetail /> */}
         {/* <BastForm /> */}
 
         {/* <DropDownPickerExample />
       <DropdownSelectListExample /> */}
         {/* <ListPage /> */}
-        {/* <BastList /> */}
+        <BastList />
         {/* <InvoiceList /> */}
 
         {/* <DemoUi name="rnpaper" /> */}

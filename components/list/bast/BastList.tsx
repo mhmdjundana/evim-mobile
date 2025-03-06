@@ -9,7 +9,7 @@ const BastList: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [pageSize, setPageSize] = React.useState(10);
-  const [pageIndex, setPageIndex] = React.useState(0);
+  const [pageIndex, setPageIndex] = React.useState(1);
 
   const { userData } = useGetUserData();
   // console.log(userData, "userData")

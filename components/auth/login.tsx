@@ -50,7 +50,7 @@ const Login = () => {
       setEmail(emailR)
       setPassword(passwordR)
     }
-    // rl()
+    rl()
   }, [])
 
   return (

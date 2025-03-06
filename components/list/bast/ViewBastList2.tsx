@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import FilterBar from "../filter/FilterBar";
+import { router } from "expo-router";
+import { handleApproveButton, handleRejectButton } from "./utils";
 
 const vendors = [
   {
@@ -19,8 +21,8 @@ const vendors = [
   },
 ];
 
-const BastListUi = ({data}: any) => {
-  // console.log(data, "data")
+const BastListUi = ({ data }: any) => {
+  console.log(data, "data")
   return (
     <>
       <FilterBar moduleName="BAST" />
@@ -40,46 +42,64 @@ const VendorCard = ({ data }: any) => {
   const [status, setStatus] = useState("Review");
 
   return (
-    <View style={styles.card}>
-      <View style={styles.row}>
-        <Text style={styles.label}>Vendor Name</Text>
-        <Text style={styles.colon}>:</Text>
-        <Text style={styles.value}> {data.suplier_name}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>BAST No.</Text>
-        <Text style={styles.colon}>:</Text>
-        <Text style={styles.value}> {data.bast_no}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>PO No.</Text>
-        <Text style={styles.colon}>:</Text>
-        <Text style={styles.value}> {data.po_no}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>DPP</Text>
-        <Text style={styles.colon}>:</Text>
-        <Text style={styles.value}> {data.grand_total}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>Status</Text>
-        <Text style={styles.colon}>:</Text>
-        <Text style={styles.value}> </Text>
-        <View style={styles.statusContainer}>
-          <TouchableOpacity style={[styles.statusButton, status === "Review" ? styles.review : styles.approved]}>
-            <Text style={styles.statusText}>{status}</Text>
-          </TouchableOpacity>
+    <TouchableOpacity style={styles.row} onPress={() => {
+      router.push({ pathname: `/bast/detail`, params: { id: data.id } })
+    }}>
+      <View style={styles.card}>
+        <View style={styles.row}>
+          <Text style={styles.label}>Vendor Name</Text>
+          <Text style={styles.colon}>:</Text>
+          <Text style={styles.value}> {data.suplier_name}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>BAST No.</Text>
+          <Text style={styles.colon}>:</Text>
+          <Text style={styles.value}> {data.bast_no}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>PO No.</Text>
+          <Text style={styles.colon}>:</Text>
+          <Text style={styles.value}> {data.po_no}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>DPP</Text>
+          <Text style={styles.colon}>:</Text>
+          <Text style={styles.value}> {data.grand_total}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Status</Text>
+          <Text style={styles.colon}>:</Text>
+          <Text style={styles.value}> </Text>
+          <View style={styles.statusContainer}>
+            <TouchableOpacity style={[styles.statusButton, { backgroundColor: data.approval_status?.status_color ? data.approval_status?.status_color : "#c5c5c5" }]}>
+              <Text style={styles.statusText}>{data.approval_status?.status_name}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          {
+            data.action?.is_approve && (
+              <TouchableOpacity style={styles.approveButton} onPress={() => handleApproveButton({
+                item: data,
+                router: router
+              })}>
+                <Text style={styles.buttonText}>Approve</Text>
+              </TouchableOpacity>
+            )
+          }
+          {
+            data.action?.is_reject && (
+              <TouchableOpacity style={styles.rejectButton} onPress={() => handleRejectButton({
+                item: data,
+                router: router
+              })}>
+                <Text style={styles.buttonText}>Reject</Text>
+              </TouchableOpacity>
+            )
+          }
         </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.approveButton} onPress={() => setStatus("1st Approve")}>
-          <Text style={styles.buttonText}>Approve</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.rejectButton} onPress={() => setStatus("Rejected")}>
-          <Text style={styles.buttonText}>Reject</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

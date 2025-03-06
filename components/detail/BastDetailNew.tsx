@@ -18,7 +18,7 @@ import ApprovalAction from "./ApprovalAction";
 import DetailHistory from "./DetailHistory";
 import DetailHistoryNew from "./DetailHistoryNew";
 
-export default function BastDetail() {
+export default function BastDetailNew() {
   // const navigation = useNavigation()
   const { id } = useLocalSearchParams()
   // console.log(navigation, "navigation")
@@ -68,8 +68,6 @@ export default function BastDetail() {
       <HeaderDetail title="BAST Detail" status={bastData?.approval_status?.status_name} statusColor={bastData?.approval_status?.status_color} />
       <Text>{bastData?.id}</Text>
       <View style={{ marginTop: 15 }}></View>
-      <DetailLogo title={logoTitle} />
-      <View style={{ marginTop: 10 }}></View>
       <DocumentDetailNew data={bastData} />
       <View style={{ marginTop: 10 }}></View>
       <DocumentDetailBastSapEditFilesNew data={bastData} />

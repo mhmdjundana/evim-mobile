@@ -83,19 +83,6 @@ const FilterBast = () => {
 
 
       <Text style={{ fontSize: 16, fontWeight: '500' }}>Status</Text>
-      <View style={styles.pickerContainer}>
-        <RNPickerSelect
-          placeholder={{ label: 'Select a Status', value: null }}
-          items={statusOptions}
-          onValueChange={value => setStatus(value)}
-          value={status}
-          style={{
-            inputIOS: styles.pickerInput,
-            inputAndroid: styles.pickerInput,
-            placeholder: styles.pickerPlaceholder,
-          }}
-        />
-      </View>
       {/* <InputSelect
         label="Status"
         placeholder="Select Status"

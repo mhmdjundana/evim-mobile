@@ -32,6 +32,7 @@ import { router } from "expo-router";
 import evimLoginBackground from "@/assets/images/evim-login-background.jpg";
 import stmLogo from "@/assets/images/logo-stm-login.png";
 import STMLogin from "./STMLogin.png";
+import { PaperTextInputGroup } from "./PaperTextInputGroup";
 
 const { width, height } = Dimensions.get("window");
 
@@ -178,7 +179,15 @@ const LoginUiNew = ({
             showPassword={showPassword}
             setShowPassword={setShowPassword}
           />
-          <PaperText variant="titleMedium">Forgot Password?</PaperText>
+          <TouchableOpacity 
+            onPress={() => {
+              console.log("Forgot Password?");
+              router.push("/forgot-password");
+            }}
+            style={styles.forgotPassword}
+          >
+            <PaperText variant="titleMedium">Forgot Password?</PaperText>
+          </TouchableOpacity>
         </View>
         <View style={{ marginBottom: 10 }} />
         <Button
@@ -325,53 +334,6 @@ const LoginMessage = ({ isInvalidCred, loginMsgTitle, loginMsg }: any) => {
   );
 };
 
-const PaperTextInputGroup = ({
-  title,
-  value,
-  onChangeText,
-  isPassword,
-  showPassword,
-  setShowPassword,
-}: any) => {
-  return (
-    <View
-      style={
-        {
-          // backgroundColor: 'red'
-        }
-      }
-    >
-      {/* <PaperText variant="titleMedium">{title}</PaperText> */}
-      <PaperTextInput
-        mode="outlined"
-        style={{
-          // margin: 8,
-          width: width - 16 * 6,
-        }}
-        dense
-        placeholder={title}
-        value={value}
-        secureTextEntry={isPassword && !showPassword}
-        onChangeText={onChangeText}
-        right={
-          isPassword &&
-          (showPassword ? (
-            <PaperTextInput.Icon
-              icon="eye"
-              onPress={() => setShowPassword(!showPassword)}
-            />
-          ) : (
-            <PaperTextInput.Icon
-              icon="eye-off"
-              onPress={() => setShowPassword(!showPassword)}
-            />
-          ))
-        }
-      />
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   stmLogo: {
     width: width,
@@ -434,9 +396,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   forgotPassword: {
-    fontSize: 14,
-    color: "gray",
-    marginBottom: 24,
+    marginBottom: 5,
+    width: "auto",
   },
   loginButton: {
     backgroundColor: "#1a237e",

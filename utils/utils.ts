@@ -6,3 +6,16 @@ export const displayDate = (date: string) => {
     year: 'numeric',
   });
 }
+
+export function displayDateWithTime(date: string) {
+  const newDate = new Date(date);
+  const options: any = {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  };
+
+  return newDate.toLocaleDateString('en-GB', options);
+}

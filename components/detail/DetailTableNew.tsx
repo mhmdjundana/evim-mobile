@@ -1,25 +1,116 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TextInput, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Or your preferred icon library
 import { RnPicker } from '../input/dropdown';
+import { bastDetailItemDataKeys } from './data/bastDetailData';
+import detail from '@/app/bast/detail';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Or your preferred icon library
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 
 const { width } = Dimensions.get('window');
 
-const DetailTable = ({ data, setData, style, uomList, permission }: any) => {
-  // console.log(data)
+const DetailTableNew = ({ data, setData, style, uomList, permission }: any) => {
+  // console.log(data, 'DetailTableNew data')
   const { details } = data
+  const [details2, setDetails2] = useState([])
+  const [uomList2, setUomList2] = useState([])
 
-  uomList = uomList?.map((item: any) => {
-    return {
-      ...item,
-      label: item.uom_name,
-      value: item.id
+  useEffect(() => {
+    const d: any = []
+    if (details?.length) {
+      for (let i = 0; i < details.length; i++) {
+        const e = JSON.parse(JSON.stringify(bastDetailItemDataKeys))
+        for (let j = 0; j < e.length; j++) {
+          e[j].value = details[i]?.[e[j].name]
+        }
+        console.log(e)
+        d.push(e)
+      }
+      setDetails2(d)
     }
-  })
+    setUomList2(uomList?.map((item: any) => {
+      return {
+        ...item,
+        label: item.uom_name,
+        value: item.id
+      }
+    }))
+  }, [
+    details,
+    uomList
+  ])
 
   // return (
   //   <></>
   // )
+  return (
+    <View style={[{
+      // backgroundColor: 'yellow',
+      paddingHorizontal: 16
+    }]}>
+      {
+        details?.map((item: any, idx: number) => {
+          return (
+            <View style={styles.card} key={idx}>
+              <View style={styles.row}>
+                <Text style={styles.label}>Description</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.description}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>UOM</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.uom?.uom_name}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>QTY</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.qty}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Currency</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.currency?.currency_name}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Unit Price</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.unit_price}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Total Value</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.total_value}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Is Reimbursement</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.is_reimbursement === "0" ? 'No' : item.is_reimbursement === "1" ? 'Yes' : '-'}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Reason of Rejection</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.reason_of_rejection}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Comment</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.comment}</Text>
+              </View>
+
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={[styles.approveButton, styles.approvalButton]} onPress={() => { }}>
+                  <FontAwesome6 name="check" size={24} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.rejectButton, styles.approvalButton]} onPress={() => { }}>
+                  <FontAwesome6 name="xmark" size={24} color="white" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          )
+        })
+      }
+    </View>
+  )
   return (
     <View style={[styles.container, style]}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
@@ -108,7 +199,7 @@ const DetailTable = ({ data, setData, style, uomList, permission }: any) => {
                         //   { label: 'Hour', value: 'hour' },
                         //   { label: 'Day', value: 'day' },
                         // ]
-                        uomList
+                        uomList2
                       }
                       value={item.uom?.id}
                       setValue={(value: any) => {
@@ -119,7 +210,7 @@ const DetailTable = ({ data, setData, style, uomList, permission }: any) => {
                               if (i === idx) {
                                 return {
                                   ...item,
-                                  uom: uomList.find((item: any) => item.value === value)
+                                  uom: uomList2.find((item: any) => item.value === value)
                                 }
                               } else {
                                 return item
@@ -208,11 +299,12 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    paddingVertical: 10,
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#ccc',
+    // paddingVertical: 10,
     alignItems: 'center',
     // backgroundColor: '#666',
+    width: "100%"
   },
   cell: {
     fontSize: 14,
@@ -288,6 +380,95 @@ const styles = StyleSheet.create({
   comment: {
     width: 100,
   },
+  card: {
+    borderRadius: 10,
+    width: "100%",
+    alignSelf: "center",
+    backgroundColor: "#F8F9FE", // White background
+    padding: 16, // Padding inside the card
+    marginBottom: 16, // Margin between cards
+    elevation: 1, // For Android shadow
+    shadowColor: "#000", // For iOS shadow
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    alignItems: "flex-start", // Vertically center items
+  },
+  label: {
+    color: "#494A50",
+    width: "40%",
+    fontWeight: "800",
+    fontSize: 14,
+  },
+  colon: {
+    color: "#494A50",
+    fontWeight: "800",
+    fontSize: 16,
+    marginRight: 5,
+  },
+  value: {
+    // flex: 1,
+    // backgroundColor: 'red',
+    maxWidth: "60%",
+    color: "#494A50",
+    fontSize: 16,
+  },
+  statusContainer: {
+    alignItems: "center",
+    marginVertical: 5,
+  },
+  statusButton: {
+    padding: 8,
+    borderRadius: 12,
+    minWidth: 100,
+    alignItems: "center",
+  },
+  review: {
+    backgroundColor: "#2196F3",
+  },
+  approved: {
+    backgroundColor: "#4CAF50",
+  },
+  statusText: {
+    color: "#FFFFFF",
+    fontWeight: "700",
+    fontSize: 14,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+    // backgroundColor: 'yellow',
+    width: '100%',
+    paddingHorizontal: 40
+  },
+  approvalButton: {
+    padding: 'auto',
+    borderRadius: 30,
+    // flex: 1,
+    marginHorizontal: 5,
+    alignItems: "center",
+    justifyContent: 'center',
+    height: 30,
+    width: 100,
+  },
+  approveButton: {
+    backgroundColor: "#007E7A",
+  },
+  rejectButton: {
+    backgroundColor: "#E53935",
+  },
+  buttonText: {
+    color: "#EAF2FF",
+    fontWeight: "700",
+    fontSize: 14,
+  },
+  itemDetailContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingVertical: 10,
+    alignItems: "center",
+  },
 });
 
-export default DetailTable;
+export default DetailTableNew;
