@@ -1,35 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { getBastList } from '@/fetch/bast';
+import React from 'react';
 import { useGetUserData } from '@/hooks/useGetUserData';
 import BastListUi from './BastListUi';
-import { retriveAccessToken } from '@/fetch/auth';
+import useListData from '@/hooks/useListData';
+import { getBastList } from '@/fetch/bast';
 
 const BastList: React.FC = () => {
-  const [data, setData] = React.useState<any[]>([]);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
-  const [pageSize, setPageSize] = React.useState(10);
-  const [pageIndex, setPageIndex] = React.useState(1);
-
   const { userData } = useGetUserData();
-  // console.log(userData, "userData")
-
-  const handleLoadMore = () => {
-    console.log("handleLoadMore")
-    // setIsLoading(true);
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 2000);
-  }
-  // (async () => {
-  //   const cred = await retriveAccessToken()
-  //   console.log('================================================')
-  //   console.log(cred, 'credential')
-  // })()
-
-  useEffect(() => {
-    getBastList({ setData, pageIndex, pageSize })
-  }, [])
+  const {
+    data,
+    isLoading,
+    handleLoadMore,
+    rowSelection,
+    setRowSelection,
+    handleCheck,
+  } = useListData({
+    pageSize: 10,
+    getList: getBastList
+  });
 
   return (
     <BastListUi
@@ -37,9 +24,11 @@ const BastList: React.FC = () => {
       userData={userData}
       handleLoadMore={handleLoadMore}
       isLoading={isLoading}
+      rowSelection={rowSelection}
+      setRowSelection={setRowSelection}
+      handleCheck={handleCheck}
     />
-  )
-}
-
+  );
+};
 
 export default BastList;

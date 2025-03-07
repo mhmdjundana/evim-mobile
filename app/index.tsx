@@ -12,10 +12,15 @@ const ScrollDiv = () => {
   return (
     <View style={{ backgroundColor: 'white' }}>
       <TopBarNavigation />
-      <ScrollView
+      {/* <ScrollView
         style={styles.scrollViewContainer}
         contentContainerStyle={styles.scrollViewContentContainer}
-      >
+      > */}
+      <View style={[
+        styles.scrollViewContainer,
+        styles.scrollViewContentContainer
+      ]}>
+
         {/* <ApproveButton /> */}
         {/* <FormDemo /> */}
         {/* <TestForm /> */}
@@ -32,16 +37,18 @@ const ScrollDiv = () => {
 
         {/* <Menu /> */}
         {/* <BastDetail /> */}
+        <BastList />
         {/* <BastForm /> */}
 
         {/* <DropDownPickerExample />
       <DropdownSelectListExample /> */}
         {/* <ListPage /> */}
-        <BastList />
         {/* <InvoiceList /> */}
 
         {/* <DemoUi name="rnpaper" /> */}
-      </ScrollView>
+      </View>
+
+      {/* </ScrollView> */}
     </View>
   );
 };

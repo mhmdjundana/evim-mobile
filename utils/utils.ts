@@ -19,3 +19,23 @@ export function displayDateWithTime(date: string) {
 
   return newDate.toLocaleDateString('en-GB', options);
 }
+
+export function displayPrice(numberString: string) {
+  const parts = numberString.split('.');
+  let integerPart = parts[0];
+  let decimalPart = parts[1] || '00';
+
+  // Add commas for thousands separators
+  integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  // Ensure decimal part has two digits
+  if (decimalPart.length === 0) {
+      decimalPart = "00";
+  } else if (decimalPart.length === 1){
+      decimalPart += "0";
+  } else if (decimalPart.length > 2) {
+      decimalPart = decimalPart.substring(0,2);
+  }
+
+  return integerPart + ',' + decimalPart;
+}

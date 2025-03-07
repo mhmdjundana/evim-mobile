@@ -38,7 +38,7 @@ api.interceptors.request.use(
       const credentials = await Keychain?.getGenericPassword({
         service: "ACCESS_TOKEN",
       }); // Use a service name
-      console.log(credentials, 'credentials')
+      // console.log(credentials, 'credentials')
       if (credentials) {
         config.headers.Authorization = `Bearer ${credentials.password}`; // credentials.password contains the access token
       }

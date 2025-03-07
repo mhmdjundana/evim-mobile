@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { IconButton } from "react-native-paper";
 import { useGetUserData } from '@/hooks/useGetUserData';
+import { router } from "expo-router";
 
 export default function TopBarNavigation() {
   const { userData } = useGetUserData();
@@ -26,7 +27,9 @@ export default function TopBarNavigation() {
       <IconButton
         icon="menu"
         size={44}
-        onPress={() => { }}
+        onPress={() => {
+          router.push('/menu')
+        }}
       />
     </View>);
 }

@@ -147,7 +147,7 @@ export const retrieveEmailPassword = async () => {
       // "email": "ci@mail.com",
       "email": "cifi@mail.com",
       // "email": "albert.ap@mail.com",
-      "password": "1234567"
+      "password": "12345678"
     }
     const emailCredentials = await Keychain.getGenericPassword({
       service: "email",

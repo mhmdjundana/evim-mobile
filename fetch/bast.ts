@@ -1,11 +1,12 @@
 import { relogin } from "./auth";
 import api from "./axios"
 
-export const getBastList = async ({ setData, pageIndex, pageSize }: any) => {
+export const getBastList = async ({ setData, pageIndex, pageSize, setIsLoading }: any) => {
   console.log("getBastList start")
   let count: any = 1
   const getData = async () => {
     try {
+      setIsLoading(true)
       const response = await api.post("bast/data-list", {
         "columnFilters": [{ "id": "company", "value": "STM" }],
         "sorting": [],
@@ -14,8 +15,9 @@ export const getBastList = async ({ setData, pageIndex, pageSize }: any) => {
       })
       // console.log("bast list response status", response.status)
       // console.log("response", response.config)
-      setData(response.data?.data?.data)
+      // setData(response.data?.data?.data)
       // console.log("response", response)
+      return response
     } catch (error) {
       // console.error("error", error?.status)
       // console.error("error", error?.message)
@@ -25,10 +27,12 @@ export const getBastList = async ({ setData, pageIndex, pageSize }: any) => {
         count -= 1
         getData()
       }
+    } finally {
+      setIsLoading(false)
     }
   }
-  await getData()
   console.log("getBastList end")
+  return await getData()
 }
 
 export const getBastById = async ({ id, setData, isGetDepartmentData, isGetUomData, isGetWbsData, isGetGlData, isGetCostCenterData, company = "STM" }: any) => {
