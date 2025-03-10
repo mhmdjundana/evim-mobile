@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
 import React, { useState } from "react";
 import Login from "@/components/auth/login";
 import BastList from "@/components/list/bast/BastList";
@@ -8,18 +8,19 @@ import DemoUi from "@/components/demo";
 import Menu from "./menu";
 import IconDemo from "@/components/icons/icons";
 
+const {height} = Dimensions.get('window');
+
 const ScrollDiv = () => {
   return (
-    <View style={{ backgroundColor: 'white' }}>
-      <TopBarNavigation />
+    <View style={[
+      styles.scrollViewContainer,
+      styles.scrollViewContentContainer
+    ]}>
+      {/* <TopBarNavigation /> */}
       {/* <ScrollView
         style={styles.scrollViewContainer}
         contentContainerStyle={styles.scrollViewContentContainer}
       > */}
-      <View style={[
-        styles.scrollViewContainer,
-        styles.scrollViewContentContainer
-      ]}>
 
         {/* <ApproveButton /> */}
         {/* <FormDemo /> */}
@@ -35,9 +36,9 @@ const ScrollDiv = () => {
 
         {/* <IconDemo /> */}
 
-        {/* <Menu /> */}
+        <Menu />
         {/* <BastDetail /> */}
-        <BastList />
+        {/* <BastList /> */}
         {/* <BastForm /> */}
 
         {/* <DropDownPickerExample />
@@ -46,7 +47,6 @@ const ScrollDiv = () => {
         {/* <InvoiceList /> */}
 
         {/* <DemoUi name="rnpaper" /> */}
-      </View>
 
       {/* </ScrollView> */}
     </View>
@@ -68,7 +68,7 @@ export default function Index() {
 
   // resetTokenKeychain()
   return (
-    <>
+    <View style={{ flex: 1, margin: 0, padding: 0 }}>
       {
         !isLoggedIn ? (
           <Login />
@@ -76,8 +76,7 @@ export default function Index() {
           <ScrollDiv />
         )
       }
-    </>
-
+    </View>
   );
 }
 
@@ -99,10 +98,11 @@ const styles = StyleSheet.create({
     // paddingTop: 30,
   },
   scrollViewContentContainer: {
-    flexGrow: 1,
+    // flexGrow: 1,
     justifyContent: "flex-start",
     alignItems: "center",
     width: "100%",
+    height: height
   },
   closeButton: {
     backgroundColor: "#eee", // Light gray background

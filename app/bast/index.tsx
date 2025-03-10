@@ -13,7 +13,7 @@ export default function BastHome() {
   // }, [navigation]);
 
   return (
-    <ScrollView
+    <View
       style={{
         // flex: 1,
         // justifyContent: "flex-start",
@@ -21,13 +21,13 @@ export default function BastHome() {
         backgroundColor: "white",
         padding: 0,
         margin: 0,
-        paddingTop: 30,
+        // paddingTop: 30,
       }}
-      contentContainerStyle={{
-        flexGrow: 1,
-        justifyContent: "flex-start",
-        alignItems: "center",
-      }}
+      // contentContainerStyle={{
+      //   flexGrow: 1,
+      //   justifyContent: "flex-start",
+      //   alignItems: "center",
+      // }}
     >
       {/* <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>Bast Home!</Text>
@@ -43,6 +43,6 @@ export default function BastHome() {
       {/* <BastList /> */}
       {/* <Text>Bast Home</Text> */}
       <BastList />
-    </ScrollView>
+    </View>
   );
 }

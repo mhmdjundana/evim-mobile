@@ -96,15 +96,24 @@ const DetailTableNew = ({ data, setData, style, uomList, permission }: any) => {
                 <Text style={styles.colon}>:</Text>
                 <Text style={styles.value}> {item.comment}</Text>
               </View>
+              {
+                (data?.action?.is_approve || data?.action?.is_reject) &&
+                <View style={styles.buttonContainer}>
+                  {
+                    data?.action?.is_approve &&
+                    <TouchableOpacity style={[styles.approveButton, styles.approvalButton]} onPress={() => { }}>
+                      <FontAwesome6 name="check" size={24} color="white" />
+                    </TouchableOpacity>
+                  }
+                  {
+                    data?.action?.is_reject &&
+                    <TouchableOpacity style={[styles.rejectButton, styles.approvalButton]} onPress={() => { }}>
+                      <FontAwesome6 name="xmark" size={24} color="white" />
+                    </TouchableOpacity>
 
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.approveButton, styles.approvalButton]} onPress={() => { }}>
-                  <FontAwesome6 name="check" size={24} color="white" />
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.rejectButton, styles.approvalButton]} onPress={() => { }}>
-                  <FontAwesome6 name="xmark" size={24} color="white" />
-                </TouchableOpacity>
-              </View>
+                  }
+                </View>
+              }
             </View>
           )
         })

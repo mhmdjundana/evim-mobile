@@ -1,11 +1,44 @@
 import { InputSelect, InputText } from '@/components/form/input';
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select'; // Make sure you have this library installed
 
 const { width } = Dimensions.get('window');
 
-const FilterBast = () => {
+const statusOptions = [ // Define your status options
+  { label: 'All', value: '' },
+  { label: "Create SES", value: "Create SES" },
+  {
+    label: "Approve",
+    value: "Approve",
+  },
+  {
+    label: "1st Approve",
+    value: "1st Approve",
+  },
+  {
+    label: "Review",
+    value: "Review",
+  },
+  {
+    label: "2nd Approve",
+    value: "2nd Approve",
+  },
+  { label: "Completed", value: "Completed" },
+  { label: "Rejected", value: "Rejected" },
+  { label: "Rejected > 30 days", value: "Rejected > 30 days" },
+  // Add more status options as needed
+];
+
+const FilterBast = ({ listState = {}, setIsRenderFilter, setApplyFilter }: any) => {
+  /* 
+  vendor name
+  bast no
+  po no
+  status
+   */
+  const { columnFilters, setColumnFilters } = listState
+  console.log(columnFilters, 'columnFilters')
   const [migoSes, setMigoSes] = useState('');
   const [supplierName, setSupplierName] = useState('');
   const [currency, setCurrency] = useState('');
@@ -13,88 +46,54 @@ const FilterBast = () => {
   const [department, setDepartment] = useState('');
   const [status, setStatus] = useState('');
 
-  const statusOptions = [ // Define your status options
-    { label: 'All', value: '' },
-    { label: "Create SES", value: "Create SES" },
-    {
-      label: "Approve",
-      value: "Approve",
-    },
-    {
-      label: "1st Approve",
-      value: "1st Approve",
-    },
-    {
-      label: "Review",
-      value: "Review",
-    },
-    {
-      label: "2nd Approve",
-      value: "2nd Approve",
-    },
-    { label: "Completed", value: "Completed" },
-    { label: "Rejected", value: "Rejected" },
-    { label: "Rejected > 30 days", value: "Rejected > 30 days" },
-    // Add more status options as needed
-  ];
-
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+    style={styles.container}
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <TouchableOpacity style={styles.header} onPress={() => setIsRenderFilter(false)}>
+        <Text style={styles.title}>Back</Text>
+      </TouchableOpacity>
       <View style={styles.header}>
         <Text style={styles.title}>Filter & Sort</Text>
       </View>
 
-      <InputText
-        label="MIGO / SES"
-        placeholder="MIGO / SES"
-        value={migoSes}
-        onChangeText={(value: any) => setMigoSes(value)}
-        style={{ marginBottom: 10 }}
-      />
-      <InputText
-        label="Supplier Name"
-        placeholder="Supplier Name"
-        value={supplierName}
-        onChangeText={setSupplierName}
-        style={{ marginBottom: 10 }}
-      />
-      <InputText
-        label="Currency"
-        placeholder="Currency"
-        value={currency}
-        onChangeText={setCurrency}
-        style={{ marginBottom: 10 }}
-      />
-      <InputText
-        label="Amount"
-        placeholder="Amount"
-        value={amount}
-        onChangeText={setAmount}
-        keyboardType="numeric" // For numeric input
-        style={{ marginBottom: 10 }}
-      />
-      <InputText
-        label="Department"
-        placeholder="Department"
-        value={department}
-        onChangeText={setDepartment}
-        style={{ marginBottom: 10 }}
-      />
+      {columnFilters?.map((input: any, index: number) => (
+        <InputText
+          key={index}
+          index={index}
+          label={input.label}
+          placeholder={input.placeholder}
+          value={input.value}
+          onChangeText={(value: any) => {
+            const updatedState = [...columnFilters];
+            updatedState[index].value = value;
+            setColumnFilters(updatedState);
+          }}
+          style={input.style}
+        />
+      ))}
 
-
-      <Text style={{ fontSize: 16, fontWeight: '500' }}>Status</Text>
-      {/* <InputSelect
+      {/* <Text style={{ fontSize: 16, fontWeight: '500' }}>Status</Text> */}
+      <InputSelect
         label="Status"
         placeholder="Select Status"
         onValueChange={(value: any) => setStatus(value)}
         value={status}
         style={{ marginBottom: 10 }}
-      /> */}
+        options={statusOptions}
+      />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          setApplyFilter((prev: any) => prev + 1)
+          setIsRenderFilter(false)
+        }}
+      >
         <Text style={styles.buttonText}>Apply</Text>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

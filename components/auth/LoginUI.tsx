@@ -179,7 +179,7 @@ const LoginUiNew = ({
             showPassword={showPassword}
             setShowPassword={setShowPassword}
           />
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => {
               console.log("Forgot Password?");
               router.push("/forgot-password");
@@ -268,6 +268,7 @@ const LoginUiNew = ({
 };
 
 const LoginMessage = ({ isInvalidCred, loginMsgTitle, loginMsg }: any) => {
+  // if (!loginMsgTitle && !loginMsg) return null;
   return (
     <View
       style={{
@@ -276,60 +277,60 @@ const LoginMessage = ({ isInvalidCred, loginMsgTitle, loginMsg }: any) => {
         justifyContent: "flex-end",
       }}
     >
-      <Card
-        style={{
-          backgroundColor: isInvalidCred ? "#FFE2E5" : "#E7F4E8",
-          maxWidth: 674 / 2.5,
-        }}
-      >
-        <Card.Content
+      {loginMsgTitle && loginMsg ? (
+        <Card
           style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "row",
+            backgroundColor: isInvalidCred ? "#FFE2E5" : "#E7F4E8",
+            maxWidth: 674 / 2.5,
           }}
         >
-          {isInvalidCred && loginMsgTitle && loginMsg ? (
-            <>
-              <View style={{ marginRight: 10 }}>
-                <Icon source="alert-circle" size={24} color="#FF616D" />
-              </View>
-              <View>
-                <PaperText
-                  variant="bodyMedium"
-                  style={{ fontWeight: "bold", color: "#1F2024" }}
-                >
-                  Wrong Credential
-                </PaperText>
-                <PaperText variant="bodyMedium" style={{ color: "#494A50" }}>
-                  Please Check your Email / Password
-                </PaperText>
-              </View>
-            </>
-          ) : !isInvalidCred && loginMsgTitle && loginMsg ? (
-            <>
-              <View style={{ marginRight: 10 }}>
-                <Icon source="check-circle" size={24} color="#3AC0A0" />
-              </View>
-              <View>
-                <PaperText
-                  variant="bodyMedium"
-                  style={{ fontWeight: "bold", color: "#1F2024" }}
-                >
-                  Success
-                </PaperText>
-                <PaperText variant="bodyMedium" style={{ color: "#494A50" }}>
-                  You will be redirected to EVIM Mobile Approver Application
-                </PaperText>
-              </View>
-            </>
-          ) : (
-            <></>
-          )}
-        </Card.Content>
-
-        {/* <></> */}
-      </Card>
+          <Card.Content
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "row",
+            }}
+          >
+            {isInvalidCred && loginMsgTitle && loginMsg ? (
+              <>
+                <View style={{ marginRight: 10 }}>
+                  <Icon source="alert-circle" size={24} color="#FF616D" />
+                </View>
+                <View>
+                  <PaperText
+                    variant="bodyMedium"
+                    style={{ fontWeight: "bold", color: "#1F2024" }}
+                  >
+                    Wrong Credential
+                  </PaperText>
+                  <PaperText variant="bodyMedium" style={{ color: "#494A50" }}>
+                    Please Check your Email / Password
+                  </PaperText>
+                </View>
+              </>
+            ) : !isInvalidCred && loginMsgTitle && loginMsg ? (
+              <>
+                <View style={{ marginRight: 10 }}>
+                  <Icon source="check-circle" size={24} color="#3AC0A0" />
+                </View>
+                <View>
+                  <PaperText
+                    variant="bodyMedium"
+                    style={{ fontWeight: "bold", color: "#1F2024" }}
+                  >
+                    Success
+                  </PaperText>
+                  <PaperText variant="bodyMedium" style={{ color: "#494A50" }}>
+                    You will be redirected to EVIM Mobile Approver Application
+                  </PaperText>
+                </View>
+              </>
+            ) : (
+              <></>
+            )}
+          </Card.Content>
+        </Card>
+      ) : null}
     </View>
   );
 };

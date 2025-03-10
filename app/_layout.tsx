@@ -6,8 +6,8 @@ export default function RootLayout() {
       <Stack.Screen name="index" options={{ headerShown: false }} />
       {/* <Stack.Screen name="index" /> */}
       <Stack.Screen name="home" />
-      {/* <Stack.Screen name="bast" options={{ headerShown: false }} /> */}
-      <Stack.Screen name="bast" />
+      <Stack.Screen name="bast" options={{ headerShown: false }} />
+      {/* <Stack.Screen name="bast" /> */}
       <Stack.Screen name="login" options={{ headerShown: false }} />
       <Stack.Screen name="forgot-password" options={{ headerShown: false }} />
       <Stack.Screen name="sp" />

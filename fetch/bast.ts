@@ -1,22 +1,29 @@
 import { relogin } from "./auth";
 import api from "./axios"
 
-export const getBastList = async ({ setData, pageIndex, pageSize, setIsLoading }: any) => {
+export const getBastList = async ({ 
+  setData, 
+  pageIndex, 
+  pageSize, 
+  setIsLoading, 
+  columnFilters = [],
+}: any) => {
   console.log("getBastList start")
+  setIsLoading(true)
+  // const cf = [...columnFilters?.map((i: any) => ({ id: i.id, value: i.value })), { "id": "company", "value": "STM" }]
   let count: any = 1
   const getData = async () => {
     try {
-      setIsLoading(true)
       const response = await api.post("bast/data-list", {
-        "columnFilters": [{ "id": "company", "value": "STM" }],
+        columnFilters,
         "sorting": [],
         "pagination": { pageIndex, pageSize },
         "all_department": false
       })
-      // console.log("bast list response status", response.status)
+    // console.log("bast list response status", response.status)
       // console.log("response", response.config)
       // setData(response.data?.data?.data)
-      // console.log("response", response)
+      // console.log("response", response?.data?.data?.data)
       return response
     } catch (error) {
       // console.error("error", error?.status)

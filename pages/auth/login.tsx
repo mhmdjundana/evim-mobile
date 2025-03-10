@@ -13,7 +13,7 @@ const Login = () => {
   const [checkTnC, setCheckTnC] = useState(false)
 
   const handleLogin = async () => {
-    console.log("Login");
+    // console.log("Login");
     try {
       const res: any = await login(email, password);
       // console.log(res.data?.access_token)

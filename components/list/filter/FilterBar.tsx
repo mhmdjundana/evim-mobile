@@ -3,23 +3,26 @@ import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
-interface FilterBarProps {
-  moduleName: string;
-  data: any[];
-  rowSelection: any[];
-  setRowSelection: (newSelection: any[]) => void;
-}
-
-export default function FilterBar({ moduleName, data, rowSelection, setRowSelection }: FilterBarProps) {
+export default function FilterBar({ 
+  moduleName, 
+  data, 
+  rowSelection, 
+  setRowSelection, 
+  columnFilters,
+  setColumnFilters,
+  filterState,
+  setFilterState,
+  setIsRenderFilter
+}: any) {
   const [isSelectedAll, setIsSelectedAll] = useState(false);
 
   const handleSelectAll = () => {
-    const newSelection = isSelectedAll ? [] : data.filter(item => item.action?.is_approve || item.action?.is_reject).map(item => item.id);
+    const newSelection = isSelectedAll ? [] : data.filter((item: any) => item.action?.is_approve || item.action?.is_reject).map((item: any) => item.id);
     setRowSelection(newSelection);
     setIsSelectedAll(!isSelectedAll);
   };
 
-  const selectedCount = isSelectedAll ? data?.filter(item => item.action?.is_approve || item.action?.is_reject)?.length : rowSelection?.length;
+  const selectedCount = isSelectedAll ? data?.filter((item: any) => item.action?.is_approve || item.action?.is_reject)?.length : rowSelection?.length;
 
   return (
     <View style={styles.container}>
@@ -37,7 +40,11 @@ export default function FilterBar({ moduleName, data, rowSelection, setRowSelect
       </Text>
 
       <TouchableOpacity
-        onPress={() => router.push({ pathname: `/filter`, params: { module: 'bast' } })}
+        onPress={() => {
+          setIsRenderFilter(true)
+          console.log("setIsRenderFilter")
+          // router.push({ pathname: `/filter`, params: { module: 'bast' } })
+        }}
         style={[styles.searchButton, { flex: 1, justifyContent: 'flex-end' }]}
       >
         <FontAwesome name="search" size={20} color="gray" />

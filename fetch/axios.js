@@ -8,21 +8,30 @@ import { API_URI } from "@/constants/variables";
 // Create an instance of Axios (optional but recommended for better organization)
 const api = axios.create({
   baseURL: API_URI, // Your API base URL
-
   timeout: 30000,
   headers: {
     "Content-Type": "application/json", // Set the default content type
-    accept: "application/json",
+    accept: "*/*",
+    // accept: "application/json",
     "access-control-allow-origin": "*",
     "cache-control": "no-cache",
   },
 });
 
 api.defaults.baseURL = API_URI;
+api.defaults.headers = {
+  "Content-Type": "application/json", //
+  accept: "*/*",
+  // accept: "application/json",
+  "access-control-allow-origin": "*",
+  "cache-control": "no-cache",
+}
+api.defaults.timeout = 30000;
 
 api.interceptors.request.use(
   async (config) => {
     console.log("axios interceptor request started");
+    // console.log(config)
     // try {
     //   const token = await SecureStore.getItemAsync('jwtToken'); // Get JWT from secure storage
     //   if (token) {
@@ -47,6 +56,8 @@ api.interceptors.request.use(
     } catch (error) {
       console.error("Error adding token to request:", error);
       return config;
+    } finally {
+      console.log("axios interceptor request ended");
     }
   },
   (error) => {
@@ -62,7 +73,7 @@ api.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
   // console.log(response.data?.access_token, 'response interceptor token');
-  // console.log(response.data, 'response interceptor');
+  // console.log(response, 'response interceptor');
   if (response.data?.access_token) {
     storeAccessToken(response.data?.access_token);
   }

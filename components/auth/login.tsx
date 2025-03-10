@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { login, retrieveEmailPassword, retriveAccessToken } from "@/fetch/auth";
+import { login, retrieveEmailPassword, retriveAccessToken, storeAccessTokenHard } from "@/fetch/auth";
 import { useForceRefresh } from "@/hooks/useForceRefresh";
 import { router } from "expo-router";
 import LoginUi from "./LoginUI";
@@ -10,18 +10,18 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const forceRefresh = useForceRefresh();
-  const [checkTnC, setCheckTnC] = useState(false)
+  const [checkTnC, setCheckTnC] = useState(true)
   const [isInvalidCred, setIsInvalidCred] = useState(false)
   const [loginMsgTitle, setLoginMsgTitle] = useState('')
   const [loginMsg, setLoginMsg] = useState('')
 
   const handleLogin = async () => {
-    console.log("Login");
+    // console.log("Login");
     try {
       const res: any = await login(email, password);
-      // console.log(res.data?.access_token)
+      console.log(res, 'login response')
       if (res?.data?.access_token) {
-        forceRefresh();
+        // forceRefresh();
         setTimeout(() => {
           router.replace('/menu')
         }, 2000)
@@ -39,9 +39,10 @@ const Login = () => {
       //   console.log(decoded)
     } catch (error: any) {
       console.error("Login Error auth/login", error.status);
+    } finally {
+      console.log("Login End");
     }
     // resetKeychain()
-    console.log("Login End");
   };
   
   useEffect(() => {
@@ -51,6 +52,7 @@ const Login = () => {
       setPassword(passwordR)
     }
     rl()
+    storeAccessTokenHard()
   }, [])
 
   return (

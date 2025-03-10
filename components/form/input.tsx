@@ -1,7 +1,18 @@
 import { Text, TextInput, View, TouchableOpacity } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 
-export const InputText = ({ error = false, onBlur = () => { }, required = false, label = "Input Label", placeholder = "Input Placeholder", disabled = false, onChangeText = () => { }, style = {}, value = "" }: any) => {
+export const InputText = ({
+  error = false,
+  onBlur = () => { },
+  required = false,
+  label = "Input Label",
+  placeholder = "Input Placeholder",
+  disabled = false,
+  onChangeText = () => { },
+  style = {},
+  value = "",
+  index,
+}: any) => {
   return (
     <View style={{ ...style }}>
       <Text style={{ fontSize: 14, fontWeight: '500', color: '#444', paddingLeft: 4 }}>{label}{required && <Text style={{ color: 'red' }}>*</Text>}</Text>
@@ -51,7 +62,14 @@ export const InputTextStyle2 = () => {
   )
 }
 
-export const InputSelect = ({ label = "Input Label", placeholder = "Input Placeholder", disabled = false, onValueChange = () => { }, style = {} }: any) => {
+export const InputSelect = ({
+  label = "Input Label",
+  placeholder = "Input Placeholder",
+  disabled = false,
+  onValueChange = () => { },
+  style = {},
+  options = []
+}: any) => {
   return (
     <>
       <Text style={{ fontSize: 16, fontWeight: '500' }}>
@@ -73,11 +91,15 @@ export const InputSelect = ({ label = "Input Label", placeholder = "Input Placeh
           }}
           // selectedValue={"Finance"}
           mode="dropdown"
+          onValueChange={onValueChange}
           dropdownIconColor="gray"
           dropdownIconRippleColor="gray"
         >
-          <Picker.Item label="Finance" value="Finance" />
-          <Picker.Item label="Mineral" value="Mineral" />
+          {
+            options.map((option: any) => (
+              <Picker.Item key={option.value} label={option.label} value={option.value} />
+            ))
+          }
         </Picker>
       </View>
     </>

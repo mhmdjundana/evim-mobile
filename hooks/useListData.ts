@@ -1,18 +1,44 @@
 import { useEffect, useRef, useState } from 'react';
-
-const useListData = ({ pageSize, getList }: any) => {
+import { useCompanyMapping } from './useGetUserData';
+const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
+  const {
+    currentCompany,
+  } = useCompanyMapping();
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState<any>(0);
   const lastPage = useRef(0);
   const [rowSelection, setRowSelection] = useState<any[]>([]);
+  const [columnFilters, setColumnFilters] = useState<any[]>(filterInput)
+  const defaultColumnFilters = { "id": "company", "value": currentCompany?.company_initial ? currentCompany?.company_initial : "STM" }
+  const [applyFilter, setApplyFilter] = useState(0)
 
   const fetchData = async () => {
     setIsLoading(true);
+    const cf = [
+      ...columnFilters?.map((i: any) => ({ id: i.id, value: i.value })),
+      defaultColumnFilters
+    ]
     try {
-      const res: any = await getList({ setData, pageIndex, pageSize, setIsLoading });
+      const res: any = await getList({
+        setData,
+        pageIndex: pageIndex ?? 0,
+        pageSize,
+        setIsLoading,
+        columnFilters: cf
+      });
       if (res?.data?.data?.data?.length > 0) {
-        setData(prev => (pageIndex === 0 ? res.data.data.data : [...prev, ...res.data.data.data]));
+        setData(prev => {
+          if (pageIndex === null) {
+            setPageIndex(0)
+            return res.data.data.data
+          }
+          if (pageIndex === 0) {
+            return res.data.data.data
+          }
+
+          return [...prev, ...res.data.data.data]
+        })
         lastPage.current = res.data.data.last_page;
       }
     } catch (error) {
@@ -24,7 +50,7 @@ const useListData = ({ pageSize, getList }: any) => {
 
   const handleLoadMore = () => {
     if (pageIndex + 1 <= lastPage.current) {
-      setPageIndex(prev => prev + 1);
+      setPageIndex((prev: any) => prev + 1);
     }
   };
 
@@ -38,6 +64,9 @@ const useListData = ({ pageSize, getList }: any) => {
   useEffect(() => {
     fetchData();
   }, [pageIndex]);
+  useEffect(() => {
+    setPageIndex(null)
+  }, [applyFilter]);
 
   return {
     data,
@@ -45,7 +74,11 @@ const useListData = ({ pageSize, getList }: any) => {
     handleLoadMore,
     rowSelection,
     setRowSelection,
-    handleCheck
+    handleCheck,
+    columnFilters,
+    setColumnFilters,
+    defaultColumnFilters,
+    setApplyFilter
   };
 };
 
