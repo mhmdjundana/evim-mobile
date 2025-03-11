@@ -1,18 +1,16 @@
 import { Dimensions, FlatList } from "react-native";
 import React from "react";
 import { View } from "react-native";
-import FilterBar from "../filter/FilterBar";
+import FilterBar from "./filter/FilterBar";
 import ListCard from './ListCard';
 import TopBarLayout from "@/components/layout/TopBarLayout";
-import FilterBast from "../filter/FilterBast";
 
 const { height } = Dimensions.get('window');
 
-const BastListUi = ({
+const ListUi = ({
   listState,
-  // filterState,
-  // setFilterState,
-
+  filterComponent,
+  moduleName = "BAST",
 }: any) => {
   const {
     data,
@@ -37,16 +35,12 @@ const BastListUi = ({
         {
           isRenderFilter ? (
             <>
-              <FilterBast
-                listState={listState}
-                setIsRenderFilter={setIsRenderFilter}
-                setApplyFilter={setApplyFilter}
-              />
+              {filterComponent}
             </>
           ) : (
             <>
               <FilterBar
-                moduleName="BAST"
+                moduleName={moduleName}
                 data={data}
                 rowSelection={rowSelection}
                 setRowSelection={setRowSelection}
@@ -76,4 +70,4 @@ const BastListUi = ({
   );
 };
 
-export default BastListUi;
+export default ListUi;

@@ -2,13 +2,13 @@ import { Dimensions, FlatList } from "react-native";
 import React from "react";
 import { View } from "react-native";
 import FilterBar from "../filter/FilterBar";
-import ListCard from './ListCard';
 import TopBarLayout from "@/components/layout/TopBarLayout";
 import FilterBast from "../filter/FilterBast";
+import ListCardInvoice from "./ListCardInvoice";
 
 const { height } = Dimensions.get('window');
 
-const BastListUi = ({
+const ViewInvoiceList = ({
   listState,
   // filterState,
   // setFilterState,
@@ -55,7 +55,7 @@ const BastListUi = ({
               <FlatList
                 data={data}
                 renderItem={({ item }) => (
-                  <ListCard
+                  <ListCardInvoice
                     key={item.id}
                     data={item}
                     rowSelection={rowSelection}
@@ -76,4 +76,4 @@ const BastListUi = ({
   );
 };
 
-export default BastListUi;
+export default ViewInvoiceList;

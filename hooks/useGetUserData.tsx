@@ -23,7 +23,7 @@ export const useCompanyMapping = () => {
   /* 
   [{"company_code": "1492", "company_initial": "STM", "is_default": "1"}]
   */
-  let currentCompany: any;
+  const [currentCompany, setCurrentCompany] = useState<any>(null);
   const { userData } = useGetUserData();
   const companies = userData?.data?.mapping
   // console.log(companies, 'companies')
@@ -32,12 +32,13 @@ export const useCompanyMapping = () => {
     await setCurrentCompanyKeychain(company);
   }
   const getCurrentComp = async () => {
-    currentCompany = await getCurrentCompanyKeychain();
+    const a = await getCurrentCompanyKeychain();
+    setCurrentCompany(a);
   };
 
   useEffect(() => {
     getCurrentComp();
-  });
+  }, []);
 
   return {
     currentCompany,

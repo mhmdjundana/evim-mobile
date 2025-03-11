@@ -3,39 +3,67 @@ import { getInvoiceList } from '@/fetch/invoice';
 import { useGetUserData } from '@/hooks/useGetUserData';
 import InvoiceListUi from './invoiceListUi';
 import { Text } from 'react-native';
+import useListData from '@/hooks/useListData';
+
+const filterInputInvoice = [
+  {
+    label: "Vendor Name",
+    placeholder: "Vendor Name",
+    name: "suplier_name",
+    id: "suplier_name",
+    value: "",
+    style: { marginBottom: 10 },
+  },
+  {
+    label: "Invoice No.",
+    placeholder: "Invoice No.",
+    name: "invoice_number",
+    id: "invoice_number",
+    value: "",
+    style: { marginBottom: 10 },
+  },
+  {
+    label: "PO No.",
+    placeholder: "PO No.",
+    name: "po_no",
+    id: "po_no",
+    value: "",
+    style: { marginBottom: 10 },
+  },
+  {
+    label: "DPP",
+    placeholder: "DPP",
+    name: "grand_total",
+    id: "grand_total",
+    value: "",
+    style: { marginBottom: 10 },
+  },
+  {
+    label: "Status",
+    placeholder: "Status",
+    name: "status_name",
+    id: "status_name",
+    value: "",
+    style: { marginBottom: 10 },
+  }
+]
+
 
 const InvoiceList: React.FC = () => {
-  const [data, setData] = React.useState<any[]>([]);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
-  const [pageSize, setPageSize] = React.useState(10000);
-  const [pageIndex, setPageIndex] = React.useState(0);
-
   const { userData } = useGetUserData();
   // console.log(userData, "userData")
 
-  const handleLoadMore = () => {
-    console.log("handleLoadMore")
-    // setIsLoading(true);
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 2000);
-  }
-
-  useEffect(() => {
-    getInvoiceList({ setData, pageIndex, pageSize })
-  }, [])
+  const listState = useListData({
+    pageSize: 10,
+    getList: getInvoiceList,
+    filterInput: filterInputInvoice,
+  });
 
   return (
-    <>
-      <InvoiceListUi
-        data={data}
-        userData={userData}
-        handleLoadMore={handleLoadMore}
-        isLoading={isLoading}
-      />
-      {/* <Text>Invoice List</Text> */}
-    </>
+    <InvoiceListUi
+      listState={listState}
+      userData={userData}
+    />
   )
 }
 

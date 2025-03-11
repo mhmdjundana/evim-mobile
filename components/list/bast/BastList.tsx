@@ -50,22 +50,16 @@ const filterInputBast = [
 const BastList: React.FC = () => {
   const { userData } = useGetUserData();
   // console.log(userData?.data?.mapping, 'userdata mapping')
-const [filterState, setFilterState] = useState(filterInputBast);
   const listState = useListData({
     pageSize: 10,
     getList: getBastList,
     filterInput: filterInputBast,
   });
-  const [isRenderFilter, setIsRenderFilter] = useState(false);
 
   return (
     <BastListUi
       userData={userData}
       listState={listState}
-      filterState={filterState}
-      setFilterState={setFilterState}
-      isRenderFilter={isRenderFilter}
-      setIsRenderFilter={setIsRenderFilter}
     />
   );
 };

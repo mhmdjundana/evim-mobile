@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useCompanyMapping } from './useGetUserData';
+
 const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
   const {
     currentCompany,
@@ -12,6 +13,9 @@ const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
   const [columnFilters, setColumnFilters] = useState<any[]>(filterInput)
   const defaultColumnFilters = { "id": "company", "value": currentCompany?.company_initial ? currentCompany?.company_initial : "STM" }
   const [applyFilter, setApplyFilter] = useState(0)
+  const [isRenderFilter, setIsRenderFilter] = useState(false);
+  console.log("pageIndex", pageIndex)
+  console.log("lastPage", lastPage.current)
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -21,7 +25,7 @@ const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
     ]
     try {
       const res: any = await getList({
-        setData,
+        // setData,
         pageIndex: pageIndex ?? 0,
         pageSize,
         setIsLoading,
@@ -64,6 +68,7 @@ const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
   useEffect(() => {
     fetchData();
   }, [pageIndex]);
+  
   useEffect(() => {
     setPageIndex(null)
   }, [applyFilter]);
@@ -78,7 +83,9 @@ const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
     columnFilters,
     setColumnFilters,
     defaultColumnFilters,
-    setApplyFilter
+    setApplyFilter,
+    isRenderFilter,
+    setIsRenderFilter,
   };
 };
 

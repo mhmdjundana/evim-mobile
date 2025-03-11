@@ -10,7 +10,6 @@ export const getBastList = async ({
 }: any) => {
   console.log("getBastList start")
   setIsLoading(true)
-  // const cf = [...columnFilters?.map((i: any) => ({ id: i.id, value: i.value })), { "id": "company", "value": "STM" }]
   let count: any = 1
   const getData = async () => {
     try {

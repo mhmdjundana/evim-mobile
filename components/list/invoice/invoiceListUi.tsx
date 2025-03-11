@@ -1,3 +1,4 @@
-import ViewInvoiceListOld from "./ViewInvoiceListOld";
+// import ViewInvoiceList from "./ViewInvoiceListOld";
+import ViewInvoiceList from "./ViewInvoiceList";
 
-export default ViewInvoiceListOld
+export default ViewInvoiceList

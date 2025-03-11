@@ -1,21 +1,29 @@
 import { relogin } from "./auth";
 import api from "./axios"
 
-export const getInvoiceList = async ({ setData, pageIndex, pageSize }: any) => {
+export const getInvoiceList = async ({ 
+  setData, 
+  pageIndex, 
+  pageSize,
+  setIsLoading, 
+  columnFilters = [],
+}: any) => {
   console.log("getInvoiceList start")
+  setIsLoading(true)
   let count: any = 1
   const getData = async () => {
     try {
       const response = await api.post("invoice/data-list", {
-        "columnFilters": [{ "id": "company", "value": "STM" }],
+        columnFilters,
         "sorting": [],
         "pagination": { pageIndex, pageSize },
         "all_department": false
       })
-      console.log("bast list response status", response.status)
+      // console.log("invoice list response status", response.status)
       // console.log("response", response.config)
-      setData(response.data?.data?.data)
-      // console.log("response", response)
+      console.log("response invoice list", response?.data?.data?.data)
+      // setData(response.data?.data?.data)
+      return response
     } catch (error) {
       // console.error("error", error?.status)
       // console.error("error", error?.message)
@@ -25,10 +33,12 @@ export const getInvoiceList = async ({ setData, pageIndex, pageSize }: any) => {
         count -= 1
         getData()
       }
+    } finally {
+      setIsLoading(false)
     }
   }
-  await getData()
   console.log("getInvoiceList end")
+  return await getData()
 }
 
 export const getInvoiceById = async ({ id, setData, isGetDepartmentData, isGetUomData, isGetWbsData, isGetGlData, isGetCostCenterData, company = "STM" }: any) => {

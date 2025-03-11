@@ -32,8 +32,8 @@ export const login = async (email, password) => {
       try {
         await storeAccessToken(accessToken);
         const decoded = jwtDecode(accessToken);
+        console.log(decoded.data.mapping, 'decoded data mapping')
         await setCurrentCompanyKeychain(decoded.data?.mapping[0]);
-        // console.log(decoded.data.modules)
         // await SecureStore.setItemAsync("accessToken", accessToken);
         // await SecureStore.setItemAsync('userData', JSON.stringify(decoded.data));
         return response;
@@ -155,11 +155,11 @@ export const setCurrentCompanyKeychain = async (company) => {
 };
 
 export const getCurrentCompanyKeychain = async () => {
-  const credentials = await Keychain?.getGenericPassword({
+  const a = await Keychain?.getGenericPassword({
     service: "currentCompany",
   });
-  if (credentials?.password) {
-    return JSON.parse(credentials.password);
+  if (a.password) {
+    return JSON.parse(a.password);
   } else {
     return null;
   }
@@ -187,8 +187,9 @@ export const retrieveEmailPassword = async () => {
       // "email": "upton.sap@mail.com",
       // "email": "sapfi@mail.com",
       // "email": "ci@mail.com",
-      "email": "cifi@mail.com",
+      // "email": "cifi@mail.com",
       // "email": "albert.ap@mail.com",
+      "email": "candace.tax@mail.com",
       "password": "12345678"
     }
     const emailCredentials = await Keychain.getGenericPassword({

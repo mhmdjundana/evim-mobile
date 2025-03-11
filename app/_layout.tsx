@@ -15,6 +15,7 @@ export default function RootLayout() {
       <Stack.Screen name="pcard" />
       <Stack.Screen name="ci" />
       <Stack.Screen name="tnc" />
+      <Stack.Screen name="menu" options={{ headerShown: false }} />
     </Stack>
   );
 }
