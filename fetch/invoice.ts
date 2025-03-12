@@ -21,7 +21,7 @@ export const getInvoiceList = async ({
       })
       // console.log("invoice list response status", response.status)
       // console.log("response", response.config)
-      console.log("response invoice list", response?.data?.data?.data)
+      // console.log("response invoice list", response?.data?.data?.data)
       // setData(response.data?.data?.data)
       return response
     } catch (error) {
@@ -53,7 +53,7 @@ export const getInvoiceById = async ({ id, setData, isGetDepartmentData, isGetUo
     params.append('glData', `${isGetGlData ? "true" : "false"}`);
     const response = await api.get(`invoice/show-list/${ids}` + "?" + params.toString());
 
-    // console.log(response.data.data, "data")
+    console.log(response.data.data, "data invoice by id")
     setData(response.data)
   } catch (error) {
     console.error('Error fetching data:', error);

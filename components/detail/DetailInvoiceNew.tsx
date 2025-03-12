@@ -17,8 +17,11 @@ import DetailTableNew from "./DetailTableNew";
 import ApprovalAction from "./ApprovalAction";
 import DetailHistory from "./DetailHistory";
 import DetailHistoryNew from "./DetailHistoryNew";
+import { getInvoiceById } from "@/fetch/invoice";
+import DocumentDetailInvoice from "./DocumentDetailInvoice";
+import DocumentDetailInvoiceFile from "./DocumentDetailInvoiceFile";
 
-export default function BastDetailNew() {
+export default function DetailInvoiceNew() {
   // const navigation = useNavigation()
   const { id } = useLocalSearchParams()
   // console.log(navigation, "navigation")
@@ -29,12 +32,6 @@ export default function BastDetailNew() {
   // console.log(userData?.data?.name, "userData name")
   // console.log(userData?.data?.modules, "modules permission")
 
-  const logoTitle = (
-    <View style={styles.logoTitleContainer}>
-      <Text style={styles.logoTitleText}>BERITA ACARA SERAH TERIMA</Text>
-      <Text style={styles.logoTitleText}>GOODS / SERVICES RECEIPT NOTE</Text>
-    </View>
-  )
   const [data, setData] = useState<any>([]);
   // console.log(data, "Data bast view")
   const [bastData, setBastData] = useState<any>([])
@@ -50,7 +47,7 @@ export default function BastDetailNew() {
 
   useEffect(() => {
     // getDataById()
-    getBastById({ setData, id })
+    getInvoiceById({ setData, id })
     retrieveUserData().then((res: any) => {
       // console.log(res?.modules, "res user data")
       setUserData(res)
@@ -65,12 +62,16 @@ export default function BastDetailNew() {
 
   return (
     <View style={{ backgroundColor: 'white' }}>
-      <HeaderDetail title="BAST Detail" status={bastData?.approval_status?.status_name} statusColor={bastData?.approval_status?.status_color} />
+      <HeaderDetail 
+        title="Normal Receipt Detail" 
+        status={bastData?.approval_status?.status_name} 
+        statusColor={bastData?.approval_status?.status_color} 
+      />
       <Text>{bastData?.id}</Text>
       <View style={{ marginTop: 15 }}></View>
-      <DocumentDetailNew data={bastData} />
+      <DocumentDetailInvoice data={bastData} />
       <View style={{ marginTop: 10 }}></View>
-      <DocumentDetailBastSapEditFilesNew data={bastData} />
+      <DocumentDetailInvoiceFile data={bastData} />
       <View style={{ marginTop: 25 }}></View>
       <DetailTableNew data={bastData} permission={{
         description: false,

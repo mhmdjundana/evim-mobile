@@ -38,7 +38,7 @@ export default function BastDetail() {
   const [data, setData] = useState<any>([]);
   // console.log(data, "Data bast view")
   const [bastData, setBastData] = useState<any>([])
-  console.log(bastData, "bastData")
+  // console.log(bastData, "bastData")
   const [historyData, setHistoryData] = useState<any>([]);
 
   // const getDataById = async () => {

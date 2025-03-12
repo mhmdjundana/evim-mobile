@@ -6,7 +6,6 @@ export default function Layout() {
       <Stack.Screen name="index" options={{ headerShown: false }} />
       {/* <Stack.Screen name="index" /> */}
       <Stack.Screen name="detail" options={{ headerShown: false }} />
-      <Stack.Screen name="form" />
     </Stack>
   );
 }

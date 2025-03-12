@@ -36,8 +36,8 @@ const DocumentDetailBastSapEditFiles = (props: any) => {
     { title: 'Progress Report (.xlsx)', value: '', flag: 'monthly_report_file', text: 'Progress Report (.xlsx)' },
     { title: 'Other BAST Attachment', value: '', flag: 'others_file', text: 'Other BAST Attachment.pdf' },
   ])
-  console.log(bastDetailData, "bastDetailData")
-  console.log(data.id, "bast data id")
+  // console.log(bastDetailData, "bastDetailData")
+  // console.log(data.id, "bast data id")
 
   useEffect(() => {
     const newData = []

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-const DocumentDetailNew = (props: any) => {
+const DocumentDetailInvoice = (props: any) => {
   const { data } = props; // Destructure data from props
 
   const bastDetailData = [
@@ -17,24 +17,12 @@ const DocumentDetailNew = (props: any) => {
       value: data?.bast_no,
     },
     {
-      title: "Posting Date",
-      value: data?.posting_date,
-    },
-    {
       title: "Goods or Services",
       value: data?.good_or_services === '1' ? "Goods" : data?.good_or_services === '2' ? "Services" : "-",
     },
     {
       title: "Mineral or Geothermal",
       value: data?.company_sub_id === "1" ? "Mineral" : data?.company_sub_id === "2" ? "Geothermal" : "-",
-    },
-    {
-      title: "PO Type",
-      value: data?.is_po_onthespot === "1" ? "Spot PO" : data?.is_po_onthespot === "0" ? "Contract/BPO" : "-",
-    },
-    {
-      title: "Requested By",
-      value: data?.requested_by,
     },
     {
       title: "Contract/BPO No",
@@ -49,30 +37,73 @@ const DocumentDetailNew = (props: any) => {
       value: data?.po_no,
     },
     {
-      title: "Posting Date",
-      value: data?.posting_date,
+      title: "MIGO / SES No",
+      value: data?.migo_or_ses,
     },
     {
-      title: "Delivery Note",
-      value: data?.delivery_note,
+      title: "House Bank",
+      value: data?.house_bank,
+    },
+    {
+      title: "Account ID",
+      value: data?.account_id,
+    },
+    {
+      title: "Payment Method",
+      value: data?.payment_method,
+    },
+    {
+      title: "GL No",
+      value: data?.gl_no,
+    },
+    {
+      title: "WBS No",
+      value: data?.wbs_no,
+    },
+    {
+      title: "Cost Center No.",
+      value: data?.coscenter_no,
+    },
+    {
+      title: "SAP Invoice (MIRO)",
+      value: data?.sap_invoice_miro,
+    },
+    {
+      title: "Invoice Date",
+      value: data?.invoice_date,
     },
     {
       title: "Supplier Name",
       value: data?.suplier_name,
     },
     {
-      title: "Bill of Lading (if any)",
-      value: data?.bill_of_leading,
+      title: "Vendor Code",
+      value: data?.vendor_code,
     },
     {
-      title: "Airway Bill (if any)",
-      value: data?.airway_bill,
+      title: "Vendor Type",
+      value: data?.vendor_type,
+    },
+    {
+      title: "Department",
+      value: data?.department?.name,
+    },
+    {
+      title: "Invoice Number",
+      value: data?.invoice_number,
+    },
+    {
+      title: "Invoice Description",
+      value: data?.description_invoice,
+    },
+    {
+      title: "Paid Date",
+      value: data?.payment_date,
     },
     {
       title: "Notes",
       value: data?.notes,
     },
-
   ]
 
   return (
@@ -139,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DocumentDetailNew;
+export default DocumentDetailInvoice;

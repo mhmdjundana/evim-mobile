@@ -23,7 +23,7 @@ const HistoryItem = ({ created_at, vendor, user, process, read_status, comment }
 );
 
 const HistoryScreen = ({ data }: any) => {
-  console.log(data, 'history data')
+  // console.log(data, 'history data')
   const historyData = [
     {
       date: '6 Jan 2025 14:00',

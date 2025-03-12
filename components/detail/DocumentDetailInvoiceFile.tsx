@@ -1,42 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity, Platform, Alert } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
-import Entypo from 'react-native-vector-icons/Entypo'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import Feather from 'react-native-vector-icons/Feather'
-import api from '@/fetch/axios';
-import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
-import * as Linking from 'expo-linking'; // Import Linking
-import { downLoadPdfExcelBase64 } from '@/fetch/downloadFile';
 import { downloadFile } from './utils/downloadFile';
 
 const { width } = Dimensions.get('window');
 
 
-const DocumentDetailBastSapEditFilesNew = (props: any) => {
+const DocumentDetailInvoiceFile = (props: any) => {
   const { data } = props; // Destructure data from props
   const [downloading, setDownloading] = useState(false);
 
   const bast_id = data.id
   const [bastDetailData, setBastDetailData] = useState([
-    { title: 'Timesheet', value: '', flag: 'timesheet_file', text: 'Timesheet.pdf' },
-    { title: 'Proforma Invoice', value: '', flag: 'proforma_invoice_file', text: 'Proforma Invoice.pdf' },
-    { title: 'Delivery Order', value: '', flag: 'delivery_order_file', text: 'Delivery Order.pdf' },
-    { title: 'Summary Reimburse', value: '', flag: 'sumary_reimburse_file', text: 'Summary Reimburse.pdf' },
+    { title: "BAST file", value: '', flag: 'bast_file', text: 'BAST.pdf' },
+    { title: 'Contract of summary expenditure', value: '', flag: 'expenditure_file', text: 'Contract of summary expenditure.pdf' },
     { title: 'Bill of Lading', value: '', flag: 'bill_of_leading_file', text: 'Bill of Lading.pdf' },
     { title: 'Airway Bill', value: '', flag: 'airway_bill_file', text: 'Airway Bill.pdf' },
     { title: 'PB1', value: '', flag: 'pib_file', text: 'PB1.pdf' },
-    { title: 'Purchase Order', value: '', flag: 'po_file', text: 'Purchase Order.pdf' },
     { title: 'Confirmation File', value: '', flag: 'contract_file', text: 'Confirmation File.pdf' },
-    { title: 'Good Receipt Note', value: '', flag: 'good_receipt_note', text: 'Good Receipt Note.pdf' },
-    { title: 'Progress Report (.xlsx)', value: '', flag: 'monthly_report_file', text: 'Progress Report (.xlsx)' },
+    { title: 'Summary Reimburse', value: '', flag: 'sumary_reimburse_file', text: 'Summary Reimburse.pdf' },
+    { title: 'Delivery Order', value: '', flag: 'delivery_order_file', text: 'Delivery Order.pdf' },
+    { title: 'Purchase Order', value: '', flag: 'po_file', text: 'Purchase Order.pdf' },
+    { title: 'Timesheet', value: '', flag: 'timesheet_file', text: 'Timesheet.pdf' },
     { title: 'Other BAST Attachment', value: '', flag: 'others_file', text: 'Other BAST Attachment.pdf' },
+    { title: 'Other Invoice Attachment', value: '', flag: 'other_invoice_file', text: 'Other Invoice Attachment.pdf' },
+    { title: 'Invoice Doc', value: '', flag: 'invoice_file', text: 'Invoice Doc.pdf' },
+    { title: 'IAS', value: '', flag: 'ias_file', text: 'IAS.pdf' },
+    { title: 'Faktur Pajak', value: '', flag: 'faktur_file', text: 'Faktur Pajak.pdf' },
+    { title: 'Confirmation Sheet', value: '', flag: 'confirmation_sheet_file', text: 'Confirmation Sheet.pdf' },
+    { title: 'COD/COR & DGT', value: '', flag: 'cod_cor_dgt_file', text: 'COD/COR & DGT.pdf' },
+    { title: 'SK Pembebasan Pajak', value: '', flag: 'sk_pembebeasan_file', text: 'SK Pembebasan Pajak.pdf' },
+    { title: 'Tax Slip', value: '', flag: 'taxslip_file', text: 'Tax Slip.pdf' },
+    { title: 'Payment Advice', value: '', flag: 'payment_advice_file', text: 'Payment Advice.pdf' },
+    { title: 'Good Receipt Note', value: '', flag: 'good_receipt_note', text: 'Good Receipt Note.pdf' },
   ])
   // console.log(bastDetailData, "bastDetailData")
   // console.log(data.id, "bast data id")
@@ -205,4 +201,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DocumentDetailBastSapEditFilesNew;
+export default DocumentDetailInvoiceFile;
