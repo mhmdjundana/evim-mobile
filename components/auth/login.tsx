@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
-import { login, retrieveEmailPassword, retriveAccessToken, storeAccessTokenHard } from "@/fetch/auth";
-import { useForceRefresh } from "@/hooks/useForceRefresh";
+import { login2, retrieveEmailPassword, storeAccessTokenHard } from "@/fetch/auth";
+// import { useForceRefresh } from "@/hooks/useForceRefresh";
 import { router } from "expo-router";
-import LoginUi from "./LoginUI";
+import LoginUi from "@/components/auth/LoginUI";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const forceRefresh = useForceRefresh();
+  // const forceRefresh = useForceRefresh();
   const [checkTnC, setCheckTnC] = useState(true)
   const [isInvalidCred, setIsInvalidCred] = useState(false)
   const [loginMsgTitle, setLoginMsgTitle] = useState('')
   const [loginMsg, setLoginMsg] = useState('')
+  const [debugMsg, setDebugMsg] = useState('')
 
   const handleLogin = async () => {
     // console.log("Login");
     try {
-      const res: any = await login(email, password);
+      const res: any = await login2(email, password, setDebugMsg);
       console.log(res, 'login response')
       if (res?.data?.access_token) {
         // forceRefresh();
@@ -44,7 +44,7 @@ const Login = () => {
     }
     // resetKeychain()
   };
-  
+ 
   useEffect(() => {
     const rl = async () => {
       const { email: emailR, password: passwordR }: any = await retrieveEmailPassword()
@@ -69,6 +69,7 @@ const Login = () => {
       isInvalidCred={isInvalidCred}
       loginMsgTitle={loginMsgTitle}
       loginMsg={loginMsg}
+      debugMsg={debugMsg}
     />
   );
 };

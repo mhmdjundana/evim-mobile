@@ -11,6 +11,7 @@ import {
   ImageBackground,
   Dimensions,
   KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
 import {
   configureFonts,
@@ -29,9 +30,9 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 // assets
-import evimLoginBackground from "@/assets/images/evim-login-background.jpg";
-import stmLogo from "@/assets/images/logo-stm-login.png";
-import STMLogin from "./STMLogin.png";
+// import evimLoginBackground from "@/assets/images/evim-login-background.jpg";
+// import stmLogo from "@/assets/images/logo-stm-login.png";
+// import STMLogin from "./STMLogin.png";
 import { PaperTextInputGroup } from "./PaperTextInputGroup";
 
 const { width, height } = Dimensions.get("window");
@@ -61,14 +62,14 @@ const LoginUiOld = ({
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
-          <ImageBackground
+          {/* <ImageBackground
             source={stmLogo}
             style={styles.stmLogo}
-          ></ImageBackground>
-          <ImageBackground
+          ></ImageBackground> */}
+          {/* <ImageBackground
             source={evimLoginBackground}
             style={styles.background}
-          >
+          > */}
             <View style={styles.container2}>
               <View style={styles.inputContainer}>
                 <TextInput
@@ -109,7 +110,7 @@ const LoginUiOld = ({
                 <Text style={styles.loginButtonText}>Login</Text>
               </TouchableOpacity>
             </View>
-          </ImageBackground>
+          {/* </ImageBackground> */}
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -129,29 +130,31 @@ const LoginUiNew = ({
   isInvalidCred,
   loginMsgTitle,
   loginMsg,
+  debugMsg,
 }: any) => {
   return (
+    <ScrollView>
     <KeyboardAvoidingView
       style={[styles.container, { position: "relative" }]}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ImageBackground
+      {/* <ImageBackground
         source={evimLoginBackground}
         style={[styles.background, { opacity: 0.3, position: "absolute" }]}
-      ></ImageBackground>
+      ></ImageBackground> */}
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         {/* <ImageBackground
         source={stmLogo}
         style={styles.stmLogo}
       ></ImageBackground> */}
-        <ImageBackground
+        {/* <ImageBackground
           source={STMLogin}
           style={{
             width: 674 / 2.5,
             height: 352 / 2.5,
             marginBottom: 20,
           }}
-        ></ImageBackground>
+        ></ImageBackground> */}
 
         <LoginMessage
           isInvalidCred={isInvalidCred}
@@ -264,6 +267,25 @@ const LoginUiNew = ({
         </TouchableRipple>
       </View>
     </KeyboardAvoidingView>
+    <View>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>asdf</Text>
+      <Text>{debugMsg}</Text>
+    </View>
+    </ScrollView>
   );
 };
 

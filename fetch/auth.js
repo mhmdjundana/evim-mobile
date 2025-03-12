@@ -6,8 +6,8 @@ import { API_URI_WEB, API_URI } from "@/constants/variables";
 
 export const login = async (email, password) => {
   console.log("login start")
-  await saveEmailPassword(email, password)
   try {
+    await saveEmailPassword(email, password)
     const response = await api.post("login", {
       email,
       password,
@@ -50,6 +50,65 @@ export const login = async (email, password) => {
     // throw new Error(error)
   } finally {
     console.log("login end")
+  }
+};
+export const login2 = async (email, password, setMsg) => {
+  console.log("login2 start")
+  try {
+    // await saveEmailPassword(email, password)
+    const response = await axios({
+      method: "POST",
+      url: API_URI + "login",
+      data: {
+        email,
+        password,
+      },
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+    // const response = await axios({
+    //   method: "POST",
+    //   url: API_URI + "login",
+    //   data: {
+    //     email,
+    //     password,
+    //   },
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //     "Access-Control-Allow-Origin": "*",
+    //   },
+    // })
+    setMsg(JSON.stringify(response.data))
+    console.log("Login Response Status:", response.status);
+    if (response.data.access_token) {
+      // console.log(typeof response.data.access_token);
+      const accessToken = response.data.access_token;
+      try {
+        await storeAccessToken(accessToken);
+        const decoded = jwtDecode(accessToken);
+        console.log(decoded.data.mapping, 'decoded data mapping')
+        await setCurrentCompanyKeychain(decoded.data?.mapping[0]);
+        // await SecureStore.setItemAsync("accessToken", accessToken);
+        // await SecureStore.setItemAsync('userData', JSON.stringify(decoded.data));
+        return response;
+      } catch (error) {
+        console.error("Login Error:", error.message);
+        return error;
+        // throw new Error(error)
+      }
+    }
+  } catch (error) {
+    console.error("Login Request Error", error.status);
+    setMsg(JSON.stringify(error))
+    return error;
+    // return new Error(error);
+    // throw new Error(error)
+  } finally {
+    console.log("login2 end")
   }
 };
 
