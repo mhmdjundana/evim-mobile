@@ -37,7 +37,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "./plugins/network-security-config.js"
     ],
     "experiments": {
       "typedRoutes": true
