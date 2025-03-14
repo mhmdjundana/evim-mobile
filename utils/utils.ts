@@ -21,8 +21,9 @@ export function displayDateWithTime(date: string) {
 }
 
 export function displayPrice(numberString: string) {
-  const parts = numberString.split('.');
-  let integerPart = parts[0];
+  if (!numberString) return '0,00';
+  const parts = numberString?.split('.');
+  let integerPart = parts[0] || '0';
   let decimalPart = parts[1] || '00';
 
   // Add commas for thousands separators
@@ -38,4 +39,9 @@ export function displayPrice(numberString: string) {
   }
 
   return integerPart + ',' + decimalPart;
+}
+
+export const displayStringArray = (str: string) => {
+  if (!str) return '';
+  return str.replace(/\[|\]/g, '').split(',').map(s => s.trim()).join(', ');
 }

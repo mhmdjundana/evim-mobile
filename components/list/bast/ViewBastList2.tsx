@@ -5,6 +5,7 @@ import FilterBar from "../filter/FilterBar";
 import ListCard from './ListCard';
 import TopBarLayout from "@/components/layout/TopBarLayout";
 import FilterBast from "../filter/FilterBast";
+import { EmptyList } from "../EmptyList";
 
 const { height } = Dimensions.get('window');
 
@@ -58,6 +59,7 @@ const BastListUi = ({
                   <ListCard
                     key={item.id}
                     data={item}
+                    listData={data}
                     rowSelection={rowSelection}
                     setRowSelection={setRowSelection}
                     handleCheck={handleCheck}
@@ -66,6 +68,8 @@ const BastListUi = ({
                 keyExtractor={item => item.id.toString()}
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.5}
+                ListEmptyComponent={<EmptyList />}
+                style={{ paddingHorizontal: 10 }}
               />
             </>
           )

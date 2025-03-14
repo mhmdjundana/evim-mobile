@@ -30,6 +30,7 @@ export const useCompanyMapping = () => {
 
   const changeCompany = async (company: any) => {
     await setCurrentCompanyKeychain(company);
+    await getCurrentComp();
   }
   const getCurrentComp = async () => {
     const a = await getCurrentCompanyKeychain();

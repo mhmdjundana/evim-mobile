@@ -14,15 +14,19 @@ interface ListCardProps {
 
 const ListCard = ({
   data,
+  listData,
   rowSelection,
   handleCheck = () => { }
 }: any) => {
   // console.log(data, 'listcard data')
 
   return (
-    <TouchableOpacity style={styles.row} onPress={() => {
-      router.push({ pathname: `/bast/detail`, params: { id: data.id } })
-    }}>
+    <TouchableOpacity
+      style={styles.row}
+      onPress={() => {
+        router.push({ pathname: `/bast/detail`, params: { id: data.id } })
+      }}
+    >
       <View style={styles.card}>
         {
           (data.action?.is_approve || data.action?.is_reject) &&
@@ -68,12 +72,26 @@ const ListCard = ({
         </View>
         <View style={styles.buttonContainer}>
           {data.action?.is_approve && (
-            <TouchableOpacity style={styles.approveButton} onPress={() => handleApproveButton({ item: data, router: router })}>
+            <TouchableOpacity
+              style={styles.approveButton}
+              onPress={() => handleApproveButton({
+                item: data,
+                router: router,
+                listData: listData,
+                rowSelection: rowSelection
+              })}>
               <Text style={styles.buttonText}>Approve</Text>
             </TouchableOpacity>
           )}
           {data.action?.is_reject && (
-            <TouchableOpacity style={styles.rejectButton} onPress={() => handleRejectButton({ item: data, router: router })}>
+            <TouchableOpacity
+              style={styles.rejectButton}
+              onPress={() => handleRejectButton({
+                item: data,
+                router: router,
+                listData: listData,
+                rowSelection: rowSelection
+              })}>
               <Text style={styles.buttonText}>Reject</Text>
             </TouchableOpacity>
           )}

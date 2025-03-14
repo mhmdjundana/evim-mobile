@@ -1,16 +1,18 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { displayStringArray } from '@/utils/utils';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { downloadFile } from './utils/downloadFile';
 
 const { width } = Dimensions.get('window');
 
 const DocumentDetailNew = (props: any) => {
   const { data } = props; // Destructure data from props
+  const [downloading, setDownloading] = useState(false);
 
   const bastDetailData = [
     {
       title: "All Document",
       value: data?.doc_no ? data?.doc_no + ".pdf" : "-",
-      col: 1,
     },
     {
       title: "BAST No.",
@@ -29,12 +31,24 @@ const DocumentDetailNew = (props: any) => {
       value: data?.company_sub_id === "1" ? "Mineral" : data?.company_sub_id === "2" ? "Geothermal" : "-",
     },
     {
-      title: "PO Type",
-      value: data?.is_po_onthespot === "1" ? "Spot PO" : data?.is_po_onthespot === "0" ? "Contract/BPO" : "-",
+      title: "MIGO / SES No.",
+      value: data?.migo_ses_no,
     },
     {
-      title: "Requested By",
-      value: data?.requested_by,
+      title: "GL No.",
+      value: displayStringArray(data?.gl_no),
+    },
+    {
+      title: "WBS No.",
+      value: displayStringArray(data?.wbs_no),
+    },
+    {
+      title: "Cost Center No.",
+      value: displayStringArray(data?.coscenter_no),
+    },
+    {
+      title: "PO Type",
+      value: data?.is_po_onthespot === "1" ? "Spot PO" : data?.is_po_onthespot === "0" ? "Contract/BPO" : "-",
     },
     {
       title: "Contract/BPO No",
@@ -61,6 +75,18 @@ const DocumentDetailNew = (props: any) => {
       value: data?.suplier_name,
     },
     {
+      title: "Vendor Type",
+      value: data?.vendor_type,
+    },
+    {
+      title: "Department",
+      value: data?.department?.name,
+    },
+    {
+      title: "Requested By",
+      value: data?.requested_by,
+    },
+    {
       title: "Bill of Lading (if any)",
       value: data?.bill_of_leading,
     },
@@ -72,24 +98,45 @@ const DocumentDetailNew = (props: any) => {
       title: "Notes",
       value: data?.notes,
     },
-
+  
   ]
-
+  
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      {bastDetailData.map((item, index) => (
-        <View key={index} style={styles.row}>
-          <View style={styles.columnLeft}>
-            <Text style={styles.label}>{item.title}</Text>
+      {bastDetailData.map((item, index) => {
+        // if (!item.value) return null;
+        if (index === 0) return (
+          <View key={index} style={styles.row}>
+            <View style={styles.columnLeft}>
+              <Text style={styles.label}>{item.title}</Text>
+            </View>
+            <View style={styles.middle}>
+              <Text style={styles.label}>:</Text>
+            </View>
+            <View style={styles.columnRight}>
+              <TouchableOpacity
+                onPress={() => downloadFile({ setDownloading, id: data.id, value: "all", name: item?.value })}
+                disabled={downloading}
+              >
+                <Text style={styles.valueAllDoc}>{item.value}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.middle}>
-            <Text style={styles.label}>:</Text>
+        );
+        return (
+          <View key={index} style={styles.row}>
+            <View style={styles.columnLeft}>
+              <Text style={styles.label}>{item.title}</Text>
+            </View>
+            <View style={styles.middle}>
+              <Text style={styles.label}>:</Text>
+            </View>
+            <View style={styles.columnRight}>
+              <Text style={styles.value}>{item.value}</Text>
+            </View>
           </View>
-          <View style={styles.columnRight}>
-            <Text style={styles.value}>{item.value}</Text>
-          </View>
-        </View>
-      ))}
+        )
+      })}
     </ScrollView>
   );
 };
@@ -136,6 +183,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'normal',
     color: '#494A50',
+  },
+  valueAllDoc: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    color: '#0024FF',
   },
 });
 

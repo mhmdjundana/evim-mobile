@@ -8,7 +8,7 @@ import DemoUi from "@/components/demo";
 import Menu from "./menu";
 import IconDemo from "@/components/icons/icons";
 
-const {height} = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const ScrollDiv = () => {
   return (
@@ -22,31 +22,31 @@ const ScrollDiv = () => {
         contentContainerStyle={styles.scrollViewContentContainer}
       > */}
 
-        {/* <ApproveButton /> */}
-        {/* <FormDemo /> */}
-        {/* <TestForm /> */}
-        {/* <FilterBast /> */}
-        {/* <FilterInvoice /> */}
-        {/* <FilterSpecialPayment /> */}
-        {/* <FilterCC /> */}
-        {/* <TestList /> */}
-        {/* <Menu /> */}
-        {/* <RejectionConfirmation /> */}
-        {/* <ApprovalConfirmation /> */}
+      {/* <ApproveButton /> */}
+      {/* <FormDemo /> */}
+      {/* <TestForm /> */}
+      {/* <FilterBast /> */}
+      {/* <FilterInvoice /> */}
+      {/* <FilterSpecialPayment /> */}
+      {/* <FilterCC /> */}
+      {/* <TestList /> */}
+      {/* <Menu /> */}
+      {/* <RejectionConfirmation /> */}
+      {/* <ApprovalConfirmation /> */}
 
-        {/* <IconDemo /> */}
+      {/* <IconDemo /> */}
 
-        <Menu />
-        {/* <BastDetail /> */}
-        {/* <BastList /> */}
-        {/* <BastForm /> */}
+      <Menu />
+      {/* <BastDetail /> */}
+      {/* <BastList /> */}
+      {/* <BastForm /> */}
 
-        {/* <DropDownPickerExample />
+      {/* <DropDownPickerExample />
       <DropdownSelectListExample /> */}
-        {/* <ListPage /> */}
-        {/* <InvoiceList /> */}
+      {/* <ListPage /> */}
+      {/* <InvoiceList /> */}
 
-        {/* <DemoUi name="rnpaper" /> */}
+      {/* <DemoUi name="rnpaper" /> */}
 
       {/* </ScrollView> */}
     </View>
@@ -68,7 +68,13 @@ export default function Index() {
 
   // resetTokenKeychain()
   return (
-    <View style={{ flex: 1, margin: 0, padding: 0 }}>
+    <View style={{
+      flex: 1,
+      margin: 0,
+      padding: 0,
+      // backgroundColor: "white",
+      // minHeight: height + 200,
+    }}>
       {
         !isLoggedIn ? (
           <Login />

@@ -30,7 +30,7 @@ import { PaperTextInputGroup } from "./PaperTextInputGroup";
 // assets
 import evimLoginBackground from "@/assets/images/evim-login-background.jpg";
 import stmLogo from "@/assets/images/logo-stm-login.png";
-import STMLogin from "./STMLogin.png";
+import STMLogin from "@/assets/images/STMLogin.png";
 import { router } from "expo-router";
 
 const { width, height } = Dimensions.get("window");

@@ -23,7 +23,7 @@ export default function TopBarNavigation() {
           size={30}
           onPress={() => { }}
         /> */}
-      <Text>{userData?.data?.email}</Text>
+      {/* <Text>{userData?.data?.email}</Text> */}
       <IconButton
         icon="menu"
         size={44}
@@ -43,5 +43,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     // marginBottom: 10,
+    // add shadow at bottom
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    marginBottom: 2,
   },
 })

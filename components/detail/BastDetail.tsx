@@ -22,7 +22,7 @@ export default function BastDetail() {
   // const navigation = useNavigation()
   const { id } = useLocalSearchParams()
   // console.log(navigation, "navigation")
-  console.log(id, "id")
+  console.log(id, "id bast")
   const [userData, setUserData] = useState<any>([])
   // console.log(userData, "userData")
   // console.log(userData?.data?.id, "userData id")
@@ -36,7 +36,7 @@ export default function BastDetail() {
     </View>
   )
   const [data, setData] = useState<any>([]);
-  // console.log(data, "Data bast view")
+  console.log(data, "Data bast view")
   const [bastData, setBastData] = useState<any>([])
   // console.log(bastData, "bastData")
   const [historyData, setHistoryData] = useState<any>([]);

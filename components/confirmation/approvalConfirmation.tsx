@@ -1,21 +1,132 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { ActionButton } from '../button/ActionButton';
 import { router } from 'expo-router';
 import api from '@/fetch/axios';
+import { Card } from 'react-native-paper';
 
-const ApprovalConfirmation = ({ data, module }: any) => {
-  console.log(data[0], "Apporval data");
+const ApprovalConfirmation = ({ data, module, listData = [] }: any) => {
+  console.log(data, "Apporval data");
   console.log(module, "Apporval module");
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Approval Confirmation</Text>
-      <Text style={styles.subtitle}>Are you sure you want to approve?</Text>
+    <ScrollView
+      contentContainerStyle={styles.container}
+    >
+      <Text style={[styles.title, {
+        marginTop: 30
+      }]}>Approval Confirmation</Text>
+      {
+        listData?.length ?
+          <Text style={styles.subtitle}>Are you sure you want to approve these BAST?</Text>
+          :
+          <Text style={styles.subtitle}>Are you sure you want to approve?</Text>
+      }
+      {
+        listData?.length && listData.map((item: any, i: any) => {
+          return (
+            <Card style={{
+              backgroundColor: 'white',
+              padding: 0,
+              marginBottom: 10,
+            }}
+              key={i}
+            >
+              <Card.Content style={{
+                padding: 0,
+                // backgroundColor: 'gray'
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+              }}>
+                <View style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                  <Text style={[styles.subtitle, {
+                    width: "30%",
+                    marginBottom: 0,
+                  }]}>
+                    BAST No.
+                  </Text>
+                  <Text style={[styles.subtitle, {
+                    width: "10%",
+                    marginBottom: 0,
+                  }]}>
+                    :
+                  </Text>
+                  <Text style={[styles.subtitle, {
+                    width: "60%",
+                    marginBottom: 0,
+                  }]}>
+                    {item.bast_no}
+                  </Text>
+                </View>
+                <View style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                }}>
+                  <Text style={[styles.subtitle, {
+                    width: "30%",
+                    marginBottom: 0,
+                  }]}>
+                    Contract No.
+                  </Text>
+                  <Text style={[styles.subtitle, {
+                    width: "10%",
+                    marginBottom: 0,
+                  }]}>
+                    :
+                  </Text>
+                  <Text style={[styles.subtitle, {
+                    width: "60%",
+                    marginBottom: 0,
+                  }]}>
+                    {item.contract_no}
+                  </Text>
+                </View>
+                <View style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                  <Text style={[styles.subtitle, {
+                    width: "30%",
+                    marginBottom: 0,
+                  }]}>
+                    PO No.
+                  </Text>
+                  <Text style={[styles.subtitle, {
+                    width: "10%",
+                    marginBottom: 0,
+                  }]}>
+                    :
+                  </Text>
+                  <Text style={[styles.subtitle, {
+                    width: "60%",
+                    marginBottom: 0,
+                  }]}>
+                    {item.po_no}
+                  </Text>
+                </View>
+              </Card.Content>
+            </Card>
+          )
+        })
 
-      <View style={styles.buttonContainer}>
+      }
+
+      <View style={[styles.buttonContainer, {
+        marginBottom: 30
+      }]}>
         <ActionButton type="yes" onPress={() => {
           const bastApproval = async () => {
+            // console.log(JSON.stringify(data));
             try {
               const response = await api.post('bast/approval', data);
               console.log('response approval', response);
@@ -32,13 +143,13 @@ const ApprovalConfirmation = ({ data, module }: any) => {
           router.back();
         }} />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     // backgroundColor: '#F2F2F7',
     padding: 10,
     width: '100%',

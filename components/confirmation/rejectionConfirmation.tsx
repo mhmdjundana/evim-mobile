@@ -35,6 +35,7 @@ const RejectionConfirmation = ({ data, module }: any) => {
         <ActionButton type="yes" onPress={() => {
           const bastRejection = async () => {
             data[0].reason = reason;
+            // console.log(JSON.stringify(data));
             try {
               const response = await api.post('bast/approval', data);
               console.log('response rejecting: ', response);

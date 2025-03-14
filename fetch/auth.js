@@ -25,7 +25,7 @@ export const login = async (email, password) => {
     //     "Access-Control-Allow-Origin": "*",
     //   },
     // })
-    console.log("Login Response Status:", response.status);
+    // console.log("Login Response Status:", response.status);
     if (response.data.access_token) {
       // console.log(typeof response.data.access_token);
       const accessToken = response.data.access_token;
@@ -83,7 +83,7 @@ export const login2 = async (email, password, setMsg) => {
     //   },
     // })
     setMsg(JSON.stringify(response.data))
-    console.log("Login Response Status:", response.status);
+    // console.log("Login Response Status:", response.status);
     if (response.data.access_token) {
       // console.log(typeof response.data.access_token);
       const accessToken = response.data.access_token;
@@ -248,8 +248,8 @@ export const retrieveEmailPassword = async () => {
       // "email": "ci@mail.com",
       // "email": "cifi@mail.com",
       // "email": "albert.ap@mail.com",
-      "email": "candace.tax@mail.com",
-      "password": "12345678"
+      // "email": "candace.tax@mail.com",
+      // "password": "12345678"
     }
     const emailCredentials = await Keychain.getGenericPassword({
       service: "email",

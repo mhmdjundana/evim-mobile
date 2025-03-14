@@ -7,7 +7,8 @@ import * as Linking from 'expo-linking';
 const downloadFile = async ({
   setDownloading,
   id,
-  value
+  value,
+  name,
 }: any) => {
   setDownloading(true);
   const shareFile = async (fileUri: any, mimeType: any) => {
@@ -53,7 +54,7 @@ const downloadFile = async ({
       return;
     }
 
-    const fileUri = `${FileSystem.documentDirectory}${value}`;
+    const fileUri = `${FileSystem.documentDirectory}${name ? name : value}`;
     console.log(fileUri, "fileUri A")
 
     try {

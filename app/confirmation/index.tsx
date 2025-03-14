@@ -4,7 +4,7 @@ import { useLocalSearchParams } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
 
 export default function Confirmation() {
-  const { type, data = "{}", module } = useLocalSearchParams();
+  const { type, data = "{}", module, listData = "[]" } = useLocalSearchParams();
   // console.log(data, "Confirmation data");
   // console.log(module, "Confirmation module");
   // console.log(type, "Confirmation type");
@@ -14,7 +14,7 @@ export default function Confirmation() {
       <View style={styles.container}>
         {
           type === "approval" ? (
-            <ApprovalConfirmation data={JSON.parse(data as string)} module={module} />
+            <ApprovalConfirmation data={JSON.parse(data as string)} module={module} listData={JSON.parse(listData as string)} />
           ) : type === "rejection" ? (
             <RejectionConfirmation data={JSON.parse(data as string)} module={module} />
           ) : (

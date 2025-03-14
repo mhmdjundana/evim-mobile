@@ -20,6 +20,9 @@ import DetailHistoryNew from "./DetailHistoryNew";
 import { getInvoiceById } from "@/fetch/invoice";
 import DocumentDetailInvoice from "./DocumentDetailInvoice";
 import DocumentDetailInvoiceFile from "./DocumentDetailInvoiceFile";
+import DetailTableInvoice from "./DetailTableInvoice";
+import InvoicePaymentSummary from "./InvoicePaymentSummary";
+import InvoiceTaxSimulation from "./InvoiceTaxSimulation";
 
 export default function DetailInvoiceNew() {
   // const navigation = useNavigation()
@@ -73,7 +76,7 @@ export default function DetailInvoiceNew() {
       <View style={{ marginTop: 10 }}></View>
       <DocumentDetailInvoiceFile data={bastData} />
       <View style={{ marginTop: 25 }}></View>
-      <DetailTableNew data={bastData} permission={{
+      <DetailTableInvoice data={bastData} permission={{
         description: false,
         uom_name: false,
         qty: false,
@@ -85,6 +88,8 @@ export default function DetailInvoiceNew() {
         comment: false,
         // action: true,
       }} />
+      <InvoicePaymentSummary data={bastData} />
+      <InvoiceTaxSimulation data={bastData} />
       <ApprovalAction bastData={bastData} id={id} userData={userData} router={router} />
       <DetailHistoryNew data={historyData} />
       <View style={{ marginTop: 60 }}>
@@ -92,8 +97,3 @@ export default function DetailInvoiceNew() {
     </View >
   );
 }
-
-const styles = StyleSheet.create({
-  logoTitleContainer: { display: "flex", justifyContent: "center", alignItems: "center" },
-  logoTitleText: { fontSize: 15, fontWeight: "500", textAlign: "center", color: "#404040" },
-});

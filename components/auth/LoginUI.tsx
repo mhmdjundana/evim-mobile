@@ -30,9 +30,9 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 // assets
-// import evimLoginBackground from "@/assets/images/evim-login-background.jpg";
-// import stmLogo from "@/assets/images/logo-stm-login.png";
-// import STMLogin from "./STMLogin.png";
+import evimLoginBackground from "@/assets/images/evim-login-background.jpg";
+import stmLogo from "@/assets/images/logo-stm-login.png";
+import STMLogin from "@/assets/images/STMLogin.png";
 import { PaperTextInputGroup } from "./PaperTextInputGroup";
 
 const { width, height } = Dimensions.get("window");
@@ -45,77 +45,6 @@ export default function LoginUi(props: any) {
     </>
   );
 }
-
-const LoginUiOld = ({
-  email,
-  setEmail,
-  password,
-  setPassword,
-  showPassword,
-  setShowPassword,
-  handleLogin,
-}: any) => {
-  return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.inner}>
-          {/* <ImageBackground
-            source={stmLogo}
-            style={styles.stmLogo}
-          ></ImageBackground> */}
-          {/* <ImageBackground
-            source={evimLoginBackground}
-            style={styles.background}
-          > */}
-            <View style={styles.container2}>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Email"
-                  value={email}
-                  onChangeText={setEmail}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <View style={styles.passwordContainer}>
-                  <TextInput
-                    style={styles.passwordInput}
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry={!showPassword}
-                    autoCapitalize="none"
-                  />
-                  <TouchableOpacity
-                    style={styles.eyeIcon}
-                    onPress={() => setShowPassword(!showPassword)}
-                  >
-                    <FontAwesome
-                      name={showPassword ? "eye-slash" : "eye"}
-                      size={20}
-                      color="gray"
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <TouchableOpacity
-                style={styles.loginButton}
-                onPress={handleLogin}
-              >
-                <Text style={styles.loginButtonText}>Login</Text>
-              </TouchableOpacity>
-            </View>
-          {/* </ImageBackground> */}
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
-  );
-};
 
 const LoginUiNew = ({
   email,
@@ -131,161 +60,172 @@ const LoginUiNew = ({
   loginMsgTitle,
   loginMsg,
   debugMsg,
+  handleBlur,
+  handleSubmit,
+  errors,
+  touched,
 }: any) => {
   return (
-    <ScrollView>
-    <KeyboardAvoidingView
-      style={[styles.container, { position: "relative" }]}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      {/* <ImageBackground
-        source={evimLoginBackground}
-        style={[styles.background, { opacity: 0.3, position: "absolute" }]}
-      ></ImageBackground> */}
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        {/* <ImageBackground
-        source={stmLogo}
-        style={styles.stmLogo}
-      ></ImageBackground> */}
-        {/* <ImageBackground
-          source={STMLogin}
-          style={{
-            width: 674 / 2.5,
-            height: 352 / 2.5,
-            marginBottom: 20,
-          }}
-        ></ImageBackground> */}
-
-        <LoginMessage
-          isInvalidCred={isInvalidCred}
-          loginMsgTitle={loginMsgTitle}
-          loginMsg={loginMsg}
-        />
-        <View
-          style={{
-            maxWidth: width - 16 - 16,
-            alignSelf: "center",
-          }}
-        >
-          <View style={{ marginBottom: 15 }} />
-          <PaperTextInputGroup
-            title="Email"
-            value={email}
-            onChangeText={setEmail}
-          />
-          <View style={{ marginBottom: 15 }} />
-          <PaperTextInputGroup
-            title="Password"
-            value={password}
-            isPassword
-            onChangeText={setPassword}
-            showPassword={showPassword}
-            setShowPassword={setShowPassword}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              console.log("Forgot Password?");
-              router.push("/forgot-password");
-            }}
-            style={styles.forgotPassword}
-          >
-            <PaperText variant="titleMedium">Forgot Password?</PaperText>
-          </TouchableOpacity>
-        </View>
-        <View style={{ marginBottom: 10 }} />
-        <Button
-          mode="contained"
-          style={[
-            {
-              // width: width - 16,
-              marginTop: 20,
-              backgroundColor: "#2D2A69",
-              width: 295,
-              height: 40,
-              borderRadius: 12,
-              opacity: !checkTnC ? 0.7 : 1,
-            },
-          ]}
-          onPress={() => {
-            handleLogin();
-          }}
-          disabled={!checkTnC}
-          textColor="#F8F21D"
-        >
-          <PaperText
+    <View style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        style={[styles.container, { position: "relative" }]}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ImageBackground
+          source={evimLoginBackground}
+          style={[styles.background, { opacity: 0.3, position: "absolute" }]}
+        ></ImageBackground>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          {/* <ImageBackground
+            source={stmLogo}
+            style={styles.stmLogo}
+          ></ImageBackground> */}
+          <ImageBackground
+            source={STMLogin}
             style={{
-              fontSize: 16,
-              color: "#F8F21D",
-              fontWeight: "800",
-              // backgroundColor: 'red'
+              width: 674 / 2.5,
+              height: 352 / 2.5,
+              marginBottom: 20,
             }}
-          >
-            Login
-          </PaperText>
-        </Button>
-        <TouchableRipple
-          onPress={() => {
-            // setCheckTnC(!checkTnC)
-            router.push("/tnc");
-          }}
-          style={{ marginTop: 10 }}
-        >
+          ></ImageBackground>
+
+          <LoginMessage
+            isInvalidCred={isInvalidCred}
+            loginMsgTitle={loginMsgTitle}
+            loginMsg={loginMsg}
+          />
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              paddingVertical: 8,
-              paddingHorizontal: 16,
               maxWidth: width - 16 - 16,
+              alignSelf: "center",
             }}
           >
-            <View
-              // pointerEvents="box-none"
+            <View style={{ marginBottom: 15 }} />
+            <PaperTextInputGroup
+              title="Email"
+              value={email}
+              onChangeText={setEmail}
+              error={errors.email}
+              touched={touched.email}
+            />
+            <View style={{ marginBottom: 15 }} />
+            <PaperTextInputGroup
+              title="Password"
+              value={password}
+              isPassword
+              onChangeText={setPassword}
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+              error={errors.password}
+              touched={touched.password}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                console.log("Forgot Password?");
+                router.push("/forgot-password");
+              }}
+              style={styles.forgotPassword}
+            >
+              <PaperText variant="titleMedium">Forgot Password?</PaperText>
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginBottom: 10 }} />
+          {/* <Text>error email:{errors.email}</Text>
+          <Text>error password:{errors.password}</Text> */}
+          <Button
+            mode="contained"
+            style={[
+              {
+                // width: width - 16,
+                marginTop: 20,
+                backgroundColor: "#2D2A69",
+                width: 295,
+                height: 40,
+                borderRadius: 12,
+                opacity: !checkTnC ? 0.7 : 1,
+              },
+            ]}
+            onPress={() => {
+              // handleLogin();
+              handleSubmit();
+            }}
+            disabled={!checkTnC}
+            textColor="#F8F21D"
+          >
+            <PaperText
               style={{
-                margin: 8,
+                fontSize: 16,
+                color: "#F8F21D",
+                fontWeight: "800",
+                // backgroundColor: 'red'
               }}
             >
-              <Checkbox
-                color="#2D2A69"
-                status={checkTnC ? "checked" : "unchecked"}
-                onPress={() => setCheckTnC(!checkTnC)}
-              />
-            </View>
-            <PaperText variant="bodyMedium">
-              I've read and agree with the{" "}
-              <PaperText variant="bodyMedium" style={{ fontWeight: "bold" }}>
-                Terms and Conditions
-              </PaperText>{" "}
-              and the{" "}
-              <PaperText variant="bodyMedium" style={{ fontWeight: "bold" }}>
-                Privacy Policy
-              </PaperText>
-              .
+              Login
             </PaperText>
-          </View>
-        </TouchableRipple>
-      </View>
-    </KeyboardAvoidingView>
-    <View>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>asdf</Text>
-      <Text>{debugMsg}</Text>
+          </Button>
+          <TouchableRipple
+            onPress={() => {
+              // setCheckTnC(!checkTnC)
+              router.push("/tnc");
+            }}
+            style={{ marginTop: 10 }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                paddingVertical: 8,
+                paddingHorizontal: 16,
+                maxWidth: width - 16 - 16,
+              }}
+            >
+              <View
+                // pointerEvents="box-none"
+                style={{
+                  margin: 8,
+                }}
+              >
+                <Checkbox
+                  color="#2D2A69"
+                  status={checkTnC ? "checked" : "unchecked"}
+                  onPress={() => setCheckTnC(!checkTnC)}
+                />
+              </View>
+              <PaperText variant="bodyMedium">
+                I've read and agree with the{" "}
+                <PaperText variant="bodyMedium" style={{ fontWeight: "bold" }}>
+                  Terms and Conditions
+                </PaperText>{" "}
+                and the{" "}
+                <PaperText variant="bodyMedium" style={{ fontWeight: "bold" }}>
+                  Privacy Policy
+                </PaperText>
+                .
+              </PaperText>
+            </View>
+          </TouchableRipple>
+        </View>
+      </KeyboardAvoidingView>
+      {/* <View>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>asdf</Text>
+        <Text>{debugMsg}</Text>
+      </View> */}
     </View>
-    </ScrollView>
   );
 };
 

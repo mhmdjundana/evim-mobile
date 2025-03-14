@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { login2, retrieveEmailPassword, storeAccessTokenHard } from "@/fetch/auth";
+import { login, retrieveEmailPassword, storeAccessTokenHard } from "@/fetch/auth";
 // import { useForceRefresh } from "@/hooks/useForceRefresh";
 import { router } from "expo-router";
 import LoginUi from "@/components/auth/LoginUI";
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string()
+    // .min(2, 'Too Short!')
+    .required('Required'),
+});
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,11 +24,12 @@ const Login = () => {
   const [loginMsg, setLoginMsg] = useState('')
   const [debugMsg, setDebugMsg] = useState('')
 
-  const handleLogin = async () => {
+  const handleLogin = async ({email, password}: any) => {
     // console.log("Login");
     try {
-      const res: any = await login2(email, password, setDebugMsg);
-      console.log(res, 'login response')
+      // const res: any = await login2(email, password, setDebugMsg);
+      const res: any = await login(email, password);
+      // console.log(res, 'login response')
       if (res?.data?.access_token) {
         // forceRefresh();
         setTimeout(() => {
@@ -44,7 +54,7 @@ const Login = () => {
     }
     // resetKeychain()
   };
- 
+
   useEffect(() => {
     const rl = async () => {
       const { email: emailR, password: passwordR }: any = await retrieveEmailPassword()
@@ -52,25 +62,51 @@ const Login = () => {
       setPassword(passwordR)
     }
     rl()
-    storeAccessTokenHard()
+    // storeAccessTokenHard()
   }, [])
 
   return (
-    <LoginUi
-      email={email}
-      setEmail={setEmail}
-      password={password}
-      setPassword={setPassword}
-      showPassword={showPassword}
-      setShowPassword={setShowPassword}
-      handleLogin={handleLogin}
-      checkTnC={checkTnC}
-      setCheckTnC={setCheckTnC}
-      isInvalidCred={isInvalidCred}
-      loginMsgTitle={loginMsgTitle}
-      loginMsg={loginMsg}
-      debugMsg={debugMsg}
-    />
+    <Formik
+      initialValues={{
+        email: email,
+        password: password
+      }}
+      enableReinitialize
+      validationSchema={LoginSchema}
+      onSubmit={(values: any) => {
+        console.log(values)
+        handleLogin({email: values.email, password: values.password})
+      }}
+    >
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+      }) => (
+        <LoginUi
+          email={values.email}
+          setEmail={handleChange('email')}
+          password={values.password}
+          setPassword={handleChange('password')}
+          handleBlur={handleBlur}
+          handleSubmit={handleSubmit}
+          errors={errors}
+          touched={touched}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+          handleLogin={handleLogin}
+          checkTnC={checkTnC}
+          setCheckTnC={setCheckTnC}
+          isInvalidCred={isInvalidCred}
+          loginMsgTitle={loginMsgTitle}
+          loginMsg={loginMsg}
+          debugMsg={debugMsg}
+        />
+      )}
+    </Formik>
   );
 };
 

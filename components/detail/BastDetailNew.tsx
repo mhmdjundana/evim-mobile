@@ -36,10 +36,11 @@ export default function BastDetailNew() {
     </View>
   )
   const [data, setData] = useState<any>([]);
-  // console.log(data, "Data bast view")
+  console.log(data, "Data bast view")
   const [bastData, setBastData] = useState<any>([])
-  // console.log(bastData, "bastData")
+  // console.log(bastData?.details, "bastData")
   const [historyData, setHistoryData] = useState<any>([]);
+  const [isApproveItems, setIsApproveItems] = useState<any>(false);
 
   // const getDataById = async () => {
   //   const ids = id || 367
@@ -66,25 +67,35 @@ export default function BastDetailNew() {
   return (
     <View style={{ backgroundColor: 'white' }}>
       <HeaderDetail title="BAST Detail" status={bastData?.approval_status?.status_name} statusColor={bastData?.approval_status?.status_color} />
-      <Text>{bastData?.id}</Text>
+      {/* <Text>{bastData?.id}</Text> */}
       <View style={{ marginTop: 15 }}></View>
       <DocumentDetailNew data={bastData} />
       <View style={{ marginTop: 10 }}></View>
       <DocumentDetailBastSapEditFilesNew data={bastData} />
       <View style={{ marginTop: 25 }}></View>
-      <DetailTableNew data={bastData} permission={{
-        description: false,
-        uom_name: false,
-        qty: false,
-        currency_code: false,
-        unit_price: false,
-        total_value: false,
-        is_reimbursement: false,
-        reason: false,
-        comment: false,
-        // action: true,
-      }} />
-      <ApprovalAction bastData={bastData} id={id} userData={userData} router={router} />
+      <DetailTableNew
+        data={bastData}
+        setData={setBastData}
+        setIsApproveItems={setIsApproveItems}
+        permission={{
+          description: false,
+          uom_name: false,
+          qty: false,
+          currency_code: false,
+          unit_price: false,
+          total_value: false,
+          is_reimbursement: false,
+          reason: false,
+          comment: false,
+          // action: true,
+        }} />
+      <ApprovalAction
+        bastData={bastData}
+        id={id}
+        userData={userData}
+        router={router}
+        isApproveItems={isApproveItems}
+      />
       <DetailHistoryNew data={historyData} />
       <View style={{ marginTop: 60 }}>
       </View>

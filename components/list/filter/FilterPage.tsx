@@ -1,14 +1,15 @@
 import { InputSelect, InputText } from '@/components/form/input';
+import { FontAwesome6 } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-const FilterPage = ({ 
-  listState = {}, 
-  setIsRenderFilter, 
-  setApplyFilter, 
-  statusOptions = [] 
+const FilterPage = ({
+  listState = {},
+  setIsRenderFilter,
+  setApplyFilter,
+  statusOptions = []
 }: any) => {
 
   const { columnFilters, setColumnFilters } = listState
@@ -20,9 +21,28 @@ const FilterPage = ({
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <TouchableOpacity style={styles.header} onPress={() => setIsRenderFilter(false)}>
+      <View
+        style={{
+          width: "100%",
+          paddingHorizontal: 10,
+          // justifyContent: "flex-end",
+          alignItems: "flex-end",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => setIsRenderFilter(false)}
+        >
+          <FontAwesome6
+            name="xmark"
+            size={45}
+            color="#757575"
+            weight="bold"
+          />
+        </TouchableOpacity>
+      </View>
+      {/* <TouchableOpacity style={styles.header} onPress={() => setIsRenderFilter(false)}>
         <Text style={styles.title}>Back</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View style={styles.header}>
         <Text style={styles.title}>Filter & Sort</Text>
       </View>

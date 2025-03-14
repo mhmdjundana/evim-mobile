@@ -6,7 +6,7 @@ import TopBarLayout from '@/components/layout/TopBarLayout';
 
 const DetailInvoice = () => {
   return (
-    <TopBarLayout>\
+    <TopBarLayout>
       <ScrollView
         style={{
           // flex: 1,
@@ -25,7 +25,6 @@ const DetailInvoice = () => {
         <DetailInvoiceNew />
       </ScrollView >
     </TopBarLayout>
-
   );
 };
 

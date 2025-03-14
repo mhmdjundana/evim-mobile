@@ -5,14 +5,22 @@ import { bastDetailItemDataKeys } from './data/bastDetailData';
 import detail from '@/app/bast/detail';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Or your preferred icon library
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
+import { displayPrice } from '@/utils/utils';
 
 const { width } = Dimensions.get('window');
 
-const DetailTableNew = ({ data, setData, style, uomList, permission }: any) => {
+const DetailTableNew = ({
+  data,
+  setData,
+  style,
+  uomList,
+  permission,
+  setIsApproveItems
+}: any) => {
   // console.log(data, 'DetailTableNew data')
   const { details } = data
   const [details2, setDetails2] = useState([])
-  const [uomList2, setUomList2] = useState([])
+  // const [uomList2, setUomList2] = useState([])
 
   useEffect(() => {
     const d: any = []
@@ -22,21 +30,21 @@ const DetailTableNew = ({ data, setData, style, uomList, permission }: any) => {
         for (let j = 0; j < e.length; j++) {
           e[j].value = details[i]?.[e[j].name]
         }
-        console.log(e)
+        // console.log(e)
         d.push(e)
       }
       setDetails2(d)
     }
-    setUomList2(uomList?.map((item: any) => {
-      return {
-        ...item,
-        label: item.uom_name,
-        value: item.id
-      }
-    }))
+    // setUomList2(uomList?.map((item: any) => {
+    //   return {
+    //     ...item,
+    //     label: item.uom_name,
+    //     value: item.id
+    //   }
+    // }))
   }, [
     details,
-    uomList
+    // uomList
   ])
 
   // return (
@@ -64,7 +72,7 @@ const DetailTableNew = ({ data, setData, style, uomList, permission }: any) => {
               <View style={styles.row}>
                 <Text style={styles.label}>QTY</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.qty}</Text>
+                <Text style={styles.value}> {displayPrice(item.qty)}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Currency</Text>
@@ -74,12 +82,12 @@ const DetailTableNew = ({ data, setData, style, uomList, permission }: any) => {
               <View style={styles.row}>
                 <Text style={styles.label}>Unit Price</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.unit_price}</Text>
+                <Text style={styles.value}> {displayPrice(item.unit_price)}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Total Value</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.total_value}</Text>
+                <Text style={styles.value}> {displayPrice(item.total_value)}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Is Reimbursement</Text>
@@ -97,20 +105,87 @@ const DetailTableNew = ({ data, setData, style, uomList, permission }: any) => {
                 <Text style={styles.value}> {item.comment}</Text>
               </View>
               {
-                (data?.action?.is_approve || data?.action?.is_reject) &&
+                ((data?.action?.is_approve || data?.action?.is_reject) && data?.action?.is_approve_item) &&
                 <View style={styles.buttonContainer}>
                   {
                     data?.action?.is_approve &&
-                    <TouchableOpacity style={[styles.approveButton, styles.approvalButton]} onPress={() => { }}>
-                      <FontAwesome6 name="check" size={24} color="white" />
+                    <TouchableOpacity
+                      style={[
+                        styles.approveButton,
+                        styles.approvalButton,
+                        {
+                          // opacity: item?.checking_status === '1' ? 0.5 : 1,
+                          backgroundColor: item?.checking_status === '1' ? '#007E7A' : 'white',
+                          borderColor: '#007E7A',
+                          borderWidth: 3
+                        }]}
+                      onPress={() => {
+                        console.log("approve")
+                        setData((prev: any) => {
+                          return {
+                            ...prev,
+                            details: prev.details?.map((item: any, i: number) => {
+                              if (i === idx) {
+                                return {
+                                  ...item,
+                                  checking_status: '1'
+                                }
+                              } else {
+                                return item
+                              }
+                            })
+                          }
+                        })
+                        setIsApproveItems(true)
+                      }}
+                      disabled={item?.checking_status === '1'}
+                    >
+                      <FontAwesome6
+                        name="check"
+                        size={24}
+                        color={item?.checking_status === '1' ? 'white' : '#007E7A'}
+                      />
                     </TouchableOpacity>
                   }
                   {
                     data?.action?.is_reject &&
-                    <TouchableOpacity style={[styles.rejectButton, styles.approvalButton]} onPress={() => { }}>
-                      <FontAwesome6 name="xmark" size={24} color="white" />
+                    <TouchableOpacity
+                      style={[
+                        styles.rejectButton,
+                        styles.approvalButton,
+                        {
+                          // opacity: item?.checking_status === '2' ? 0.5 : 1,
+                          backgroundColor: item?.checking_status === '2' ? '#E53935' : 'white',
+                          borderColor: '#E53935',
+                          borderWidth: 3
+                        }]}
+                      onPress={() => {
+                        console.log("reject")
+                        setData((prev: any) => {
+                          return {
+                            ...prev,
+                            details: prev.details?.map((item: any, i: number) => {
+                              if (i === idx) {
+                                return {
+                                  ...item,
+                                  checking_status: '2'
+                                }
+                              } else {
+                                return item
+                              }
+                            })
+                          }
+                        })
+                        setIsApproveItems(true)
+                      }}
+                      disabled={item?.checking_status === '2'}
+                    >
+                      <FontAwesome6
+                        name="xmark"
+                        size={24}
+                        color={item?.checking_status === '2' ? 'white' : '#E53935'}
+                      />
                     </TouchableOpacity>
-
                   }
                 </View>
               }
@@ -198,41 +273,41 @@ const DetailTableNew = ({ data, setData, style, uomList, permission }: any) => {
                   <Text style={[styles.cell, styles.description]}>{item.description}</Text>
               }
               {
-                permission.uom_name ?
-                  <View style={[styles.uom]}>
-                    <RnPicker
-                      options={
-                        //   [
-                        //   { label: 'Unit', value: 'unit' },
-                        //   { label: 'Month', value: 'month' },
-                        //   { label: 'Hour', value: 'hour' },
-                        //   { label: 'Day', value: 'day' },
-                        // ]
-                        uomList2
-                      }
-                      value={item.uom?.id}
-                      setValue={(value: any) => {
-                        setData((prev: any) => {
-                          return {
-                            ...prev,
-                            details: prev.details?.map((item: any, i: number) => {
-                              if (i === idx) {
-                                return {
-                                  ...item,
-                                  uom: uomList2.find((item: any) => item.value === value)
-                                }
-                              } else {
-                                return item
-                              }
-                            })
-                          }
-                        })
-                      }}
-                    />
-                  </View>
-                  // <TextInput style={[styles.editCell, styles.uom]} defaultValue={item.uom?.uom_name} />
-                  :
-                  <Text style={[styles.cell, styles.uom]}>{item.uom?.uom_name}</Text>
+                // permission.uom_name ?
+                //   <View style={[styles.uom]}>
+                //     <RnPicker
+                //       options={
+                //         //   [
+                //         //   { label: 'Unit', value: 'unit' },
+                //         //   { label: 'Month', value: 'month' },
+                //         //   { label: 'Hour', value: 'hour' },
+                //         //   { label: 'Day', value: 'day' },
+                //         // ]
+                //         uomList2
+                //       }
+                //       value={item.uom?.id}
+                //       setValue={(value: any) => {
+                //         setData((prev: any) => {
+                //           return {
+                //             ...prev,
+                //             details: prev.details?.map((item: any, i: number) => {
+                //               if (i === idx) {
+                //                 return {
+                //                   ...item,
+                //                   uom: uomList2.find((item: any) => item.value === value)
+                //                 }
+                //               } else {
+                //                 return item
+                //               }
+                //             })
+                //           }
+                //         })
+                //       }}
+                //     />
+                //   </View>
+                //   // <TextInput style={[styles.editCell, styles.uom]} defaultValue={item.uom?.uom_name} />
+                //   :
+                //   <Text style={[styles.cell, styles.uom]}>{item.uom?.uom_name}</Text>
               }
               {/* <Text style={[styles.cell, styles.uom]}>{item.uom?.uom_name}</Text> */}
               <Text style={[styles.cell, styles.qty]}>{item.qty}</Text>

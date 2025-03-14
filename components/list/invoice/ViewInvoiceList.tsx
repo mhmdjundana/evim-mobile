@@ -5,6 +5,7 @@ import FilterBar from "../filter/FilterBar";
 import TopBarLayout from "@/components/layout/TopBarLayout";
 import FilterBast from "../filter/FilterBast";
 import ListCardInvoice from "./ListCardInvoice";
+import { EmptyList } from "../EmptyList";
 
 const { height } = Dimensions.get('window');
 
@@ -66,6 +67,8 @@ const ViewInvoiceList = ({
                 keyExtractor={item => item.id.toString()}
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.5}
+                // ListFooterComponent={isLoading ? <View style={{ height: 100 }} /> : null}
+                ListEmptyComponent={<EmptyList />}
               />
             </>
           )

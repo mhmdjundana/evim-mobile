@@ -6,12 +6,16 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { router } from "expo-router";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { resetTokenKeychain } from "@/fetch/auth";
 import { useCompanyMapping, useGetUserData } from "@/hooks/useGetUserData";
 import { menuNotification } from "@/fetch/notification";
+import { Card } from "react-native-paper";
+
+const { width, height } = Dimensions.get("window");
 
 const modules = [
   {
@@ -93,7 +97,9 @@ const MenuContainer = () => {
         <DisplayMenu
           userData={userData}
           notification={notification}
-          setDisplay={setDisplay} />
+          setDisplay={setDisplay}
+          modules={modulesFilter}
+        />
       )
     case 'changeCompany':
       return (
@@ -108,7 +114,7 @@ const MenuContainer = () => {
 };
 
 const MenuItem = ({ modules, notification }: any) => {
-  console.log('asdf', notification)
+  console.log('notification: ', notification)
   return (
     <View style={styles.menu}>
       {modules.map((el: any, i: number) => {
@@ -139,9 +145,23 @@ const MenuItem = ({ modules, notification }: any) => {
   );
 };
 
-const DisplayMenu = ({ userData, setDisplay, notification }: any) => {
+const DisplayMenu = ({ userData, setDisplay, notification, modules }: any) => {
+  const { currentCompany } = useCompanyMapping()
+
   return (
-    <ScrollView style={{ width: "100%" }}>
+    <ScrollView
+      style={{
+        // width: width,
+      }}
+      contentContainerStyle={{
+        // alignItems: "center",
+        // justifyContent: "center",
+        width: width,
+        // minHeight: height,
+        minHeight: "100%",
+        // flex: 1
+      }}
+    >
       <View style={styles.container}>
         {/* <View style={[styles.header, { backgroundColor: "#e0e0e0" }]}>
           <Image
@@ -154,25 +174,66 @@ const DisplayMenu = ({ userData, setDisplay, notification }: any) => {
           </TouchableOpacity>
         </View> */}
 
-        <View style={styles.companyInfo}>
-          <Image
-            // source={require('@/assets/images/vei-logo-large.png')}
-            source={require("@/assets/images/stm-logo-large.png")}
-            style={{ width: "100%", height: 100 }}
-            resizeMode="contain"
-          />
+        <View
+          style={{
+            width: "100%",
+            marginTop: 50
+          }}
+        >
+          {currentCompany?.company_initial === 'STM' ?
+            (<TouchableOpacity
+              onPress={() => setDisplay('changeCompany')}
+
+              style={styles.companyInfo}>
+              <Image
+                // source={require('@/assets/images/vei-logo-large.png')}
+                source={require("@/assets/images/stm-logo-large.png")}
+                style={{ width: "100%", height: 100 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            )
+            : currentCompany?.company_initial === 'VEI' ?
+              (
+                <TouchableOpacity
+                  onPress={() => setDisplay('changeCompany')}
+
+                  style={styles.companyInfo}>
+                  <Image
+                    // source={require('@/assets/images/vei-logo-large.png')}
+                    source={require("@/assets/images/vei-logo-large.png")}
+                    style={{ width: "100%", height: 100 }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              )
+              : <View
+                style={[styles.companyInfo, { height: 100 }]}>
+              </View>
+          }
         </View>
 
-        <View>
-          <Text>{userData?.data?.email}</Text>
-        </View>
+        <Card style={{
+          minWidth: "50%",
+          marginVertical: 16,
+          alignSelf: "center",
+          padding: 10,
+        }}>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 16,
+              fontWeight: "500",
+            }}
+          >{userData?.data?.email}</Text>
+        </Card>
 
-        <TouchableOpacity style={styles.changeCompanyButton}
+        {/* <TouchableOpacity style={styles.changeCompanyButton}
           onPress={() => setDisplay('changeCompany')}
         >
           <Text style={styles.changeCompanyButtonText}>Change Company</Text>
           <View style={styles.triangle} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <MenuItem
           // modules={modulesFilter}
@@ -217,39 +278,127 @@ const DisplayChangeCompany = ({ companies, currentCompany, changeCompany, setDis
   const logo = currentCompany?.company_initial === 'STM' ? stmLogo : veiLogo
 
   return (
-    <View>
-      <TouchableOpacity onPress={() => setDisplay('menu')}>
-        <Text>Back</Text>
-      </TouchableOpacity>
-
-      <Text>Current Company:</Text>
-      {logo}
-
-      <Text>Choose Company:</Text>
-      {companies.map((el: any) => {
-        return (
-          <TouchableOpacity
-            key={el.company_code}
-            onPress={() => {
-              changeCompany(el)
-              setDisplay('menu')
+    <ScrollView
+      style={{
+        // width: width,
+      }}
+      contentContainerStyle={{
+        // alignItems: "center",
+        // justifyContent: "center",
+        width: width,
+        // minHeight: height,
+        minHeight: "100%",
+        backgroundColor: "#fff",
+      }}
+    >
+      {/* <Card style={{
+        minWidth: "20%",
+        marginVertical: 16,
+        alignSelf: "flex-start",
+        padding: 10,
+        // backgroundColor: "#fff",
+        backgroundColor: "#ff4d4d",
+      }}>
+        <TouchableOpacity onPress={() => setDisplay('menu')}>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 16,
+              fontWeight: "500",
+              color: "#fff",
             }}
+          >Back</Text>
+        </TouchableOpacity>
+      </Card> */}
+      <View
+        style={{
+          width: "100%",
+          paddingHorizontal: 30,
+          // justifyContent: "flex-end",
+          alignItems: "flex-end",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => setDisplay('menu')}
+        >
+          <FontAwesome6
+            name="xmark"
+            size={45}
+            color="#757575"
+            weight="bold"
+          />
+        </TouchableOpacity>
+      </View>
+
+      {/* <Card style={{
+        minWidth: "50%",
+        marginVertical: 16,
+        alignSelf: "center",
+        padding: 10,
+      }}>
+        <Text
+          style={{
+            textAlign: "center",
+            fontSize: 16,
+            fontWeight: "500",
+          }}
+        >Currently in:</Text>
+      </Card>
+      {logo} */}
+
+      <Card style={{
+        minWidth: "50%",
+        marginVertical: 16,
+        alignSelf: "center",
+        padding: 10,
+      }}>
+        <Text
+          style={{
+            textAlign: "center",
+            fontSize: 16,
+            fontWeight: "500",
+          }}
+        >Login to:</Text>
+      </Card>
+      {companies.map((el: any, i: number) => {
+        return (
+          <Card
+            style={{
+              minWidth: "50%",
+              marginVertical: 16,
+              alignSelf: "center",
+              // padding: 10,
+              // backgroundColor: "#fff",
+              backgroundColor: currentCompany?.company_initial === el.company_initial ? "#ccc" : "#fff",
+            }}
+            key={i}
           >
-            {el.company_initial === 'STM' ?
-              stmLogo
-              :
-              veiLogo
-            }
-          </TouchableOpacity>
+            <TouchableOpacity
+              key={el.company_code}
+              onPress={() => {
+                changeCompany(el)
+                setDisplay('menu')
+              }}
+            >
+              {
+                el.company_initial === 'STM' ?
+                  stmLogo
+                  :
+                  el.company_initial === 'VEI' ?
+                    veiLogo : null
+              }
+            </TouchableOpacity>
+          </Card>
         )
       })}
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    minHeight: "100%",
     backgroundColor: "#fff", // Set your desired background color
     // padding: 20, // Adjust padding as needed
   },
@@ -317,7 +466,7 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 15,
     // borderBottomWidth: 1,
     // borderBottomColor: "#eee",
@@ -358,10 +507,12 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   logoutButton: {
-    backgroundColor: "#dc3545", // Red color
+    backgroundColor: "#545454", // Red color
     padding: 15,
     borderRadius: 5,
     alignItems: "center",
+    alignSelf: "center",
+    width: "80%",
   },
   logoutButtonText: {
     color: "white",

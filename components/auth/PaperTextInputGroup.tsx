@@ -23,12 +23,15 @@ const PaperTextInputGroup = ({
   isPassword,
   showPassword,
   setShowPassword,
+  error,
+  touched,
 }: any) => {
   return (
     <View
       style={
         {
           // backgroundColor: 'red'
+          position: 'relative'
         }
       }
     >
@@ -36,7 +39,8 @@ const PaperTextInputGroup = ({
       <PaperTextInput
         mode="outlined"
         style={{
-          // margin: 8,
+          margin: 0,
+          // marginBottom: 10,
           width: width - 16 * 6,
         }}
         dense
@@ -58,7 +62,19 @@ const PaperTextInputGroup = ({
             />
           ))
         }
+        error={touched && error}
       />
+      {error && <HelperText
+        type="error"
+        visible={touched && error}
+        style={{
+          // position: 'absolute',
+          // top: 40
+          margin: 0
+        }}
+      >
+        {error}
+      </HelperText>}
     </View>
   );
 };
