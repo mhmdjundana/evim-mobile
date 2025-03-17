@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FilterPage from './FilterPage';
+import FilterPageUi from './FilterPageUi';
 
 const statusOptions = [ // Define your status options
   { label: 'All', value: '' },
@@ -26,13 +26,14 @@ const statusOptions = [ // Define your status options
   // Add more status options as needed
 ];
 
-const FilterBast = ({ listState = {}, setIsRenderFilter, setApplyFilter }: any) => {
-  const { columnFilters, setColumnFilters } = listState
-  console.log(columnFilters, 'columnFilters')
-  const [status, setStatus] = useState('');
+const FilterBast = ({
+  listState = {},
+  setIsRenderFilter,
+  setApplyFilter
+}: any) => {
 
   return (
-    <FilterPage
+    <FilterPageUi
       listState={listState}
       setIsRenderFilter={setIsRenderFilter}
       setApplyFilter={setApplyFilter}

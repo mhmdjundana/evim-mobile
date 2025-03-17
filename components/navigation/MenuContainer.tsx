@@ -225,7 +225,7 @@ const DisplayMenu = ({ userData, setDisplay, notification, modules }: any) => {
               fontSize: 16,
               fontWeight: "500",
             }}
-          >{userData?.data?.email}</Text>
+          >{userData?.data?.name}</Text>
         </Card>
 
         {/* <TouchableOpacity style={styles.changeCompanyButton}

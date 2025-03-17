@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FilterPage from './FilterPage';
+import FilterPage from './FilterPageUi';
 
 const statusOptions = [ // Define your status options
   { label: 'All', value: '' },

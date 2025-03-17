@@ -60,12 +60,18 @@ const ListCard = ({
           <Text style={styles.colon}>:</Text>
           <Text style={styles.value}> {displayPrice(data.grand_total)}</Text>
         </View>
-        <View style={styles.row}>
+        <View style={[styles.row, {
+          // backgroundColor: 'red',
+          alignItems: 'center'
+        }]}>
           <Text style={styles.label}>Status</Text>
           <Text style={styles.colon}>:</Text>
           <Text style={styles.value}> </Text>
           <View style={styles.statusContainer}>
-            <TouchableOpacity style={[styles.statusButton, { backgroundColor: data.approval_status?.status_color ? data.approval_status?.status_color : "#c5c5c5" }]}>
+            <TouchableOpacity
+              style={[styles.statusButton, {
+                backgroundColor: data.approval_status?.status_color ? data.approval_status?.status_color : "#c5c5c5"
+              }]}>
               <Text style={styles.statusText}>{data.approval_status?.status_name}</Text>
             </TouchableOpacity>
           </View>
@@ -139,10 +145,11 @@ const styles = StyleSheet.create({
   statusContainer: {
     alignItems: "center",
     marginVertical: 5,
+    marginLeft: 10
   },
   statusButton: {
     padding: 8,
-    borderRadius: 12,
+    borderRadius: 25,
     minWidth: 100,
     alignItems: "center",
   },

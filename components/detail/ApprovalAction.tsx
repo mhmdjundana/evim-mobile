@@ -9,7 +9,14 @@ export default function ApprovalAction({
   isApproveItems
 }: any) {
   return (
-    <>
+    <View
+      style={{
+        marginVertical: 5,
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        width: "100%",
+      }}
+    >
       {
         // true && (
         // (userData?.data?.modules?.Bast?.is_e === "1" ) && (
@@ -57,7 +64,7 @@ export default function ApprovalAction({
                     })
                   }}
                 />}
-                {(bastData?.action?.is_approve && !bastData?.details.some((item: any) => item?.checking_status === '2'))  && <ActionButton
+                {(bastData?.action?.is_approve && !bastData?.details.some((item: any) => item?.checking_status === '2')) && <ActionButton
                   type="approve"
                   onPress={() => {
                     const payload: any = [{
@@ -93,6 +100,6 @@ export default function ApprovalAction({
           }
         )()
       }
-    </>
+    </View>
   )
 }

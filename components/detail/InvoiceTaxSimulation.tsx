@@ -1,4 +1,4 @@
-import { displayPrice } from '@/utils/utils';
+import { displayPrice, displayStringArray } from '@/utils/utils';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -24,13 +24,13 @@ const InvoiceTaxSimulation = ({ data }: any) => {
           </View>
 
           <View style={styles.row}>
-            <Text style={styles.value}>{data?.gl_no}</Text>
-            <Text style={styles.value}>{data?.wbs_no}</Text>
+            <Text style={styles.value}>{displayStringArray(data?.gl_no)}</Text>
+            <Text style={styles.value}>{displayStringArray(data?.wbs_no)}</Text>
           </View>
 
           <View style={styles.row}>
-            <Text style={styles.description}>Consultants/Management and something</Text>
-            <Text style={styles.description2}>Project Hu'u - Top WBS something something</Text>
+            <Text style={styles.description}>{data?.gl?.reduce((acc: any, item: any, index: any) => acc + item?.gl_account + (index < data?.gl?.length - 1 ? ', ' : ''), '')}</Text>
+            <Text style={styles.description2}>{data?.wbs?.reduce((acc: any, item: any, index: any) => acc + item?.wbs_name + (index < data?.wbs?.length - 1 ? ', ' : ''), '')}</Text>
           </View>
 
           {/* <View style={styles.row}>
@@ -50,7 +50,6 @@ const InvoiceTaxSimulation = ({ data }: any) => {
             <Text style={styles.sectionTitle}>VAT</Text>
             <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.vat_amount)}</Text>
           </View>
-
           <View style={styles.row}>
             <Text style={styles.label}>GL No.</Text>
             <Text style={styles.percentage}>{data?.vat?.wht_rate} %</Text>
@@ -61,7 +60,7 @@ const InvoiceTaxSimulation = ({ data }: any) => {
           </View>
 
           <View style={styles.row}>
-            <Text style={styles.description}>Taxes Payable - VAT Final</Text>
+            <Text style={styles.description}>{data?.vat?.gl?.gl_name}</Text>
           </View>
         </View>
 
@@ -71,7 +70,6 @@ const InvoiceTaxSimulation = ({ data }: any) => {
             <Text style={styles.sectionTitle}>WHT</Text>
             <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.wht_amount)}</Text>
           </View>
-
           <View style={styles.row}>
             <Text style={styles.label}>GL No.</Text>
             <Text style={styles.percentage}>{data?.wht?.wht_rate} %</Text>
@@ -82,7 +80,7 @@ const InvoiceTaxSimulation = ({ data }: any) => {
           </View>
 
           <View style={styles.row}>
-            <Text style={styles.description}>Taxes Payable - W/H Tax Final</Text>
+            <Text style={styles.description}>{data?.wht?.gl?.gl_name}</Text>
           </View>
         </View>
 
@@ -96,6 +94,10 @@ const InvoiceTaxSimulation = ({ data }: any) => {
                   <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(item?.amount)}</Text>
                 </View>
                 <View style={styles.row}>
+                  <Text style={styles.label}>Debit / Credit</Text>
+                  <Text style={styles.value2}>{item?.debit_or_credit === "D" ? "Debit" : "Credit"}</Text>
+                </View>
+                <View style={styles.row}>
                   <Text style={styles.label}>GL No.</Text>
                   {
                     item?.wbs_no ?
@@ -107,8 +109,8 @@ const InvoiceTaxSimulation = ({ data }: any) => {
                   <Text style={styles.value}>{item?.gl_no}</Text>
                   {
                     item?.wbs_no ?
-                      <Text style={styles.value}>{item?.wbs_no}</Text>
-                      : <Text style={styles.value}>{item?.coscenter_no}</Text>
+                      <Text style={styles.value2}>{item?.wbs_no}</Text>
+                      : <Text style={styles.value2}>{item?.coscenter_no}</Text>
                   }
                 </View>
                 <View style={styles.row}>
@@ -123,7 +125,7 @@ const InvoiceTaxSimulation = ({ data }: any) => {
             )
           })
         }
-        <View style={styles.card}>
+        {/* <View style={styles.card}>
           <View style={styles.titleRow}>
             <Text style={styles.sectionTitle}>Other Adjustment</Text>
             <Text style={styles.amount}>USD 10,00</Text>
@@ -136,28 +138,32 @@ const InvoiceTaxSimulation = ({ data }: any) => {
 
           <View style={styles.row}>
             <Text style={styles.value}>5000100004</Text>
-            <Text style={styles.value}>R001408</Text>
+            <Text style={styles.value2}>R001408</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.description}>Consultants/Manageme</Text>
             <Text style={styles.description2}>Project Hu'u - Top WBS</Text>
           </View>
-        </View>
+        </View> */}
 
         {/* NET PAYMENT Section */}
         <View style={styles.totalCard}>
           <View style={styles.titleRow}>
             <Text style={styles.totalTitle}>NET PAYMENT</Text>
-            <Text style={styles.totalAmount}>USD 10,00</Text>
+            <Text style={styles.totalAmount}>{data?.contract?.currency} {displayPrice(data?.net_payment)}</Text>
           </View>
         </View>
-
         {/* DIFFERENCE Section */}
         <View style={styles.totalCard}>
           <View style={styles.titleRow}>
             <Text style={styles.totalTitle}>DIFFERENCE</Text>
-            <Text style={styles.totalAmount}>0,00</Text>
+            <Text style={styles.totalAmount}>{
+              displayPrice((parseFloat(data?.grand_total) + parseFloat(data?.vat_amount) - parseFloat(data?.wht_amount) + data?.other_expense?.reduce((acc: any, item: any) => {
+                const amount = item?.debit_or_credit === "D" ? parseFloat(item?.amount) : -parseFloat(item?.amount)
+                return acc + amount
+              }, 0) - parseFloat(data?.net_payment)).toFixed(2))
+            }</Text>
           </View>
         </View>
       </View>
@@ -227,6 +233,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     color: '#666',
+    fontWeight: '700',
   },
   percentage: {
     fontSize: 16,
@@ -236,6 +243,15 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 16,
     color: '#333',
+    flexWrap: 'wrap',
+    flex: 1,
+  },
+  value2: {
+    fontSize: 16,
+    color: '#333',
+    flexWrap: 'wrap',
+    flex: 1,
+    textAlign: 'right',
   },
   description: {
     fontSize: 16,

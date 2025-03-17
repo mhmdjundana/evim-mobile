@@ -5,7 +5,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Dimensions, Keyboa
 
 const { width } = Dimensions.get('window');
 
-const FilterPage = ({
+const FilterPageUi = ({
   listState = {},
   setIsRenderFilter,
   setApplyFilter,
@@ -145,4 +145,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FilterPage;
+export default FilterPageUi;

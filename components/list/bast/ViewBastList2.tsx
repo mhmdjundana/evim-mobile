@@ -47,7 +47,7 @@ const BastListUi = ({
           ) : (
             <>
               <FilterBar
-                moduleName="BAST"
+                // moduleName="BAST"
                 data={data}
                 rowSelection={rowSelection}
                 setRowSelection={setRowSelection}

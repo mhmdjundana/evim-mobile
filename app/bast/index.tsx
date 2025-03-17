@@ -29,19 +29,6 @@ export default function BastHome() {
       //   alignItems: "center",
       // }}
     >
-      {/* <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Bast Home!</Text>
-        <Button
-          title="Bast Create"
-          onPress={() => {
-            router.push("/bast/bast_create");
-          }}
-        />
-      </View> */}
-      {/* <ApproveButton /> */}
-
-      {/* <BastList /> */}
-      {/* <Text>Bast Home</Text> */}
       <BastList />
     </View>
   );

@@ -64,11 +64,14 @@ export default function DetailInvoiceNew() {
   }, [data?.data?.id])
 
   return (
-    <View style={{ backgroundColor: 'white' }}>
-      <HeaderDetail 
-        title="Normal Receipt Detail" 
-        status={bastData?.approval_status?.status_name} 
-        statusColor={bastData?.approval_status?.status_color} 
+    <View style={{
+      backgroundColor: 'white',
+      maxWidth: "100%",
+    }}>
+      <HeaderDetail
+        title="Normal Receipt Detail"
+        status={bastData?.approval_status?.status_name}
+        statusColor={bastData?.approval_status?.status_color}
       />
       <Text>{bastData?.id}</Text>
       <View style={{ marginTop: 15 }}></View>

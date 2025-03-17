@@ -44,7 +44,8 @@ export default function FilterBar({
         style={[styles.searchButton, { flex: 1, justifyContent: 'flex-end' }]}
       >
         <FontAwesome name="search" size={20} color="gray" />
-        <Text>{moduleName}</Text>
+        {/* <Text>{moduleName}</Text> */}
+        <Text>Search</Text>
       </TouchableOpacity>
     </View >
   );
@@ -57,7 +58,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     width: "100%",
-    // backgroundColor: "",
   },
   searchButton: {
     flexDirection: "row",
