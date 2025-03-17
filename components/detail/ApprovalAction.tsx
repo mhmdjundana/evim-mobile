@@ -1,5 +1,6 @@
-import { View } from "react-native"
+import { Text, View } from "react-native"
 import { ActionButton } from "../button/ActionButton"
+import { usePathname, useLocalSearchParams } from "expo-router";
 
 export default function ApprovalAction({
   bastData,
@@ -8,6 +9,9 @@ export default function ApprovalAction({
   router,
   isApproveItems
 }: any) {
+  const pathname = usePathname();
+  // console.log(pathname, "pathname")
+  // console.log(params, "params")
   return (
     <View
       style={{
@@ -33,7 +37,11 @@ export default function ApprovalAction({
         (bastData?.action?.is_approve || bastData?.action?.is_reject) && (
           () => {
             return (
-              <View style={{ marginVertical: 5, flexDirection: "row", justifyContent: "flex-end", width: "100%", }}>
+              <View
+                style={{
+                  marginVertical: 5, flexDirection: "row", justifyContent: "flex-end", width: "100%",
+                }}
+              >
                 {bastData?.action?.is_reject && <ActionButton
                   type="reject"
                   onPress={() => {
@@ -56,10 +64,13 @@ export default function ApprovalAction({
                       pathname: `/confirmation`,
                       params: {
                         id: id,
-                        // type: "approval",
                         data: JSON.stringify(payload),
                         module: "bast",
                         type: "rejection",
+                        onSuccessNavigateTo: JSON.stringify({
+                          pathname: pathname,
+                          params: { id: id }
+                        })
                       }
                     })
                   }}
@@ -90,6 +101,10 @@ export default function ApprovalAction({
                         data: JSON.stringify(payload),
                         module: "bast",
                         type: "approval",
+                        onSuccessNavigateTo: JSON.stringify({
+                          pathname: pathname,
+                          params: { id: id }
+                        })
                       }
                     })
                   }}

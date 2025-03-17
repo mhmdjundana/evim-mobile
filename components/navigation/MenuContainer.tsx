@@ -19,6 +19,7 @@ const { width, height } = Dimensions.get("window");
 
 const modules = [
   {
+    displayModuleName: "BAST",
     moduleName: "Bast",
     moduleIcon: "",
     notif: 3,
@@ -26,6 +27,7 @@ const modules = [
     name: "bast"
   },
   {
+    displayModuleName: "Normal Receipt",
     moduleName: "Invoice",
     moduleIcon: "",
     notif: 3,
@@ -33,6 +35,7 @@ const modules = [
     name: "invoice"
   },
   {
+    displayModuleName: "Special Payment",
     moduleName: "Special Payment",
     moduleIcon: "",
     notif: 3,
@@ -40,6 +43,7 @@ const modules = [
     name: "special_payment"
   },
   {
+    displayModuleName: "Credit Card Settlement",
     moduleName: "Employee Claim CC",
     moduleIcon: "",
     notif: 3,
@@ -47,6 +51,7 @@ const modules = [
     name: "employee_claim_cc"
   },
   {
+    displayModuleName: "P Card",
     moduleName: "P Card",
     moduleIcon: "",
     notif: 3,
@@ -54,6 +59,7 @@ const modules = [
     name: "pcard"
   },
   {
+    displayModuleName: "Corporate Integrity",
     moduleName: "Corporate Integrity",
     moduleIcon: "",
     notif: 3,
@@ -114,6 +120,7 @@ const MenuContainer = () => {
 };
 
 const MenuItem = ({ modules, notification }: any) => {
+  console.log('modules: ', modules)
   console.log('notification: ', notification)
   return (
     <View style={styles.menu}>
@@ -133,7 +140,7 @@ const MenuItem = ({ modules, notification }: any) => {
               <FontAwesome6 name="box-archive" size={20} color="#757575" />
             </View>
 
-            <Text style={styles.menuItemText}>{el.moduleName}</Text>
+            <Text style={styles.menuItemText}>{el.displayModuleName}</Text>
             {notification?.[el.name] && (
               <View style={styles.badge}>
                 <Text style={styles.badgeText}>{notification?.[el.name]}</Text>

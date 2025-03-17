@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { router } from "expo-router";
+import { router, useLocalSearchParams, usePathname } from "expo-router";
 import { handleApproveButton, handleRejectButton } from "./utils";
 import { Checkbox } from "react-native-paper";
 import { displayPrice } from "@/utils/utils";
@@ -19,6 +19,7 @@ const ListCard = ({
   handleCheck = () => { }
 }: any) => {
   // console.log(data, 'listcard data')
+  const pathname = usePathname();
 
   return (
     <TouchableOpacity
@@ -84,7 +85,8 @@ const ListCard = ({
                 item: data,
                 router: router,
                 listData: listData,
-                rowSelection: rowSelection
+                rowSelection: rowSelection,
+                onSuccessNavigateTo: JSON.stringify({ pathname })
               })}>
               <Text style={styles.buttonText}>Approve</Text>
             </TouchableOpacity>
@@ -96,7 +98,8 @@ const ListCard = ({
                 item: data,
                 router: router,
                 listData: listData,
-                rowSelection: rowSelection
+                rowSelection: rowSelection,
+                onSuccessNavigateTo: JSON.stringify({ pathname })
               })}>
               <Text style={styles.buttonText}>Reject</Text>
             </TouchableOpacity>

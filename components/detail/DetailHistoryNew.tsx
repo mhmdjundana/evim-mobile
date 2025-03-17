@@ -24,43 +24,6 @@ const HistoryItem = ({ created_at, vendor, user, process, read_status, comment }
 
 const HistoryScreen = ({ data }: any) => {
   // console.log(data, 'history data')
-  const historyData = [
-    {
-      date: '6 Jan 2025 14:00',
-      name: 'Hendry',
-      company: 'PT. Senyum Untuk Negeri',
-      process: 'Paid Completed',
-      activity: 'Approved',
-    },
-    {
-      date: '5 Jan 2025 14:00',
-      name: 'Emily',
-      company: 'PT. Senyum Untuk Negeri',
-      process: 'Input Miro',
-      activity: 'Updated',
-    },
-    {
-      date: '4 Jan 2025 14:00',
-      name: 'Genevieve',
-      company: 'PT. Senyum Untuk Negeri',
-      process: 'Approved By Payment Approver',
-      activity: 'Approved',
-    },
-    {
-      date: '3 Jan 2025 14:00',
-      name: 'Francis',
-      company: 'PT. Senyum Untuk Negeri',
-      process: 'Approved By Tax Admin',
-      activity: 'Approved',
-    },
-    {
-      date: '2 Jan 2025 14:00',
-      name: 'Emily',
-      company: 'PT. Senyum Untuk Negeri',
-      process: 'Approved By Account Payables',
-      activity: 'Updated',
-    },
-  ];
 
   return (
     <View style={styles.container}>
@@ -78,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: '#1E293B', // Dark background color
-
+    width: "100%",
     padding: 20,
   },
   title: {

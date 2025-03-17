@@ -242,15 +242,15 @@ export const resetTokenKeychain = async () => {
 // resetKeychain()
 export const retrieveEmailPassword = async () => {
   try {
-    return {
-      // "email": "upton.sap@mail.com",
-      // "email": "sapfi@mail.com",
-      // "email": "ci@mail.com",
-      // "email": "cifi@mail.com",
-      // "email": "albert.ap@mail.com",
-      // "email": "candace.tax@mail.com",
-      // "password": "12345678"
-    }
+    // return {
+    //   // "email": "upton.sap@mail.com",
+    //   // "email": "sapfi@mail.com",
+    //   // "email": "ci@mail.com",
+    //   // "email": "cifi@mail.com",
+    //   // "email": "albert.ap@mail.com",
+    //   // "email": "candace.tax@mail.com",
+    //   // "password": "12345678"
+    // }
     const emailCredentials = await Keychain.getGenericPassword({
       service: "email",
     });

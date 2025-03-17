@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 import HeaderDetail from "./DetailHeader";
 import DetailLogo from "./DetailLogo";
 import DetailTable from "./DetailTable";
@@ -23,6 +23,7 @@ import DocumentDetailInvoiceFile from "./DocumentDetailInvoiceFile";
 import DetailTableInvoice from "./DetailTableInvoice";
 import InvoicePaymentSummary from "./InvoicePaymentSummary";
 import InvoiceTaxSimulation from "./InvoiceTaxSimulation";
+import { RefreshControl } from "react-native";
 
 export default function DetailInvoiceNew() {
   // const navigation = useNavigation()
@@ -40,6 +41,7 @@ export default function DetailInvoiceNew() {
   const [bastData, setBastData] = useState<any>([])
   // console.log(bastData, "bastData")
   const [historyData, setHistoryData] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<any>(false);
 
   // const getDataById = async () => {
   //   const ids = id || 367
@@ -64,16 +66,36 @@ export default function DetailInvoiceNew() {
   }, [data?.data?.id])
 
   return (
-    <View style={{
-      backgroundColor: 'white',
-      maxWidth: "100%",
-    }}>
+    <ScrollView
+      style={{
+        backgroundColor: "#fff",
+        padding: 0,
+        margin: 0,
+        width: "100%",
+      }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        maxWidth: '100%'
+      }}
+      refreshControl={
+        <RefreshControl
+          refreshing={isLoading}
+          onRefresh={() => {
+            router.replace({
+              pathname: '/invoice/detail',
+              params: { id }
+            })
+          }}
+        />
+      }
+    >
       <HeaderDetail
         title="Normal Receipt Detail"
         status={bastData?.approval_status?.status_name}
         statusColor={bastData?.approval_status?.status_color}
       />
-      <Text>{bastData?.id}</Text>
       <View style={{ marginTop: 15 }}></View>
       <DocumentDetailInvoice data={bastData} />
       <View style={{ marginTop: 10 }}></View>
@@ -97,6 +119,6 @@ export default function DetailInvoiceNew() {
       <DetailHistoryNew data={historyData} />
       <View style={{ marginTop: 60 }}>
       </View>
-    </View >
+    </ScrollView >
   );
 }

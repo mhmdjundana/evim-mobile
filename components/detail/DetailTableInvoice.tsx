@@ -42,7 +42,8 @@ const DetailTableInvoice = ({ data, setData, style, uomList, permission }: any) 
   return (
     <View style={[{
       // backgroundColor: 'yellow',
-      paddingHorizontal: 16
+      paddingHorizontal: 16,
+      width: '100%'
     }]}>
       {
         details?.map((item: any, idx: number) => {

@@ -4,15 +4,11 @@ import { ActionButton } from '../button/ActionButton';
 import { router } from 'expo-router';
 import api from '@/fetch/axios';
 
-const RejectionConfirmation = ({ data, module }: any) => {
-  // console.log(data[0], "Apporval data");
-  // console.log(module, "Apporval module");
+const RejectionConfirmation = ({ data, module, onSuccessNavigateTo }: any) => {
+  console.log(data[0], "Apporval data");
+  console.log(module, "Apporval module");
+  console.log(onSuccessNavigateTo, "Apporval onSuccessNavigateTo");
   const [reason, setReason] = useState('');
-
-  const handleYesPress = () => {
-
-    router.back();
-  };
 
   return (
     <View style={styles.container}>
@@ -40,7 +36,8 @@ const RejectionConfirmation = ({ data, module }: any) => {
               const response = await api.post('bast/approval', data);
               console.log('response rejecting: ', response);
               if (response.data?.success) {
-                router.back();
+                // router.dismiss(2);
+                router.push(JSON.parse(onSuccessNavigateTo));
               }
             } catch (error) {
               console.error('Error rejecting bast:', error);

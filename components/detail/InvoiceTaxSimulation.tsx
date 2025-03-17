@@ -19,18 +19,39 @@ const InvoiceTaxSimulation = ({ data }: any) => {
           </View>
 
           <View style={styles.row}>
-            <Text style={styles.label}>GL No.</Text>
-            <Text style={styles.label}>WBS No.</Text>
+            {
+              data?.gl_no &&
+              <Text style={styles.label}>GL No.</Text>
+            }
+            {
+              data?.wbs_no ?
+                <Text style={styles.label}>WBS No.</Text>
+                : data?.coscenter_no ? <Text style={styles.label}>Cost Center No.</Text> : null
+            }
           </View>
 
           <View style={styles.row}>
-            <Text style={styles.value}>{displayStringArray(data?.gl_no)}</Text>
-            <Text style={styles.value}>{displayStringArray(data?.wbs_no)}</Text>
+            {
+              data?.gl_no &&
+              <Text style={styles.value}>{displayStringArray(data?.gl_no)}</Text>
+            }
+            {
+              data?.wbs_no ?
+                <Text style={styles.value}>{displayStringArray(data?.wbs_no)}</Text>
+                : data?.coscenter_no ? <Text style={styles.value}>{displayStringArray(data?.coscenter_no)}</Text> : null
+            }
           </View>
 
           <View style={styles.row}>
-            <Text style={styles.description}>{data?.gl?.reduce((acc: any, item: any, index: any) => acc + item?.gl_account + (index < data?.gl?.length - 1 ? ', ' : ''), '')}</Text>
-            <Text style={styles.description2}>{data?.wbs?.reduce((acc: any, item: any, index: any) => acc + item?.wbs_name + (index < data?.wbs?.length - 1 ? ', ' : ''), '')}</Text>
+            {
+              data?.gl &&
+              <Text style={styles.description}>{data?.gl?.reduce((acc: any, item: any, index: any) => acc + item?.gl_account + (index < data?.gl?.length - 1 ? ', ' : ''), '')}</Text>
+            }
+            {
+              data?.wbs?.length ?
+                <Text style={styles.description2}>{data?.wbs?.reduce((acc: any, item: any, index: any) => acc + item?.wbs_name + (index < data?.wbs?.length - 1 ? ', ' : ''), '')}</Text>
+                : data?.coscenter?.length ? <Text style={styles.description2}>{data?.coscenter?.reduce((acc: any, item: any, index: any) => acc + item?.coscenter_name + (index < data?.coscenter?.length - 1 ? ', ' : ''), '')}</Text> : null
+            }
           </View>
 
           {/* <View style={styles.row}>
@@ -45,44 +66,52 @@ const InvoiceTaxSimulation = ({ data }: any) => {
         </View>
 
         {/* VAT Section */}
-        <View style={styles.card}>
-          <View style={styles.titleRow}>
-            <Text style={styles.sectionTitle}>VAT</Text>
-            <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.vat_amount)}</Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>GL No.</Text>
-            <Text style={styles.percentage}>{data?.vat?.wht_rate} %</Text>
-          </View>
+        {
+          data?.vat_amount && (
+            <View style={styles.card}>
+              <View style={styles.titleRow}>
+                <Text style={styles.sectionTitle}>VAT</Text>
+                <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.vat_amount)}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>GL No.</Text>
+                <Text style={styles.percentage}>{data?.vat?.wht_rate} %</Text>
+              </View>
 
-          <View style={styles.row}>
-            <Text style={styles.value}>{data?.vat?.gl_account}</Text>
-          </View>
+              <View style={styles.row}>
+                <Text style={styles.value}>{data?.vat?.gl_account}</Text>
+              </View>
 
-          <View style={styles.row}>
-            <Text style={styles.description}>{data?.vat?.gl?.gl_name}</Text>
-          </View>
-        </View>
+              <View style={styles.row}>
+                <Text style={styles.description}>{data?.vat?.gl?.gl_name}</Text>
+              </View>
+            </View>
+          )
+        }
 
         {/* WHT Section */}
-        <View style={styles.card}>
-          <View style={styles.titleRow}>
-            <Text style={styles.sectionTitle}>WHT</Text>
-            <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.wht_amount)}</Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>GL No.</Text>
-            <Text style={styles.percentage}>{data?.wht?.wht_rate} %</Text>
-          </View>
+        {
+          data?.wht_amount && (
+            <View style={styles.card}>
+              <View style={styles.titleRow}>
+                <Text style={styles.sectionTitle}>WHT</Text>
+                <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.wht_amount)}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>GL No.</Text>
+                <Text style={styles.percentage}>{data?.wht?.wht_rate} %</Text>
+              </View>
 
-          <View style={styles.row}>
-            <Text style={styles.value}>{data?.wht?.gl_account}</Text>
-          </View>
+              <View style={styles.row}>
+                <Text style={styles.value}>{data?.wht?.gl_account}</Text>
+              </View>
 
-          <View style={styles.row}>
-            <Text style={styles.description}>{data?.wht?.gl?.gl_name}</Text>
-          </View>
-        </View>
+              <View style={styles.row}>
+                <Text style={styles.description}>{data?.wht?.gl?.gl_name}</Text>
+              </View>
+            </View>
+          )
+        }
 
         {/* Other Adjustment Section */}
         {
@@ -98,11 +127,13 @@ const InvoiceTaxSimulation = ({ data }: any) => {
                   <Text style={styles.value2}>{item?.debit_or_credit === "D" ? "Debit" : "Credit"}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.label}>GL No.</Text>
+                  {
+                    item?.gl_no ? <Text style={styles.label}>GL No.</Text> : null
+                  }
                   {
                     item?.wbs_no ?
                       <Text style={styles.label}>WBS No.</Text>
-                      : <Text style={styles.label}>Cost Center No.</Text>
+                      : item?.coscenter_no ? <Text style={styles.label}>Cost Center No.</Text> : null
                   }
                 </View>
                 <View style={styles.row}>
@@ -110,7 +141,7 @@ const InvoiceTaxSimulation = ({ data }: any) => {
                   {
                     item?.wbs_no ?
                       <Text style={styles.value2}>{item?.wbs_no}</Text>
-                      : <Text style={styles.value2}>{item?.coscenter_no}</Text>
+                      : item?.coscenter_no ? <Text style={styles.value2}>{item?.coscenter_no}</Text> : null
                   }
                 </View>
                 <View style={styles.row}>
@@ -118,7 +149,7 @@ const InvoiceTaxSimulation = ({ data }: any) => {
                   {
                     item?.wbs_no ?
                       <Text style={styles.description2}>{item?.wbs?.wbs_name}</Text>
-                      : <Text style={styles.description2}>{item?.coscenter?.coscenter_name}</Text>
+                      : item?.coscenter_no ? <Text style={styles.description2}>{item?.coscenter?.coscenter_name}</Text> : null
                   }
                 </View>
               </View>
@@ -159,10 +190,15 @@ const InvoiceTaxSimulation = ({ data }: any) => {
           <View style={styles.titleRow}>
             <Text style={styles.totalTitle}>DIFFERENCE</Text>
             <Text style={styles.totalAmount}>{
-              displayPrice((parseFloat(data?.grand_total) + parseFloat(data?.vat_amount) - parseFloat(data?.wht_amount) + data?.other_expense?.reduce((acc: any, item: any) => {
-                const amount = item?.debit_or_credit === "D" ? parseFloat(item?.amount) : -parseFloat(item?.amount)
-                return acc + amount
-              }, 0) - parseFloat(data?.net_payment)).toFixed(2))
+              displayPrice(
+                (
+                  parseFloat(data?.grand_total)
+                  + parseFloat(data?.vat_amount || 0)
+                  - parseFloat(data?.wht_amount || 0)
+                  + data?.other_expense?.reduce((acc: any, item: any) => {
+                    const amount = item?.debit_or_credit === "D" ? parseFloat(item?.amount) : -parseFloat(item?.amount)
+                    return acc + amount
+                  }, 0) - parseFloat(data?.net_payment)).toFixed(2))
             }</Text>
           </View>
         </View>
@@ -176,6 +212,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f0f0f0',
     paddingHorizontal: 10,
+    width: '100%',
   },
   container2: {
     flex: 1,

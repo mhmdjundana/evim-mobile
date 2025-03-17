@@ -27,22 +27,30 @@ const InvoicePaymentSummary = ({ data }: any) => {
       </View>
 
       {/* VAT Amount */}
-      <View style={[styles.card, styles.cardMargin]}>
-        <View style={styles.row}>
-          <Text style={styles.label}>VAT Amount</Text>
-          <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.vat_amount)}</Text>
-        </View>
-        <Text style={styles.subLabel}>({data?.vat?.wht_code}) {data?.vat?.wht_rate}</Text>
-      </View>
+      {
+        data?.vat_amount && (
+          <View style={[styles.card, styles.cardMargin]}>
+            <View style={styles.row}>
+              <Text style={styles.label}>VAT Amount</Text>
+              <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.vat_amount)}</Text>
+            </View>
+            <Text style={styles.subLabel}>({data?.vat?.wht_code}) {data?.vat?.wht_rate}</Text>
+          </View>
+        )
+      }
 
       {/* WHT Amount */}
-      <View style={[styles.card, styles.cardMargin]}>
-        <View style={styles.row}>
-          <Text style={styles.label}>WHT Amount</Text>
-          <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.wht_amount)}</Text>
-        </View>
-        <Text style={styles.subLabel}>({data?.wht?.wht_code}) {data?.wht?.wht_rate}</Text>
-      </View>
+      {
+        data?.wht_amount && (
+          <View style={[styles.card, styles.cardMargin]}>
+            <View style={styles.row}>
+              <Text style={styles.label}>WHT Amount</Text>
+              <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.wht_amount)}</Text>
+            </View>
+            <Text style={styles.subLabel}>({data?.wht?.wht_code}) {data?.wht?.wht_rate}</Text>
+          </View>
+        )
+      }
 
       {/* BASE WHT */}
       <View style={[styles.card, styles.cardMargin]}>
@@ -50,8 +58,12 @@ const InvoicePaymentSummary = ({ data }: any) => {
           <Text style={styles.label}>BASE WHT</Text>
           <View style={styles.baseWhtContainer}>
             <Text style={styles.amount}>{displayPrice(taxable?.toFixed(2))}</Text>
-            <Text style={styles.multiplySign}>X</Text>
-            <Text style={styles.amount}>{data?.wht?.wht_rate} %</Text>
+            {data?.wht?.wht_rate && (
+              <>
+                <Text style={styles.multiplySign}>X</Text>
+                <Text style={styles.amount}>{data?.wht?.wht_rate} %</Text>
+              </>
+            )}
           </View>
         </View>
       </View>
@@ -95,6 +107,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     backgroundColor: '#f5f5f5',
+    width: '100%',
   },
   row: {
     flexDirection: 'row',

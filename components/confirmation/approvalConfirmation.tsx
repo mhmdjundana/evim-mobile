@@ -5,9 +5,52 @@ import { router } from 'expo-router';
 import api from '@/fetch/axios';
 import { Card } from 'react-native-paper';
 
-const ApprovalConfirmation = ({ data, module, listData = [] }: any) => {
+const bastList = [
+  {
+    title: "BAST No.",
+    name: "bast_no"
+  },
+  {
+    title: "Contract No.",
+    name: "contract_no"
+  },
+  {
+    title: "PO No.",
+    name: "po_no"
+  },
+]
+const invoiceList = [
+  {
+    title: "Invoice No.",
+    name: "invoice_number"
+  },
+  {
+    title: "Contract No.",
+    name: "contract_no"
+  },
+  {
+    title: "PO No.",
+    name: "po_no"
+  },
+]
+
+const ApprovalConfirmation = ({ data, module, listData = [], onSuccessNavigateTo }: any) => {
   console.log(data, "Apporval data");
   console.log(module, "Apporval module");
+  console.log(onSuccessNavigateTo, "Apporval onSuccessNavigateTo");
+
+  const listOfDataModule: any = []
+  switch (module) {
+    case "bast":
+      listOfDataModule.push(...bastList)
+      break;
+    case "invoice":
+      listOfDataModule.push(...invoiceList)
+      break;
+
+    default:
+      break;
+  }
 
   return (
     <ScrollView
@@ -18,18 +61,19 @@ const ApprovalConfirmation = ({ data, module, listData = [] }: any) => {
       }]}>Approval Confirmation</Text>
       {
         listData?.length ?
-          <Text style={styles.subtitle}>Are you sure you want to approve these BAST?</Text>
+          <Text style={styles.subtitle}>Are you sure you want to approve {listData?.length} transaction?</Text>
           :
           <Text style={styles.subtitle}>Are you sure you want to approve?</Text>
       }
       {
         listData?.length && listData.map((item: any, i: any) => {
           return (
-            <Card style={{
-              backgroundColor: 'white',
-              padding: 0,
-              marginBottom: 10,
-            }}
+            <Card
+              style={{
+                backgroundColor: 'white',
+                padding: 0,
+                marginBottom: 10,
+              }}
               key={i}
             >
               <Card.Content style={{
@@ -39,81 +83,39 @@ const ApprovalConfirmation = ({ data, module, listData = [] }: any) => {
                 alignItems: 'flex-start',
                 justifyContent: 'flex-start',
               }}>
-                <View style={{
-                  flexDirection: 'row',
-                  width: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                  <Text style={[styles.subtitle, {
-                    width: "30%",
-                    marginBottom: 0,
-                  }]}>
-                    BAST No.
-                  </Text>
-                  <Text style={[styles.subtitle, {
-                    width: "10%",
-                    marginBottom: 0,
-                  }]}>
-                    :
-                  </Text>
-                  <Text style={[styles.subtitle, {
-                    width: "60%",
-                    marginBottom: 0,
-                  }]}>
-                    {item.bast_no}
-                  </Text>
-                </View>
-                <View style={{
-                  flexDirection: 'row',
-                  width: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                }}>
-                  <Text style={[styles.subtitle, {
-                    width: "30%",
-                    marginBottom: 0,
-                  }]}>
-                    Contract No.
-                  </Text>
-                  <Text style={[styles.subtitle, {
-                    width: "10%",
-                    marginBottom: 0,
-                  }]}>
-                    :
-                  </Text>
-                  <Text style={[styles.subtitle, {
-                    width: "60%",
-                    marginBottom: 0,
-                  }]}>
-                    {item.contract_no}
-                  </Text>
-                </View>
-                <View style={{
-                  flexDirection: 'row',
-                  width: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                  <Text style={[styles.subtitle, {
-                    width: "30%",
-                    marginBottom: 0,
-                  }]}>
-                    PO No.
-                  </Text>
-                  <Text style={[styles.subtitle, {
-                    width: "10%",
-                    marginBottom: 0,
-                  }]}>
-                    :
-                  </Text>
-                  <Text style={[styles.subtitle, {
-                    width: "60%",
-                    marginBottom: 0,
-                  }]}>
-                    {item.po_no}
-                  </Text>
-                </View>
+                {
+                  listOfDataModule.map((item2: any, i: any) => {
+                    return (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          width: '100%',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                        }}
+                        key={i}
+                      >
+                        <Text style={[styles.subtitle, {
+                          width: "30%",
+                          marginBottom: 0,
+                        }]}>
+                          {item2.title}
+                        </Text>
+                        <Text style={[styles.subtitle, {
+                          width: "10%",
+                          marginBottom: 0,
+                        }]}>:
+                        </Text>
+                        <Text style={[styles.subtitle, {
+                          width: "60%",
+                          marginBottom: 0,
+                        }]}>
+                          {item[item2.name]}
+                        </Text>
+                      </View>
+                    )
+                  })
+                }
               </Card.Content>
             </Card>
           )
@@ -128,10 +130,11 @@ const ApprovalConfirmation = ({ data, module, listData = [] }: any) => {
           const bastApproval = async () => {
             // console.log(JSON.stringify(data));
             try {
-              const response = await api.post('bast/approval', data);
-              console.log('response approval', response);
+              const response = await api.post(module + '/approval', data);
+              console.log('response approval ' + module, response);
               if (response.data?.success) {
-                router.back();
+                // router.dismiss(2);
+                router.push(JSON.parse(onSuccessNavigateTo));
               }
             } catch (error) {
               console.error('Error approving bast:', error);

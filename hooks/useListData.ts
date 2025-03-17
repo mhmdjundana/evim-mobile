@@ -17,6 +17,7 @@ const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
   console.log("data", data)
   console.log("pageIndex", pageIndex)
   console.log("lastPage", lastPage.current)
+  console.log("data count", data?.length)
 
   const fetchData = async () => {
     setIsLoading(true);

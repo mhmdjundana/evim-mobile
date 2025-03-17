@@ -1,11 +1,12 @@
-export const handleApproveButton = ({ item, router, listData, rowSelection }: any) => {
+export const handleApproveButton = ({ item, router, listData, rowSelection, onSuccessNavigateTo }: any) => {
   console.log("approve")
   const obj: any = {
     pathname: `/confirmation`,
     params: {
       id: item.id,
       type: "approval",
-      module: "bast"
+      module: "bast",
+      onSuccessNavigateTo: onSuccessNavigateTo
     }
   }
   if (rowSelection.length) {
@@ -21,16 +22,16 @@ export const handleApproveButton = ({ item, router, listData, rowSelection }: an
         // "vendor_code": data?.vendor_code,
         "type": "approve",
       }));
-      const listDataMap = filteredData.map((item: any) => {
-        return {
-          bast_no: item.bast_no,
-          contract_no: item.contract_no,
-          po_no: item.po_no,
-          vendor_name: item.vendor_name,
-          grand_total: item.grand_total,
-          id: item.id
-        };
-      })
+    const listDataMap = filteredData.map((item: any) => {
+      return {
+        bast_no: item.bast_no,
+        contract_no: item.contract_no,
+        po_no: item.po_no,
+        vendor_name: item.vendor_name,
+        grand_total: item.grand_total,
+        id: item.id
+      };
+    })
     obj.params.data = JSON.stringify(dataApproval);
     obj.params.listData = JSON.stringify(listDataMap);
   } else {
@@ -47,7 +48,7 @@ export const handleApproveButton = ({ item, router, listData, rowSelection }: an
   router.push(obj)
 }
 
-export const handleRejectButton = ({ item, router, listData, rowSelection }: any) => {
+export const handleRejectButton = ({ item, router, listData, rowSelection, onSuccessNavigateTo }: any) => {
   console.log("reject")
   router.push({
     pathname: `/confirmation`,
@@ -63,7 +64,8 @@ export const handleRejectButton = ({ item, router, listData, rowSelection }: any
         // "vendor_code": item?.vendor_code,
         "type": "reject",
       }]),
-      module: "bast"
+      module: "bast",
+      onSuccessNavigateTo: onSuccessNavigateTo
     }
   })
 }

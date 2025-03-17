@@ -7,23 +7,7 @@ import TopBarLayout from '@/components/layout/TopBarLayout';
 const DetailInvoice = () => {
   return (
     <TopBarLayout>
-      <ScrollView
-        style={{
-          // flex: 1,
-          // justifyContent: "flex-start",
-          // alignItems: "center",
-          backgroundColor: "#eee",
-          padding: 0,
-          margin: 0,
-        }}
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: "flex-start",
-          alignItems: "center",
-        }}
-      >
         <DetailInvoiceNew />
-      </ScrollView >
     </TopBarLayout>
   );
 };

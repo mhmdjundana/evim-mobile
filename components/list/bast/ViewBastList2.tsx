@@ -1,4 +1,4 @@
-import { Dimensions, FlatList } from "react-native";
+import { Dimensions, FlatList, RefreshControl } from "react-native";
 import React from "react";
 import { View } from "react-native";
 import FilterBar from "../filter/FilterBar";
@@ -6,6 +6,7 @@ import ListCard from './ListCard';
 import TopBarLayout from "@/components/layout/TopBarLayout";
 import FilterBast from "../filter/FilterBast";
 import { EmptyList } from "../EmptyList";
+import { router } from "expo-router";
 
 const { height } = Dimensions.get('window');
 
@@ -70,6 +71,14 @@ const BastListUi = ({
                 onEndReachedThreshold={0.5}
                 ListEmptyComponent={<EmptyList />}
                 style={{ paddingHorizontal: 10 }}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={isLoading}
+                    onRefresh={() => {
+                      router.replace('/bast')
+                    }}
+                  />
+                }
               />
             </>
           )

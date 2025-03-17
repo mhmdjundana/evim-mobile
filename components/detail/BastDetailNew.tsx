@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ScrollView, RefreshControl } from "react-native";
 import HeaderDetail from "./DetailHeader";
 import DetailLogo from "./DetailLogo";
 import DetailTable from "./DetailTable";
@@ -41,6 +41,7 @@ export default function BastDetailNew() {
   // console.log(bastData?.details, "bastData")
   const [historyData, setHistoryData] = useState<any>([]);
   const [isApproveItems, setIsApproveItems] = useState<any>(false);
+  const [isLoading, setIsLoading] = useState<any>(false);
 
   // const getDataById = async () => {
   //   const ids = id || 367
@@ -65,7 +66,34 @@ export default function BastDetailNew() {
   }, [data?.data?.id])
 
   return (
-    <View style={{ backgroundColor: 'white' }}>
+    <ScrollView
+      style={{
+        // flex: 1,
+        // justifyContent: "flex-start",
+        // alignItems: "center",
+        backgroundColor: "#fff",
+        padding: 0,
+        margin: 0,
+        width: "100%",
+      }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        maxWidth: '100%',
+      }}
+      refreshControl={
+        <RefreshControl
+          refreshing={isLoading}
+          onRefresh={() => {
+            router.replace({
+              pathname: '/bast/detail',
+              params: { id }
+            })
+          }}
+        />
+      }
+    >
       <HeaderDetail title="BAST Detail" status={bastData?.approval_status?.status_name} statusColor={bastData?.approval_status?.status_color} />
       {/* <Text>{bastData?.id}</Text> */}
       <View style={{ marginTop: 15 }}></View>
@@ -88,7 +116,8 @@ export default function BastDetailNew() {
           reason: false,
           comment: false,
           // action: true,
-        }} />
+        }}
+      />
       <ApprovalAction
         bastData={bastData}
         id={id}
@@ -99,7 +128,7 @@ export default function BastDetailNew() {
       <DetailHistoryNew data={historyData} />
       <View style={{ marginTop: 60 }}>
       </View>
-    </View >
+    </ScrollView>
   );
 }
 

@@ -1,4 +1,4 @@
-import { Dimensions, FlatList } from "react-native";
+import { Dimensions, FlatList, RefreshControl } from "react-native";
 import React from "react";
 import { View } from "react-native";
 import FilterBar from "../filter/FilterBar";
@@ -6,6 +6,7 @@ import TopBarLayout from "@/components/layout/TopBarLayout";
 import FilterBast from "../filter/FilterBast";
 import ListCardInvoice from "./ListCardInvoice";
 import { EmptyList } from "../EmptyList";
+import { router } from "expo-router";
 
 const { height } = Dimensions.get('window');
 
@@ -33,7 +34,8 @@ const ViewInvoiceList = ({
       <View style={{
         flex: 1,
         // backgroundColor: 'yellow',
-        height: height
+        height: height,
+        margin: 0,
       }}>
         {
           isRenderFilter ? (
@@ -67,8 +69,18 @@ const ViewInvoiceList = ({
                 keyExtractor={item => item.id.toString()}
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.5}
-                // ListFooterComponent={isLoading ? <View style={{ height: 100 }} /> : null}
                 ListEmptyComponent={<EmptyList />}
+                style={{ paddingHorizontal: 10 }}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={isLoading}
+                    onRefresh={() => {
+                      router.replace('/invoice')
+                    }}
+                  />
+                }
+                // ListFooterComponent={isLoading ? <View style={{ height: 100 }} /> : null}
+
               />
             </>
           )
