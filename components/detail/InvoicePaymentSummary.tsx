@@ -34,7 +34,7 @@ const InvoicePaymentSummary = ({ data }: any) => {
               <Text style={styles.label}>VAT Amount</Text>
               <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.vat_amount)}</Text>
             </View>
-            <Text style={styles.subLabel}>({data?.vat?.wht_code}) {data?.vat?.wht_rate}</Text>
+            <Text style={styles.subLabel}>{data?.vat?.wht_code && `(${data?.vat?.wht_code})`} {data?.vat?.wht_rate}</Text>
           </View>
         )
       }
@@ -47,7 +47,7 @@ const InvoicePaymentSummary = ({ data }: any) => {
               <Text style={styles.label}>WHT Amount</Text>
               <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.wht_amount)}</Text>
             </View>
-            <Text style={styles.subLabel}>({data?.wht?.wht_code}) {data?.wht?.wht_rate}</Text>
+            <Text style={styles.subLabel}>{data?.wht?.wht_code && `(${data?.wht?.wht_code})`} {data?.wht?.wht_rate}</Text>
           </View>
         )
       }

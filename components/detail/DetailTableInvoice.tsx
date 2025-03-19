@@ -11,6 +11,7 @@ const { width } = Dimensions.get('window');
 const DetailTableInvoice = ({ data, setData, style, uomList, permission }: any) => {
   // console.log(data, 'DetailTableNew data')
   const { details } = data
+  console.log(details, 'DetailTableNew data')
   const [details2, setDetails2] = useState([])
   const [uomList2, setUomList2] = useState([])
 

@@ -9,6 +9,30 @@ import { EmptyList } from "../EmptyList";
 import { router } from "expo-router";
 
 const { height } = Dimensions.get('window');
+const statusOptions = [ // Define your status options
+  { label: 'All', value: '' },
+  { label: "Create SES", value: "Create SES" },
+  {
+    label: "Approve",
+    value: "Approve",
+  },
+  {
+    label: "1st Approve",
+    value: "1st Approve",
+  },
+  {
+    label: "Review",
+    value: "Review",
+  },
+  {
+    label: "2nd Approve",
+    value: "2nd Approve",
+  },
+  { label: "Completed", value: "Completed" },
+  { label: "Rejected", value: "Rejected" },
+  { label: "Rejected > 30 days", value: "Rejected > 30 days" },
+  // Add more status options as needed
+];
 
 const BastListUi = ({
   listState,
@@ -33,7 +57,6 @@ const BastListUi = ({
     <TopBarLayout>
       <View style={{
         flex: 1,
-        // backgroundColor: 'yellow',
         height: height
       }}>
         {
@@ -43,12 +66,12 @@ const BastListUi = ({
                 listState={listState}
                 setIsRenderFilter={setIsRenderFilter}
                 setApplyFilter={setApplyFilter}
+                statusOptions={statusOptions}
               />
             </>
           ) : (
             <>
               <FilterBar
-                // moduleName="BAST"
                 data={data}
                 rowSelection={rowSelection}
                 setRowSelection={setRowSelection}

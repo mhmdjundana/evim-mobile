@@ -24,10 +24,10 @@ const invoiceList = [
     title: "Invoice No.",
     name: "invoice_number"
   },
-  {
-    title: "Contract No.",
-    name: "contract_no"
-  },
+  // {
+  //   title: "Contract No.",
+  //   name: "contract_no"
+  // },
   {
     title: "PO No.",
     name: "po_no"
@@ -127,7 +127,8 @@ const ApprovalConfirmation = ({ data, module, listData = [], onSuccessNavigateTo
         marginBottom: 30
       }]}>
         <ActionButton type="yes" onPress={() => {
-          const bastApproval = async () => {
+          const approval = async () => {
+            // console.log('approval ' + module);
             // console.log(JSON.stringify(data));
             try {
               const response = await api.post(module + '/approval', data);
@@ -137,10 +138,10 @@ const ApprovalConfirmation = ({ data, module, listData = [], onSuccessNavigateTo
                 router.push(JSON.parse(onSuccessNavigateTo));
               }
             } catch (error) {
-              console.error('Error approving bast:', error);
+              console.error('Error approving ' + module + ' :', error);
             }
           }
-          bastApproval();
+          approval();
         }} />
         <ActionButton type="no" onPress={() => {
           router.back();

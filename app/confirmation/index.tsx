@@ -4,7 +4,13 @@ import { useLocalSearchParams } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
 
 export default function Confirmation() {
-  const { type, data = "{}", module, listData = "[]", onSuccessNavigateTo } = useLocalSearchParams();
+  const {
+    type,
+    data = "{}",
+    module,
+    listData = "[]",
+    onSuccessNavigateTo
+  } = useLocalSearchParams();
   // console.log(data, "Confirmation data");
   // console.log(module, "Confirmation module");
   // console.log(type, "Confirmation type");

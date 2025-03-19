@@ -33,14 +33,14 @@ const RejectionConfirmation = ({ data, module, onSuccessNavigateTo }: any) => {
             data[0].reason = reason;
             // console.log(JSON.stringify(data));
             try {
-              const response = await api.post('bast/approval', data);
-              console.log('response rejecting: ', response);
+              const response = await api.post(module + '/approval', data);
+              console.log('response rejecting: ' + module + ' :', response);
               if (response.data?.success) {
                 // router.dismiss(2);
                 router.push(JSON.parse(onSuccessNavigateTo));
               }
             } catch (error) {
-              console.error('Error rejecting bast:', error);
+              console.error('Error rejecting ' + module + ' :', error);
             }
           }
           bastRejection();

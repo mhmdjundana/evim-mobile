@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { router, useLocalSearchParams, usePathname } from "expo-router";
+import { router, usePathname } from "expo-router";
 import { handleApproveButton, handleRejectButton } from "./utils";
 import { Checkbox } from "react-native-paper";
 import { displayPrice } from "@/utils/utils";
-
-interface ListCardProps {
-  data: any;
-  listData: any;
-  rowSelection: any[];
-  setRowSelection: (rowSelection: any[]) => void;
-}
+import StatusListCard from "../StatusListCard";
+import ApprovalActionListCard from "../ApprovalActionListCard";
 
 const ListCard = ({
   data,
@@ -61,50 +56,16 @@ const ListCard = ({
           <Text style={styles.colon}>:</Text>
           <Text style={styles.value}> {displayPrice(data.grand_total)}</Text>
         </View>
-        <View style={[styles.row, {
-          // backgroundColor: 'red',
-          alignItems: 'center'
-        }]}>
-          <Text style={styles.label}>Status</Text>
-          <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> </Text>
-          <View style={styles.statusContainer}>
-            <TouchableOpacity
-              style={[styles.statusButton, {
-                backgroundColor: data.approval_status?.status_color ? data.approval_status?.status_color : "#c5c5c5"
-              }]}>
-              <Text style={styles.statusText}>{data.approval_status?.status_name}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.buttonContainer}>
-          {data.action?.is_approve && (
-            <TouchableOpacity
-              style={styles.approveButton}
-              onPress={() => handleApproveButton({
-                item: data,
-                router: router,
-                listData: listData,
-                rowSelection: rowSelection,
-                onSuccessNavigateTo: JSON.stringify({ pathname })
-              })}>
-              <Text style={styles.buttonText}>Approve</Text>
-            </TouchableOpacity>
-          )}
-          {data.action?.is_reject && (
-            <TouchableOpacity
-              style={styles.rejectButton}
-              onPress={() => handleRejectButton({
-                item: data,
-                router: router,
-                listData: listData,
-                rowSelection: rowSelection,
-                onSuccessNavigateTo: JSON.stringify({ pathname })
-              })}>
-              <Text style={styles.buttonText}>Reject</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+        <StatusListCard data={data} />
+        <ApprovalActionListCard
+          data={data}
+          listData={listData}
+          rowSelection={rowSelection}
+          pathname={pathname}
+          handleApproveButton={handleApproveButton}
+          handleRejectButton={handleRejectButton}
+          module="bast"
+        />
       </View>
     </TouchableOpacity>
   );
@@ -145,27 +106,11 @@ const styles = StyleSheet.create({
     color: "#494A50",
     fontSize: 16
   },
-  statusContainer: {
-    alignItems: "center",
-    marginVertical: 5,
-    marginLeft: 10
-  },
-  statusButton: {
-    padding: 8,
-    borderRadius: 25,
-    minWidth: 100,
-    alignItems: "center",
-  },
   review: {
     backgroundColor: "#2196F3",
   },
   approved: {
     backgroundColor: "#4CAF50",
-  },
-  statusText: {
-    color: "#FFFFFF",
-    fontWeight: "700",
-    fontSize: 14,
   },
   buttonContainer: {
     flexDirection: "row",

@@ -1,21 +1,28 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import { handleApproveButton, handleRejectButton } from "../bast/utils";
 import { Checkbox } from "react-native-paper";
 import { displayPrice } from "@/utils/utils";
+import StatusListCard from "../StatusListCard";
+import ApprovalActionListCard from "../ApprovalActionListCard";
 
 const ListCardInvoice = ({
   data,
+  listData,
   rowSelection,
   handleCheck = () => { }
 }: any) => {
   // console.log(data, 'listcardInvoice data')
+  const pathname = usePathname();
 
   return (
-    <TouchableOpacity style={styles.row} onPress={() => {
-      router.push({ pathname: `/invoice/detail`, params: { id: data.id } })
-    }}>
+    <TouchableOpacity
+      style={styles.row}
+      onPress={() => {
+        router.push({ pathname: `/invoice/detail`, params: { id: data.id } })
+      }}
+    >
       <View style={styles.card}>
         {
           (data.action?.is_approve || data.action?.is_reject) &&
@@ -49,28 +56,16 @@ const ListCardInvoice = ({
           <Text style={styles.colon}>:</Text>
           <Text style={styles.value}> {displayPrice(data.grand_total)}</Text>
         </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Status</Text>
-          <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> </Text>
-          <View style={styles.statusContainer}>
-            <TouchableOpacity style={[styles.statusButton, { backgroundColor: data.approval_status?.status_color ? data.approval_status?.status_color : "#c5c5c5" }]}>
-              <Text style={styles.statusText}>{data.approval_status?.status_name}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.buttonContainer}>
-          {data.action?.is_approve && (
-            <TouchableOpacity style={styles.approveButton} onPress={() => handleApproveButton({ item: data, router: router })}>
-              <Text style={styles.buttonText}>Approve</Text>
-            </TouchableOpacity>
-          )}
-          {data.action?.is_reject && (
-            <TouchableOpacity style={styles.rejectButton} onPress={() => handleRejectButton({ item: data, router: router })}>
-              <Text style={styles.buttonText}>Reject</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+        <StatusListCard data={data} />
+        <ApprovalActionListCard
+          data={data}
+          listData={listData}
+          rowSelection={rowSelection}
+          pathname={pathname}
+          handleApproveButton={handleApproveButton}
+          handleRejectButton={handleRejectButton}
+          module="invoice"
+        />
       </View>
     </TouchableOpacity>
   );

@@ -37,7 +37,7 @@ const InvoiceTaxSimulation = ({ data }: any) => {
             }
             {
               data?.wbs_no ?
-                <Text style={styles.value}>{displayStringArray(data?.wbs_no)}</Text>
+                <Text style={styles.value2}>{displayStringArray(data?.wbs_no)}</Text>
                 : data?.coscenter_no ? <Text style={styles.value}>{displayStringArray(data?.coscenter_no)}</Text> : null
             }
           </View>

@@ -9,6 +9,41 @@ import { EmptyList } from "../EmptyList";
 import { router } from "expo-router";
 
 const { height } = Dimensions.get('window');
+const statusOptions = [ // Define your status options
+  { label: 'All', value: '' },
+  {
+    label: "Validate Invoice",
+    value: "Validate Invoice",
+  },
+  {
+    label: "Validate Tax",
+    value: "Validate Tax",
+  },
+  {
+    label: "Finance Approve",
+    value: "Finance Approve",
+  },
+  {
+    label: "Create MIRO",
+    value: "Create MIRO",
+  },
+  {
+    label: "Release",
+    value: "Release",
+  },
+  {
+    label: "Payment Advice",
+    value: "Payment Advice",
+  },
+  {
+    label: "Paid",
+    value: "Paid",
+  },
+  { label: "Completed", value: "Completed" },
+  { label: "Rejected", value: "Rejected" },
+  { label: "Rejected > 30 days", value: "Rejected > 30 days" },
+  // Add more status options as needed
+]
 
 const ViewInvoiceList = ({
   listState,
@@ -33,7 +68,6 @@ const ViewInvoiceList = ({
     <TopBarLayout>
       <View style={{
         flex: 1,
-        // backgroundColor: 'yellow',
         height: height,
         margin: 0,
       }}>
@@ -44,16 +78,17 @@ const ViewInvoiceList = ({
                 listState={listState}
                 setIsRenderFilter={setIsRenderFilter}
                 setApplyFilter={setApplyFilter}
+                statusOptions={statusOptions}
               />
             </>
           ) : (
             <>
               <FilterBar
-                moduleName="BAST"
                 data={data}
                 rowSelection={rowSelection}
                 setRowSelection={setRowSelection}
                 setIsRenderFilter={setIsRenderFilter}
+                statusOptions={statusOptions}
               />
               <FlatList
                 data={data}
@@ -61,6 +96,7 @@ const ViewInvoiceList = ({
                   <ListCardInvoice
                     key={item.id}
                     data={item}
+                    listData={data}
                     rowSelection={rowSelection}
                     setRowSelection={setRowSelection}
                     handleCheck={handleCheck}

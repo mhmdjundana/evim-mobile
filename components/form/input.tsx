@@ -19,7 +19,7 @@ export const InputText = ({
       <TextInput
         style={{
           height: 40,
-          borderColor: error ? 'red' : '#f0f0f0',
+          borderColor: error ? 'red' : '#444',
           borderWidth: 1,
           borderRadius: 5,
           padding: 10,
@@ -68,11 +68,13 @@ export const InputSelect = ({
   disabled = false,
   onValueChange = () => { },
   style = {},
-  options = []
+  options = [],
+  value = "",
+  index,
 }: any) => {
   return (
     <>
-      <Text style={{ fontSize: 16, fontWeight: '500' }}>
+      <Text style={{ fontSize: 16, fontWeight: '500', color: '#444' }}>
         {label}
       </Text>
       <View style={{
@@ -85,15 +87,17 @@ export const InputSelect = ({
       }}>
         <Picker
           style={{
-            height: 40,
+            height: 50,
             // paddingHorizontal: 8,
             // backgroundColor: 'white',
+            borderColor: 'red'
           }}
           // selectedValue={"Finance"}
           mode="dropdown"
           onValueChange={onValueChange}
           dropdownIconColor="gray"
           dropdownIconRippleColor="gray"
+          selectedValue={value}
         >
           {
             options.map((option: any) => (

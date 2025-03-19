@@ -8,7 +8,7 @@ export default function FilterBar({
   data, 
   rowSelection, 
   setRowSelection, 
-  setIsRenderFilter
+  setIsRenderFilter,
 }: any) {
   const [isSelectedAll, setIsSelectedAll] = useState(false);
 

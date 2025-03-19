@@ -47,32 +47,50 @@ const FilterPageUi = ({
         <Text style={styles.title}>Filter & Sort</Text>
       </View>
 
-      {columnFilters?.map((input: any, index: number) => (
-        <InputText
-          key={index}
-          index={index}
-          label={input.label}
-          placeholder={input.placeholder}
-          value={input.value}
-          onChangeText={(value: any) => {
-            const updatedState = [...columnFilters];
-            updatedState[index].value = value;
-            setColumnFilters(updatedState);
-          }}
-          style={input.style}
-        />
-      ))}
+      {columnFilters?.map((input: any, index: number) => {
+        if (input.id === 'status_name') return (
+          <InputSelect
+            key={index}
+            index={index}
+            label={input.label}
+            placeholder={input.placeholder}
+            onValueChange={(value: any) => {
+              // console.log(value, 'value')
+              const updatedState = [...columnFilters];
+              updatedState[index].value = value;
+              setColumnFilters(updatedState);
+            }}
+            value={input.value}
+            style={{ marginBottom: 10 }}
+            options={statusOptions}
+          />
+        )
+        return (
+          <InputText
+            key={index}
+            index={index}
+            label={input.label}
+            placeholder={input.placeholder}
+            value={input.value}
+            onChangeText={(value: any) => {
+              const updatedState = [...columnFilters];
+              updatedState[index].value = value;
+              setColumnFilters(updatedState);
+            }}
+            style={input.style}
+          />
+        )
+      })}
 
-      {/* <Text style={{ fontSize: 16, fontWeight: '500' }}>Status</Text> */}
-      <InputSelect
-        label="Status"
-        placeholder="Select Status"
-        onValueChange={(value: any) => setStatus(value)}
-        value={status}
-        style={{ marginBottom: 10 }}
-        options={statusOptions}
-      />
-
+      <TouchableOpacity
+        style={styles.buttonReset}
+        onPress={() => {
+          setColumnFilters((prev: any) => prev.map((item: any) => ({ ...item, value: "" })));
+          // setIsRenderFilter(false)
+        }}
+      >
+        <Text style={styles.buttonText}>Reset</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
@@ -133,6 +151,13 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#007E7A', // Example button color
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  buttonReset: {
+    backgroundColor: '#999', // Example button color
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
