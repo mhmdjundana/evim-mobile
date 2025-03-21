@@ -14,7 +14,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 // import * as Sharing from 'expo-sharing';
 // import * as Linking from 'expo-linking'; // Import Linking
 // import { downLoadPdfExcelBase64 } from '@/fetch/downloadFile';
-import { downloadFile } from './utils/downloadFile';
+import { downloadFile } from '../utils/downloadFile';
 
 const { width } = Dimensions.get('window');
 
@@ -46,7 +46,7 @@ const FileItem = ({ item, index, bast_id, downloading, setDownloading }: any) =>
       <View style={styles.columnRight2}>
         {item.value ? (
           <TouchableOpacity
-            onPress={() => downloadFile({ setDownloading, id: bast_id, value: item.value })}
+            onPress={() => downloadFile({ setDownloading, id: bast_id, value: item.value, module: 'bast' })}
             disabled={downloading}
           >
             <Text style={styles.valueFile}>{item.text}</Text>
@@ -59,7 +59,7 @@ const FileItem = ({ item, index, bast_id, downloading, setDownloading }: any) =>
   )
 }
 
-const DocumentDetailBastSapEditFilesNew = (props: any) => {
+const DocumentDetailFiles = (props: any) => {
   const { data } = props; // Destructure data from props
   const [downloading, setDownloading] = useState(false);
 
@@ -182,4 +182,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DocumentDetailBastSapEditFilesNew;
+export default DocumentDetailFiles;

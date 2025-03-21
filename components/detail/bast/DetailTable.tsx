@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TextInput, TouchableOpacity } from 'react-native';
-import { RnPicker } from '../input/dropdown';
-import { bastDetailItemDataKeys } from './data/bastDetailData';
-import detail from '@/app/bast/detail';
+import { RnPicker } from '../../input/dropdown';
+import { bastDetailItemDataKeys } from '../data/bastDetailData';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Or your preferred icon library
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 import { displayPrice } from '@/utils/utils';
 
 const { width } = Dimensions.get('window');
 
-const DetailTableNew = ({
+const DetailTable = ({
   data,
   setData,
   style,
-  uomList,
   permission,
   setIsApproveItems
 }: any) => {
-  // console.log(data, 'DetailTableNew data')
+  // console.log(data, 'DetailTable data')
   const { details } = data
   const [details2, setDetails2] = useState([])
   // const [uomList2, setUomList2] = useState([])
@@ -95,16 +93,16 @@ const DetailTableNew = ({
                 <Text style={styles.colon}>:</Text>
                 <Text style={styles.value}> {item.is_reimbursement === "0" ? 'No' : item.is_reimbursement === "1" ? 'Yes' : '-'}</Text>
               </View>
-              <View style={styles.row}>
+              {item.reason_of_rejection && <View style={styles.row}>
                 <Text style={styles.label}>Reason of Rejection</Text>
                 <Text style={styles.colon}>:</Text>
                 <Text style={styles.value}> {item.reason_of_rejection}</Text>
-              </View>
-              <View style={styles.row}>
+              </View>}
+              {item.comment && <View style={styles.row}>
                 <Text style={styles.label}>Comment</Text>
                 <Text style={styles.colon}>:</Text>
                 <Text style={styles.value}> {item.comment}</Text>
-              </View>
+              </View>}
               {
                 ((data?.action?.is_approve || data?.action?.is_reject) && data?.action?.is_approve_item) &&
                 <View style={styles.buttonContainer}>
@@ -556,4 +554,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailTableNew;
+export default DetailTable;

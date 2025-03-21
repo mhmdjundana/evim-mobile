@@ -2,7 +2,7 @@ import { displayPrice, displayStringArray } from '@/utils/utils';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const InvoiceTaxSimulation = ({ data }: any) => {
+const TaxSimulation = ({ data }: any) => {
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -340,4 +340,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InvoiceTaxSimulation;
+export default TaxSimulation;

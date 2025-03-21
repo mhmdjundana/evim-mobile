@@ -1,17 +1,20 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { displayStringArray } from '@/utils/utils';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { downloadFile } from '../utils/downloadFile';
 
 const { width } = Dimensions.get('window');
 
-const DocumentDetailInvoice = (props: any) => {
+const DocumentDetail = (props: any) => {
   const { data } = props; // Destructure data from props
+  const [downloading, setDownloading] = useState(false);
 
+  const allDoc = {
+    title: "All Document",
+    value: data?.doc_no ? data?.doc_no + ".pdf" : "-",
+    col: 1,
+  }
   const bastDetailData = [
-    {
-      title: "All Document",
-      value: data?.doc_no ? data?.doc_no + ".pdf" : "-",
-      col: 1,
-    },
     {
       title: "BAST No.",
       value: data?.bast_no,
@@ -54,15 +57,15 @@ const DocumentDetailInvoice = (props: any) => {
     },
     {
       title: "GL No",
-      value: data?.gl_no,
+      value: data?.gl_no && displayStringArray(data?.gl_no),
     },
     {
       title: "WBS No",
-      value: data?.wbs_no,
+      value: data?.wbs_no && displayStringArray(data?.wbs_no),
     },
     {
       title: "Cost Center No.",
-      value: data?.coscenter_no,
+      value: data?.coscenter_no && displayStringArray(data?.coscenter_no),
     },
     {
       title: "SAP Invoice (MIRO)",
@@ -108,6 +111,26 @@ const DocumentDetailInvoice = (props: any) => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      {
+        allDoc?.value && (
+          <View style={styles.row}>
+          <View style={styles.columnLeft}>
+            <Text style={styles.label}>{allDoc.title}</Text>
+          </View>
+          <View style={styles.middle}>
+            <Text style={styles.label}>:</Text>
+          </View>
+          <View style={styles.columnRight}>
+            <TouchableOpacity
+              onPress={() => downloadFile({ setDownloading, id: data.id, value: "all", name: allDoc?.value, module: 'invoice' })}
+              disabled={downloading}
+            >
+              <Text style={styles.valueAllDoc}>{allDoc.value}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        )
+      }
       {bastDetailData.map((item, index) => (
         <View key={index} style={styles.row}>
           <View style={styles.columnLeft}>
@@ -168,6 +191,11 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     color: '#494A50',
   },
+  valueAllDoc: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    color: '#0024FF',
+  },
 });
 
-export default DocumentDetailInvoice;
+export default DocumentDetail;

@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TextInput, TouchableOpacity } from 'react-native';
-import { RnPicker } from '../input/dropdown';
-import { bastDetailItemDataKeys } from './data/bastDetailData';
-import detail from '@/app/bast/detail';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Or your preferred icon library
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
+import { bastDetailItemDataKeys } from '../data/bastDetailData';
+// import detail from '@/app/bast/detail';
+// import { RnPicker } from '../../input/dropdown';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Or your preferred icon library
+// import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
+import { displayPrice } from '@/utils/utils';
+import { FontAwesome6 } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
 
-const DetailTableInvoice = ({ data, setData, style, uomList, permission }: any) => {
+const DetailTable = ({
+  data,
+}: any) => {
   // console.log(data, 'DetailTableNew data')
   const { details } = data
   console.log(details, 'DetailTableNew data')
   const [details2, setDetails2] = useState([])
-  const [uomList2, setUomList2] = useState([])
 
   useEffect(() => {
     const d: any = []
@@ -28,16 +31,8 @@ const DetailTableInvoice = ({ data, setData, style, uomList, permission }: any) 
       }
       setDetails2(d)
     }
-    setUomList2(uomList?.map((item: any) => {
-      return {
-        ...item,
-        label: item.uom_name,
-        value: item.id
-      }
-    }))
   }, [
     details,
-    uomList
   ])
 
   return (
@@ -51,39 +46,49 @@ const DetailTableInvoice = ({ data, setData, style, uomList, permission }: any) 
           return (
             <View style={styles.card} key={idx}>
               <View style={styles.row}>
-                <Text style={styles.label}>Description</Text>
+                <Text style={styles.label}>Date</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.description}</Text>
+                <Text style={styles.value}> {item.date}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.label}>UOM</Text>
+                <Text style={styles.label}>Type of Expense</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.uom?.uom_name}</Text>
+                <Text style={styles.value}> {item.type_of_expense}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.label}>QTY</Text>
+                <Text style={styles.label}>Detail Expenditure</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.qty}</Text>
+                <Text style={styles.value}> {item.detail_expenditure}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>WBS (STM)</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.wbs_stm}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>Cost Element</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.cost_element}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Currency</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.currency?.currency_name}</Text>
+                <Text style={styles.value}> {item.currency}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.label}>Unit Price</Text>
+                <Text style={styles.label}>Amount</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.unit_price}</Text>
+                <Text style={styles.value}> {displayPrice(item.amount)}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.label}>Total Value</Text>
+                <Text style={styles.label}>Currency Rate</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.total_value}</Text>
+                <Text style={styles.value}> {displayPrice(item.currency_rate)}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.label}>Is Reimbursement</Text>
+                <Text style={styles.label}>Amount in IDR</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.is_reimbursement === "0" ? 'No' : item.is_reimbursement === "1" ? 'Yes' : '-'}</Text>
+                <Text style={styles.value}> {displayPrice(item.amount_in_idr)}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Reason of Rejection</Text>
@@ -91,10 +96,100 @@ const DetailTableInvoice = ({ data, setData, style, uomList, permission }: any) 
                 <Text style={styles.value}> {item.reason_of_rejection}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.label}>Comment</Text>
+                <Text style={styles.label}>Missing Receipt</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.comment}</Text>
+                <Text style={styles.value}> {item.missing_receipt}</Text>
               </View>
+              <View style={styles.row}>
+                <Text style={styles.label}>File</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}> {item.file}</Text>
+              </View>
+              {
+                ((data?.action?.is_approve || data?.action?.is_reject) && data?.action?.is_approve_item) &&
+                <View style={styles.buttonContainer}>
+                  {
+                    data?.action?.is_approve &&
+                    <TouchableOpacity
+                      style={[
+                        styles.approveButton,
+                        styles.approvalButton,
+                        {
+                          // opacity: item?.checking_status === '1' ? 0.5 : 1,
+                          backgroundColor: item?.checking_status === '1' ? '#007E7A' : 'white',
+                          borderColor: '#007E7A',
+                          borderWidth: 3
+                        }]}
+                      onPress={() => {
+                        console.log("approve")
+                        // setData((prev: any) => {
+                        //   return {
+                        //     ...prev,
+                        //     details: prev.details?.map((item: any, i: number) => {
+                        //       if (i === idx) {
+                        //         return {
+                        //           ...item,
+                        //           checking_status: '1'
+                        //         }
+                        //       } else {
+                        //         return item
+                        //       }
+                        //     })
+                        //   }
+                        // })
+                        // setIsApproveItems(true)
+                      }}
+                      disabled={item?.checking_status === '1'}
+                    >
+                      <FontAwesome6
+                        name="check"
+                        size={24}
+                        color={item?.checking_status === '1' ? 'white' : '#007E7A'}
+                      />
+                    </TouchableOpacity>
+                  }
+                  {
+                    data?.action?.is_reject &&
+                    <TouchableOpacity
+                      style={[
+                        styles.rejectButton,
+                        styles.approvalButton,
+                        {
+                          // opacity: item?.checking_status === '2' ? 0.5 : 1,
+                          backgroundColor: item?.checking_status === '2' ? '#E53935' : 'white',
+                          borderColor: '#E53935',
+                          borderWidth: 3
+                        }]}
+                      onPress={() => {
+                        console.log("reject")
+                        // setData((prev: any) => {
+                        //   return {
+                        //     ...prev,
+                        //     details: prev.details?.map((item: any, i: number) => {
+                        //       if (i === idx) {
+                        //         return {
+                        //           ...item,
+                        //           checking_status: '2'
+                        //         }
+                        //       } else {
+                        //         return item
+                        //       }
+                        //     })
+                        //   }
+                        // })
+                        // setIsApproveItems(true)
+                      }}
+                      disabled={item?.checking_status === '2'}
+                    >
+                      <FontAwesome6
+                        name="xmark"
+                        size={24}
+                        color={item?.checking_status === '2' ? 'white' : '#E53935'}
+                      />
+                    </TouchableOpacity>
+                  }
+                </View>
+              }
             </View>
           )
         })
@@ -302,4 +397,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailTableInvoice;
+export default DetailTable;

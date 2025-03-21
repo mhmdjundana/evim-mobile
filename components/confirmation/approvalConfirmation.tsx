@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { ActionButton } from '../button/ActionButton';
 import { router } from 'expo-router';
 import api from '@/fetch/axios';
@@ -136,6 +136,10 @@ const ApprovalConfirmation = ({ data, module, listData = [], onSuccessNavigateTo
               if (response.data?.success) {
                 // router.dismiss(2);
                 router.push(JSON.parse(onSuccessNavigateTo));
+              } else if (!response.data?.success && response.data?.message) {
+                Alert.alert('Failed', response.data?.message);
+              } else {
+                Alert.alert('Failed', 'Failed to approve ' + module);
               }
             } catch (error) {
               console.error('Error approving ' + module + ' :', error);

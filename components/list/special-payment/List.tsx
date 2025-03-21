@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { useCompanyMapping, useGetUserData } from '@/hooks/useGetUserData';
-import BastListUi from './BastListUi';
+import React, { useEffect, useState } from 'react';
+import { useGetUserData } from '@/hooks/useGetUserData';
+import ListUi from './ListUi';
+import { Text } from 'react-native';
 import useListData from '@/hooks/useListData';
-import { getBastList } from '@/fetch/bast';
+import { getSpecialPaymentList } from '@/fetch/special-payment';
 
-const filterInputBast = [
+const filterInputInvoice = [
   {
     label: "Vendor Name",
     placeholder: "Vendor Name",
@@ -14,10 +15,10 @@ const filterInputBast = [
     style: { marginBottom: 10 },
   },
   {
-    label: "BAST No.",
-    placeholder: "BAST No.",
-    name: "bast_no",
-    id: "bast_no",
+    label: "Invoice No.",
+    placeholder: "Invoice No.",
+    name: "invoice_number",
+    id: "invoice_number",
     value: "",
     style: { marginBottom: 10 },
   },
@@ -45,24 +46,27 @@ const filterInputBast = [
     value: "",
     style: { marginBottom: 10 },
   }
-] 
+]
 
-const BastList: React.FC = () => {
+
+const List: React.FC = () => {
   const { userData } = useGetUserData();
-  // console.log(userData?.data?.mapping, 'userdata mapping')
+  // console.log(userData, "userData")
+
   const listState = useListData({
     pageSize: 10,
-    getList: getBastList,
-    filterInput: filterInputBast,
-    module: 'bast',
+    getList: getSpecialPaymentList,
+    filterInput: filterInputInvoice,
+    module: 'special-payment',
   });
 
   return (
-    <BastListUi
-      userData={userData}
+    <ListUi
       listState={listState}
+      userData={userData}
     />
-  );
-};
+  )
+}
 
-export default BastList;
+
+export default List;

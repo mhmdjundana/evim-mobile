@@ -1,15 +1,12 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
-import InvoiceDetail from '@/components/detail/DocumentDetail';
-import DetailInvoiceNew from '@/components/detail/invoice/Detail';
 import TopBarLayout from '@/components/layout/TopBarLayout';
 
-const DetailInvoice = () => {
+const DetailSpecialPayment = () => {
   return (
     <TopBarLayout>
-        <DetailInvoiceNew />
     </TopBarLayout>
   );
 };
 
-export default DetailInvoice;
+export default DetailSpecialPayment;

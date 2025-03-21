@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView, RefreshControl } from "react-native";
-import HeaderDetail from "./DetailHeader";
-import DetailLogo from "./DetailLogo";
-import DetailTable from "./DetailTable";
+import HeaderDetail from "../DetailHeader";
 import DocumentDetail from "./DocumentDetail";
-import { mockData, mockHistory } from "./BastDetailMockData"
-import { ActionButton } from "../button/ActionButton";
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import { mockData, mockHistory } from "../BastDetailMockData"
+import { router, useLocalSearchParams } from "expo-router";
 import api from "@/fetch/axios";
 import { getBastById } from "@/fetch/bast";
 import { retrieveUserData } from "@/fetch/auth";
-import DocumentDetailBastSapEditFiles from "./DocumentDetailBastSapEditFiles";
-import DocumentDetailNew from "./DocumentDetailnew";
-import DocumentDetailBastSapEditFilesNew from "./DocumentDetailBastSapEditFilesNew";
-import DetailTableNew from "./DetailTableNew";
-import ApprovalAction from "./ApprovalAction";
-import DetailHistory from "./DetailHistory";
-import DetailHistoryNew from "./DetailHistoryNew";
+import DocumentDetailFiles from "./DocumentDetailFiles";
+import DetailTable from "./DetailTable";
+import ApprovalAction from "../ApprovalAction";
+import DetailHistoryNew from "../DetailHistoryNew";
 
 export default function BastDetailNew() {
   // const navigation = useNavigation()
@@ -97,26 +91,14 @@ export default function BastDetailNew() {
       <HeaderDetail title="BAST Detail" status={bastData?.approval_status?.status_name} statusColor={bastData?.approval_status?.status_color} />
       {/* <Text>{bastData?.id}</Text> */}
       <View style={{ marginTop: 15 }}></View>
-      <DocumentDetailNew data={bastData} />
+      <DocumentDetail data={bastData} />
       <View style={{ marginTop: 10 }}></View>
-      <DocumentDetailBastSapEditFilesNew data={bastData} />
+      <DocumentDetailFiles data={bastData} />
       <View style={{ marginTop: 25 }}></View>
-      <DetailTableNew
+      <DetailTable
         data={bastData}
         setData={setBastData}
         setIsApproveItems={setIsApproveItems}
-        permission={{
-          description: false,
-          uom_name: false,
-          qty: false,
-          currency_code: false,
-          unit_price: false,
-          total_value: false,
-          is_reimbursement: false,
-          reason: false,
-          comment: false,
-          // action: true,
-        }}
       />
       <ApprovalAction
         bastData={bastData}

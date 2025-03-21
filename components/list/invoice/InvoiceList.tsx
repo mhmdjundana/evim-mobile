@@ -57,6 +57,7 @@ const InvoiceList: React.FC = () => {
     pageSize: 10,
     getList: getInvoiceList,
     filterInput: filterInputInvoice,
+    module: 'invoice',
   });
 
   return (

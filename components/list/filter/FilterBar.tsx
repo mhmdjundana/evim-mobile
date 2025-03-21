@@ -18,7 +18,8 @@ export default function FilterBar({
     setIsSelectedAll(!isSelectedAll);
   };
 
-  const selectedCount = isSelectedAll ? data?.filter((item: any) => item.action?.is_approve || item.action?.is_reject)?.length : rowSelection?.length;
+  // const selectedCount = isSelectedAll ? data?.filter((item: any) => item.action?.is_approve || item.action?.is_reject)?.length : rowSelection?.length;
+  const selectedCount = rowSelection?.length;
 
   return (
     <View style={styles.container}>

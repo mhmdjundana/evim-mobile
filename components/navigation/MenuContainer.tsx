@@ -39,7 +39,7 @@ const modules = [
     moduleName: "Special Payment",
     moduleIcon: "",
     notif: 3,
-    navigateTo: "/sp",
+    navigateTo: "/special-payment",
     name: "special_payment"
   },
   {
@@ -47,7 +47,7 @@ const modules = [
     moduleName: "Employee Claim CC",
     moduleIcon: "",
     notif: 3,
-    navigateTo: "/cc",
+    navigateTo: "/employee-claim-cc",
     name: "employee_claim_cc"
   },
   {
@@ -63,7 +63,7 @@ const modules = [
     moduleName: "Corporate Integrity",
     moduleIcon: "",
     notif: 3,
-    navigateTo: "/ci",
+    navigateTo: "/corporate-integrity",
     name: "corporate_integrity"
   },
 ];
@@ -120,8 +120,8 @@ const MenuContainer = () => {
 };
 
 const MenuItem = ({ modules, notification }: any) => {
-  console.log('modules: ', modules)
-  console.log('notification: ', notification)
+  // console.log('modules: ', modules)
+  // console.log('notification: ', notification)
   return (
     <View style={styles.menu}>
       {modules.map((el: any, i: number) => {

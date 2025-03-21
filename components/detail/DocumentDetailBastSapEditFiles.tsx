@@ -81,7 +81,7 @@ const DocumentDetailBastSapEditFiles = (props: any) => {
           // }
         };
         try {
-          const base64Data = await downLoadPdfExcelBase64({ id: bast_id, filename: value });
+          const base64Data = await downLoadPdfExcelBase64({ id: bast_id, filename: value, module: 'bast' });
 
           if (!base64Data) {
             console.error("No data received from server.");

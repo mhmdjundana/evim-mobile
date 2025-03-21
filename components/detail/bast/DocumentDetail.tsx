@@ -1,11 +1,11 @@
 import { displayStringArray } from '@/utils/utils';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
-import { downloadFile } from './utils/downloadFile';
+import { downloadFile } from '../utils/downloadFile';
 
 const { width } = Dimensions.get('window');
 
-const DocumentDetailNew = (props: any) => {
+const DocumentDetail = (props: any) => {
   const { data } = props; // Destructure data from props
   const [downloading, setDownloading] = useState(false);
 
@@ -17,10 +17,6 @@ const DocumentDetailNew = (props: any) => {
     {
       title: "BAST No.",
       value: data?.bast_no,
-    },
-    {
-      title: "Posting Date",
-      value: data?.posting_date,
     },
     {
       title: "Goods or Services",
@@ -115,7 +111,7 @@ const DocumentDetailNew = (props: any) => {
             </View>
             <View style={styles.columnRight}>
               <TouchableOpacity
-                onPress={() => downloadFile({ setDownloading, id: data.id, value: "all", name: item?.value })}
+                onPress={() => downloadFile({ setDownloading, id: data.id, value: "all", name: item?.value, module: 'bast' })}
                 disabled={downloading}
               >
                 <Text style={styles.valueAllDoc}>{item.value}</Text>
@@ -191,4 +187,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DocumentDetailNew;
+export default DocumentDetail;

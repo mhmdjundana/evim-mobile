@@ -9,6 +9,7 @@ const downloadFile = async ({
   id,
   value,
   name,
+  module
 }: any) => {
   setDownloading(true);
   const shareFile = async (fileUri: any, mimeType: any) => {
@@ -38,7 +39,7 @@ const downloadFile = async ({
     // }
   };
   try {
-    const base64Data = await downLoadPdfExcelBase64({ id: id, filename: value });
+    const base64Data = await downLoadPdfExcelBase64({ id: id, filename: value, module });
 
     if (!base64Data) {
       console.error("No data received from server.");

@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { useCompanyMapping } from './useGetUserData';
+import * as Keychain from "react-native-keychain";
 
-const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
+const useListData = ({
+  pageSize,
+  getList,
+  filterInput = [],
+  module = ''
+}: any) => {
   const {
     currentCompany,
   } = useCompanyMapping();
@@ -10,17 +16,27 @@ const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
   const [pageIndex, setPageIndex] = useState<any>(0);
   const lastPage = useRef(0);
   const [rowSelection, setRowSelection] = useState<any[]>([]);
-  const [columnFilters, setColumnFilters] = useState<any[]>(filterInput)
-  const defaultColumnFilters = { "id": "company", "value": currentCompany?.company_initial ? currentCompany?.company_initial : "STM" }
+  const [columnFilters, setColumnFilters] = useState<any[]>([])
+  const defaultColumnFilters = {
+    "id": "company",
+    "value": currentCompany?.company_initial ? currentCompany?.company_initial : "STM"
+  }
   const [applyFilter, setApplyFilter] = useState(0)
   const [isRenderFilter, setIsRenderFilter] = useState(false);
   // console.log("data", data)
-  console.log("columnFilters", columnFilters)
-  console.log("pageIndex", pageIndex)
-  console.log("lastPage", lastPage.current)
-  console.log("data count", data?.length)
+  // console.log("columnFilters", columnFilters)
+  // console.log("pageIndex", pageIndex)
+  // console.log("lastPage", lastPage.current)
+  // console.log("data count", data?.length)
 
   const fetchData = async () => {
+    if (pageIndex === null) {
+      setPageIndex(0)
+      return []
+    }
+    if (columnFilters?.length === 0) {
+      return []
+    }
     setIsLoading(true);
     const cf = [
       ...columnFilters?.map((i: any) => ({ id: i.id, value: i.value })),
@@ -34,12 +50,9 @@ const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
         setIsLoading,
         columnFilters: cf
       });
+      console.log(res?.data?.data, "res")
       if (res?.data?.data?.data?.length > 0) {
         setData(prev => {
-          if (pageIndex === null) {
-            setPageIndex(0)
-            return res.data.data.data
-          }
           if (pageIndex === 0) {
             return res.data.data.data
           }
@@ -47,6 +60,10 @@ const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
           return [...prev, ...res.data.data.data]
         })
         lastPage.current = res.data.data.last_page;
+      } else if (res?.data?.data?.data?.length === 0 && res?.data?.data?.current_page === 1) {
+        // return []
+        setData([])
+        lastPage.current = res?.data?.data?.last_page;
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -69,11 +86,31 @@ const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
   };
 
   useEffect(() => {
+    retrieveFilterKeychain(module)
+      .then((filter) => {
+        if (filter?.length > 0) {
+          setColumnFilters(filter);
+          setPageIndex(null)
+        } else {
+          setColumnFilters(filterInput);
+          setPageIndex(null)
+        }
+      })
+  }, []);
+
+  useEffect(() => {
     fetchData();
   }, [pageIndex]);
-  
+
   useEffect(() => {
-    setPageIndex(null)
+    if (applyFilter === 0) return
+    saveFilterKeychain(columnFilters, module)
+      .then((status: boolean) => {
+        if (status) {
+          // console.log("save filter success")
+          setPageIndex(null)
+        }
+      })
   }, [applyFilter]);
 
   return {
@@ -90,6 +127,30 @@ const useListData = ({ pageSize, getList, filterInput = [] }: any) => {
     isRenderFilter,
     setIsRenderFilter,
   };
+};
+
+const saveFilterKeychain = async (filter: any, module: string) => {
+  try {
+    await Keychain.setGenericPassword("filter", JSON.stringify(filter), {
+      service: `${module}_filter`,
+    });
+    return true;
+  } catch (error) {
+    console.error(`Error saving filter for ${module}:`, error);
+    return false;
+  }
+};
+
+const retrieveFilterKeychain = async (module: string) => {
+  try {
+    const filter: any = await Keychain.getGenericPassword({
+      service: `${module}_filter`,
+    });
+    return filter?.password ? JSON.parse(filter.password) : null;
+  } catch (error) {
+    console.error(`Error retrieving filter for ${module}:`, error);
+    return null;
+  }
 };
 
 export default useListData;

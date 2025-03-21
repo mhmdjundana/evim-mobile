@@ -2,7 +2,7 @@ import { displayPrice } from '@/utils/utils';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const InvoicePaymentSummary = ({ data }: any) => {
+const PaymentSummary = ({ data }: any) => {
   console.log(data, 'data')
 
   const [taxable, setTaxable] = useState(0)
@@ -172,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InvoicePaymentSummary;
+export default PaymentSummary;
