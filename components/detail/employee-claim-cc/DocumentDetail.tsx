@@ -1,4 +1,4 @@
-import { displayDate, displayPrice, displayStringArray } from '@/utils/utils';
+import { changeUStoID, displayDate, displayPrice, displayStringArray } from '@/utils/utils';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import { downloadFile } from '../utils/downloadFile';
@@ -53,11 +53,11 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "Total Expense Claimed",
-      value: displayPrice(data?.total_expense_claimed),
+      value: changeUStoID(data?.total_expense_claimed),
     },
     {
       title: "Company to Pay",
-      value: displayPrice(data?.company_to_pay),
+      value: changeUStoID(data?.company_to_pay),
     },
   ]
 

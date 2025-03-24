@@ -5,7 +5,7 @@ import { bastDetailItemDataKeys } from '../data/bastDetailData';
 // import { RnPicker } from '../../input/dropdown';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Or your preferred icon library
 // import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
-import { displayPrice } from '@/utils/utils';
+import { changeUStoID, displayPrice } from '@/utils/utils';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { downloadFile } from '../utils/downloadFile';
 
@@ -83,17 +83,17 @@ const DetailTable = ({
               <View style={styles.row}>
                 <Text style={styles.label}>Amount</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.amount}</Text>
+                <Text style={styles.value}>{changeUStoID(item.amount)}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Currency Rate</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.currency_rate}</Text>
+                <Text style={styles.value}>{changeUStoID(item.currency_rate)}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Amount in IDR</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.amount_idr}</Text>
+                <Text style={styles.value}>{changeUStoID(item.amount_idr)}</Text>
               </View>
               {item.reject_reason && <View style={styles.row}>
                 <Text style={styles.label}>Reason of Rejection</Text>
