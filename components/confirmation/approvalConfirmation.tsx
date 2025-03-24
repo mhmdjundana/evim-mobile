@@ -33,9 +33,66 @@ const invoiceList = [
     name: "po_no"
   },
 ]
+const specialPaymentList = [
+  {
+    title: "Vendor Name",
+    name: "vendor.vendor_name"
+  },
+  {
+    title: "Doc No.",
+    name: "referenceNumber"
+  },
+  {
+    title: "Payment Amount",
+    name: "payment_amount"
+  },
+]
+const ccList = [
+  {
+    title: "Employee Name",
+    name: "employee_name"
+  },
+  {
+    title: "Doc No.",
+    name: "employee_claim_number"
+  },
+  {
+    title: "Company To Pay",
+    name: "company_to_pay"
+  },
+]
+const pcardList = [
+  {
+    title: "Employee Name",
+    name: "employee_name"
+  },
+  {
+    title: "Doc No.",
+    name: "p_card_number"
+  },
+  {
+    title: "Company To Pay",
+    name: "company_to_pay"
+  },
+]
+const ciList = [
+  {
+    title: "Vendor Name",
+    name: "vendor_name"
+  },
+  {
+    title: "Doc No.",
+    name: "corporate_integrity_number"
+  },
+  {
+    title: "Payment Amount",
+    name: "payment_amount"
+  },
+]
 
 const ApprovalConfirmation = ({ data, module, listData = [], onSuccessNavigateTo }: any) => {
   console.log(data, "Apporval data");
+  console.log(listData, "Apporval listData");
   console.log(module, "Apporval module");
   console.log(onSuccessNavigateTo, "Apporval onSuccessNavigateTo");
 
@@ -46,6 +103,18 @@ const ApprovalConfirmation = ({ data, module, listData = [], onSuccessNavigateTo
       break;
     case "invoice":
       listOfDataModule.push(...invoiceList)
+      break;
+    case "special-payment":
+      listOfDataModule.push(...specialPaymentList)
+      break;
+    case "employee-claim-cc":
+      listOfDataModule.push(...ccList)
+      break;
+    case "pcard":
+      listOfDataModule.push(...pcardList)
+      break;
+    case "corporate-integrity":
+      listOfDataModule.push(...ciList)
       break;
 
     default:

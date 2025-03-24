@@ -1,3 +1,5 @@
+import { changeUStoID, displayPrice } from "@/utils/utils";
+
 const getModuleId = (module: string) => {
   switch (module) {
     case "bast":
@@ -23,7 +25,7 @@ const createInfoData = (module: string, data: any) => {
       contract_no: data.contract_no,
       po_no: data.po_no,
       vendor_name: data.vendor_name,
-      grand_total: data.grand_total,
+      grand_total: displayPrice(data.grand_total),
       id: data.id
     }
   }
@@ -33,7 +35,39 @@ const createInfoData = (module: string, data: any) => {
       contract_no: data.contract_no,
       po_no: data.po_no,
       vendor_name: data.suplier_name,
-      grand_total: data.grand_total,
+      grand_total: displayPrice(data.grand_total),
+      id: data.id
+    }
+  }
+  if (module === "special-payment") {
+    return {
+      vendor_name: data['vendor.vendor_name'],
+      referenceNumber: data.referenceNumber,
+      payment_amount: changeUStoID(data.payment_amount),
+      id: data.id
+    }
+  }
+  if (module === "employee-claim-cc") {
+    return {
+      employee_name: data.employee_name,
+      employee_claim_number: data.employee_claim_number,
+      company_to_pay: changeUStoID(data.company_to_pay),
+      id: data.id
+    }
+  }
+  if (module === "pcard") {
+    return {
+      employee_name: data.employee_name,
+      p_card_number: data.p_card_number,
+      company_to_pay: changeUStoID(data.company_to_pay),
+      id: data.id
+    }
+  }
+  if (module === "corporate-integrity") {
+    return {
+      vendor_name: data.vendor_name,
+      corporate_integrity_number: data.corporate_integrity_number,
+      payment_amount: changeUStoID(data.payment_amount),
       id: data.id
     }
   }
