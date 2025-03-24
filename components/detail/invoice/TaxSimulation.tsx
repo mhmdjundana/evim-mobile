@@ -95,7 +95,7 @@ const TaxSimulation = ({ data }: any) => {
             <View style={styles.card}>
               <View style={styles.titleRow}>
                 <Text style={styles.sectionTitle}>WHT</Text>
-                <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.wht_amount)}</Text>
+                <Text style={styles.amount}>{data?.contract?.currency} {data?.wht_amount && parseFloat(data.wht_amount) > 0 ? "-" : ""}{displayPrice(data?.wht_amount)}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>GL No.</Text>
@@ -120,11 +120,11 @@ const TaxSimulation = ({ data }: any) => {
               <View style={styles.card} key={index}>
                 <View style={styles.titleRow}>
                   <Text style={styles.sectionTitle}>Other Adjustment</Text>
-                  <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(item?.amount)}</Text>
+                  <Text style={styles.amount}>{data?.contract?.currency} {item?.debit_or_credit === "C" ? "-" : ""}{displayPrice(item?.amount)}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.label}>Debit / Credit</Text>
-                  <Text style={styles.value2}>{item?.debit_or_credit === "D" ? "Debit" : "Credit"}</Text>
+                  <Text style={styles.value2}>{item?.debit_or_credit === "D" ? "Debit" : item?.debit_or_credit === "C" ? "Credit" : ""}</Text>
                 </View>
                 <View style={styles.row}>
                   {

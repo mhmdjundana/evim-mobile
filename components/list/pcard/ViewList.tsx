@@ -12,38 +12,27 @@ const { height } = Dimensions.get('window');
 const statusOptions = [
   { label: 'All', value: '' },
   {
-    label: "Approve",
-    value: "Approve",
+    label: "1st Approve",
+    value: "1st Approve",
   },
   {
-    label: "FV60 Approve",
-    value: "FV60 Approve",
-  },
-  {
-    label: "FV60 Post",
-    value: "FV60 Post",
-  },
-  {
-    label: "Payment Advice",
-    value: "Payment Advice",
+    label: "Validate Settlement",
+    value: "Validate Settlement",
   },
   { label: "Rejected", value: "Rejected" },
-  { label: "Rejected > 30 days", value: "Rejected > 30 days" },
   { label: "Completed", value: "Completed" },
 ]
 
 const ViewList = ({
   listState,
-}: {
-  listState: any;
-}) => {
+}: any) => {
   const {
     data,
     isLoading,
     handleLoadMore,
+    handleCheck,
     rowSelection,
     setRowSelection,
-    handleCheck,
     setApplyFilter,
     isRenderFilter,
     setIsRenderFilter,
@@ -100,8 +89,6 @@ const ViewList = ({
                     }}
                   />
                 }
-              // ListFooterComponent={isLoading ? <View style={{ height: 100 }} /> : null}
-
               />
             </>
           )

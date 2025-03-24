@@ -1,4 +1,4 @@
-import { displayPrice, displayStringArray } from '@/utils/utils';
+import { displayDate, displayPrice, displayStringArray } from '@/utils/utils';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import { downloadFile } from '../utils/downloadFile';
@@ -6,7 +6,7 @@ import { downloadFile } from '../utils/downloadFile';
 const { width } = Dimensions.get('window');
 
 const DocumentDetail = (props: any) => {
-  const { data } = props; // Destructure data from props
+  const { data, module } = props; // Destructure data from props
   const [downloading, setDownloading] = useState(false);
 
   const allDoc = {
@@ -21,7 +21,7 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "Mineral / Geothermal",
-      value: data?.company_sub_id === "1" ? "Mineral" : data?.company_sub_id === "2" ? "Geothermal" : "",
+      value: data?.subcompany_code === "001" ? "Mineral" : data?.subcompany_code === "002" ? "Geothermal" : "",
     },
     {
       title: "Department",
@@ -29,7 +29,7 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "Employee Name",
-      value: data?.payroll_name,
+      value: data?.employee?.payroll_name,
     },
     {
       title: "Employee ID",
@@ -41,7 +41,7 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "Currency",
-      value: data?.currency,
+      value: data?.currency_id,
     },
     {
       title: "Doc No",
@@ -49,7 +49,7 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "Doc Date",
-      value: data?.doc_date,
+      value: data?.doc_date && displayDate(data.doc_date),
     },
     {
       title: "Total Expense Claimed",
@@ -74,7 +74,7 @@ const DocumentDetail = (props: any) => {
           </View>
           <View style={styles.columnRight}>
             <TouchableOpacity
-              onPress={() => downloadFile({ setDownloading, id: data.id, value: "all", name: allDoc?.value, module: 'invoice' })}
+              onPress={() => downloadFile({ setDownloading, id: data.id, value: "all", name: allDoc?.value, module })}
               disabled={downloading}
             >
               <Text style={styles.valueAllDoc}>{allDoc.value}</Text>

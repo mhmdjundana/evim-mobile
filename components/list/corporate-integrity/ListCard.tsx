@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { RelativePathString, router, usePathname } from "expo-router";
 import { handleApproveButton, handleRejectButton } from "../bast/utils";
 import { Checkbox } from "react-native-paper";
-import { changeUStoID, displayPrice } from "@/utils/utils";
+import { displayPrice } from "@/utils/utils";
 import StatusListCard from "../StatusListCard";
 import ApprovalActionListCard from "../ApprovalActionListCard";
 
@@ -13,8 +13,9 @@ const ListCard = ({
   rowSelection,
   handleCheck = () => { }
 }: any) => {
-  // console.log(data, 'listcard data')
   const pathname = usePathname();
+  // console.log(data, 'listcard data')
+  // console.log(pathname, 'pathname data')
 
   return (
     <TouchableOpacity
@@ -37,19 +38,19 @@ const ListCard = ({
           </View>
         }
         <View style={styles.row}>
-          <Text style={styles.label}>Employee Name</Text>
+          <Text style={styles.label}>Vendor Name</Text>
           <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> {data.employee_name}</Text>
+          <Text style={styles.value}>{data?.vendor_name}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Document No.</Text>
+          <Text style={styles.label}>Doc No.</Text>
           <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> {data.employee_claim_number}</Text>
+          <Text style={styles.value}>{data.corporate_integrity_number}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Company To Pay</Text>
+          <Text style={styles.label}>Payment Amount</Text>
           <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> {changeUStoID(data.company_to_pay)}</Text>
+          <Text style={styles.value}>{displayPrice(data.payment_amount)}</Text>
         </View>
         <StatusListCard data={data} />
         <ApprovalActionListCard
@@ -59,7 +60,7 @@ const ListCard = ({
           pathname={pathname}
           handleApproveButton={handleApproveButton}
           handleRejectButton={handleRejectButton}
-          module="employee-claim-cc"
+          module={pathname.split('/').pop()}
         />
       </View>
     </TouchableOpacity>
@@ -99,7 +100,8 @@ const styles = StyleSheet.create({
   },
   value: {
     color: "#494A50",
-    fontSize: 16
+    fontSize: 16,
+    marginLeft: 5
   },
   statusContainer: {
     alignItems: "center",

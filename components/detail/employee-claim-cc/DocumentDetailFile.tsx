@@ -10,7 +10,7 @@ const DocumentDetailFile = (props: any) => {
 
   const bast_id = data.id
   const [bastDetailData, setBastDetailData] = useState([
-    { title: "Employee Claim", value: '', flag: 'employee_claim', text: 'Employee Claim.pdf' },
+    { title: "Employee Claim File", value: '', flag: 'ec', text: 'Employee Claim.pdf' },
     { title: 'Attachment HR Document', value: '', flag: 'attachFile_hr', text: 'Attachment HR Document.pdf' },
     { title: 'Billing Statement', value: '', flag: 'billing_statement', text: 'Billing Statement.pdf' },
   ])
@@ -18,6 +18,10 @@ const DocumentDetailFile = (props: any) => {
   useEffect(() => {
     const newData = []
     for (let i = 0; i < bastDetailData.length; i++) {
+      if (bastDetailData[i].flag === 'ec') {
+        newData.push({ ...bastDetailData[i], value: 'ec' })
+        continue
+      }
       const val = data?.[bastDetailData[i].flag] ? data?.[bastDetailData[i].flag] : ""
       newData.push({ ...bastDetailData[i], value: val })
     }
@@ -42,7 +46,8 @@ const DocumentDetailFile = (props: any) => {
                     setDownloading,
                     id: bast_id,
                     value: item.value,
-                    module: 'invoice'
+                    module: 'employee-claim-cc',
+                    name: item.text
                   })
                 }}
                 disabled={downloading}

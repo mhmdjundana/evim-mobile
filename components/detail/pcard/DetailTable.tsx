@@ -5,26 +5,27 @@ import { bastDetailItemDataKeys } from '../data/bastDetailData';
 // import { RnPicker } from '../../input/dropdown';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Or your preferred icon library
 // import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
-import { displayPrice } from '@/utils/utils';
+import { changeUStoID, displayDate, displayPrice } from '@/utils/utils';
 import { FontAwesome6 } from '@expo/vector-icons';
+import { downloadFile } from '../utils/downloadFile';
 
 const { width } = Dimensions.get('window');
 
 const DetailTable = ({
   data,
 }: any) => {
-  // console.log(data, 'DetailTableNew data')
-  const { details } = data
-  console.log(details, 'DetailTableNew data')
+  console.log(data, 'data')
+  const { claim_details } = data
+  // console.log(claim_details, 'DetailTableNew data')
   const [details2, setDetails2] = useState([])
 
   useEffect(() => {
     const d: any = []
-    if (details?.length) {
-      for (let i = 0; i < details.length; i++) {
+    if (claim_details?.length) {
+      for (let i = 0; i < claim_details.length; i++) {
         const e = JSON.parse(JSON.stringify(bastDetailItemDataKeys))
         for (let j = 0; j < e.length; j++) {
-          e[j].value = details[i]?.[e[j].name]
+          e[j].value = claim_details[i]?.[e[j].name]
         }
         console.log(e)
         d.push(e)
@@ -32,7 +33,7 @@ const DetailTable = ({
       setDetails2(d)
     }
   }, [
-    details,
+    claim_details,
   ])
 
   return (
@@ -42,68 +43,85 @@ const DetailTable = ({
       width: '100%'
     }]}>
       {
-        details?.map((item: any, idx: number) => {
+        claim_details?.map((item: any, idx: number) => {
           return (
             <View style={styles.card} key={idx}>
               <View style={styles.row}>
                 <Text style={styles.label}>Date</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.date}</Text>
+                <Text style={styles.value}>{item.date_detail && displayDate(item.date_detail)}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Type of Expense</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.type_of_expense}</Text>
+                <Text style={styles.value}>{item.typeofexpense?.type_code}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Detail Expenditure</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.detail_expenditure}</Text>
+                <Text style={styles.value}>{item.justification}</Text>
               </View>
-              <View style={styles.row}>
+              {item.wbs && <View style={styles.row}>
                 <Text style={styles.label}>WBS (STM)</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.wbs_stm}</Text>
-              </View>
+                <Text style={styles.value}>{item.wbs && `${item.wbs.wbs_code} - ${item.wbs.wbs_name}`}</Text>
+              </View>}
+              {item.costcenter && <View style={styles.row}>
+                <Text style={styles.label}>Cost Center (VEI)</Text>
+                <Text style={styles.colon}>:</Text>
+                <Text style={styles.value}>{item.costcenter && `${item.costcenter.code} - ${item.costcenter.name}`}</Text>
+              </View>}
               <View style={styles.row}>
                 <Text style={styles.label}>Cost Element</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.cost_element}</Text>
+                <Text style={styles.value}>{item.costelement ? `${item.costelement.gl_code} - ${item.costelement.gl_name}` : '-'}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Currency</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.currency}</Text>
+                <Text style={styles.value}>{item.currency_id}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Amount</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {displayPrice(item.amount)}</Text>
+                <Text style={styles.value}>{item.amount ? changeUStoID(item.amount) : ""}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Currency Rate</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {displayPrice(item.currency_rate)}</Text>
+                <Text style={styles.value}>{item.currency_rate}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Amount in IDR</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {displayPrice(item.amount_in_idr)}</Text>
+                <Text style={styles.value}>{item.amount_idr ? changeUStoID(item.amount_idr) : ""}</Text>
               </View>
-              <View style={styles.row}>
+              {item.reject_reason && <View style={styles.row}>
                 <Text style={styles.label}>Reason of Rejection</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.reason_of_rejection}</Text>
-              </View>
+                <Text style={styles.value}>{item.reject_reason}</Text>
+              </View>}
               <View style={styles.row}>
                 <Text style={styles.label}>Missing Receipt</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.missing_receipt}</Text>
+                <Text style={styles.value}>{item.missing_receipts === "1" ? 'Yes' : item.missing_receipts === "0" ? 'No' : '-'}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>File</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.file}</Text>
+                <TouchableOpacity onPress={() => {
+                  if (item.attachFile) {
+                    downloadFile({
+                      setDownloading: () => { },
+                      id: data?.id,
+                      value: item.attachFile,
+                      name: item.attachFile,
+                      module: 'pcard'
+                    })
+                  }
+                }}>
+                  <Text style={styles.valueFile}>{item.attachFile ? "Receipt.pdf" : "-"}</Text>
+                </TouchableOpacity>
               </View>
               {
                 ((data?.action?.is_approve || data?.action?.is_reject) && data?.action?.is_approve_item) &&
@@ -228,7 +246,7 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
     // borderBottomColor: '#ccc',
     // paddingVertical: 10,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     // backgroundColor: '#666',
     width: "100%"
   },
@@ -337,6 +355,12 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     maxWidth: "60%",
     color: "#494A50",
+    fontSize: 16,
+  },
+  valueFile: {
+    // flex: 1,
+    maxWidth: "100%",
+    color: "blue",
     fontSize: 16,
   },
   statusContainer: {

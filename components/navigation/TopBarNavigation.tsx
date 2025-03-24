@@ -2,15 +2,33 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { IconButton } from "react-native-paper";
 import { useGetUserData } from '@/hooks/useGetUserData';
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import { getCurrentCompanyKeychain } from "@/fetch/auth";
 
 export default function TopBarNavigation() {
   const { userData } = useGetUserData();
   // console.log(userData?.data?.email, "userData")
+  const stmLogo = require("@/assets/images/stm-logo-large.png")
+  const veiLogo = require("@/assets/images/vei-logo-large.png")
+  const [currentCompany, setCurrentCompany] = useState<any>(null);
 
+  useEffect(() => {
+    getCurrentCompanyKeychain()
+      .then((company) => {
+        if (company) {
+          console.log(company)
+          setCurrentCompany(company)
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting current company:", error);
+      });
+  }, [])
+  
   return (
     <View style={[styles.container]}>
       <Image
-        source={require("@/assets/images/stm-logo-large.png")}
+        source={currentCompany?.company_initial === "VEI" ? veiLogo : stmLogo}
         style={{
           width: 120, // Adjust logo size as needed
           height: 65,

@@ -1,7 +1,7 @@
 import React from 'react';
 import ListUi from './ListUi';
 import useListData from '@/hooks/useListData';
-import { getCcList } from '@/fetch/employee-claim-cc';
+import { getPcardList } from '@/fetch/pcard';
 
 const filterInput = [
   {
@@ -14,8 +14,8 @@ const filterInput = [
   {
     label: "Document No.",
     placeholder: "Document No.",
-    name: "employee_claim_number",
-    id: "employee_claim_number",
+    name: "p_card_number",
+    id: "p_card_number",
     value: "",
   },
   {
@@ -36,12 +36,12 @@ const filterInput = [
 
 
 const List: React.FC = () => {
-
+  const module = 'pcard'
   const listState = useListData({
     pageSize: 10,
-    getList: getCcList,
+    getList: getPcardList,
     filterInput: filterInput,
-    module: 'employee-claim-cc',
+    module,
   });
 
   return (

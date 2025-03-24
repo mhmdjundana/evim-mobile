@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router, usePathname } from "expo-router";
 import { handleApproveButton, handleRejectButton } from "./utils";

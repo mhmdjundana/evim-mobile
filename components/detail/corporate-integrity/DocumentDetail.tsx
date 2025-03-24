@@ -1,4 +1,4 @@
-import { displayStringArray } from '@/utils/utils';
+import { changeUStoID, displayStringArray } from '@/utils/utils';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import { downloadFile } from '../utils/downloadFile';
@@ -6,7 +6,7 @@ import { downloadFile } from '../utils/downloadFile';
 const { width } = Dimensions.get('window');
 
 const DocumentDetail = (props: any) => {
-  const { data } = props; // Destructure data from props
+  const { data, module } = props; // Destructure data from props
   const [downloading, setDownloading] = useState(false);
 
   const allDoc = {
@@ -21,11 +21,11 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "SAP Company Number",
-      value: data?.company_initial,
+      value: data?.sap_company_number,
     },
     {
       title: "Geothermal / Mineral",
-      value: data?.geothermal_mineral,
+      value: data?.subcompany_code === "001" ? "Mineral" : data?.subcompany_code === "002" ? "Geothermal" : "",
     },
     {
       title: "Classification",
@@ -37,31 +37,31 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "Vendor Name",
-      value: data?.vendor_name,
+      value: data?.vendor?.vendor_name,
     },
     {
       title: "Currency",
-      value: data?.currency_name,
+      value: data?.currency,
     },
     {
       title: "Payment Amount",
-      value: data?.payment_amount,
+      value: data?.payment_amount ? changeUStoID(data?.payment_amount) : "",
     },
     {
       title: "Vat Applicable",
-      value: data?.is_vat,
+      value: data?.is_vat === "1" ? "Yes" : "No",
     },
     {
       title: "Amount Of VAT",
-      value: data?.vat_amount,
+      value: data?.vat_amount ? changeUStoID(data?.vat_amount) : "",
     },
     {
       title: "Amount Of WHT",
-      value: data?.amount_of_wht,
+      value: data?.amount_of_wht ? changeUStoID(data?.amount_of_wht) : "",
     },
     {
       title: "Net Payment",
-      value: data?.net_payment,
+      value: data?.net_payment ? changeUStoID(data?.net_payment) : "",
     },
     {
       title: "GL",
@@ -79,22 +79,6 @@ const DocumentDetail = (props: any) => {
       title: "Requested By",
       value: data?.requested_by,
     },
-    // {
-    //   title: "Supporting Document",
-    //   value: data?.supporting_document,
-    // },
-    // {
-    //   title: "Payment Advice",
-    //   value: data?.payment_advice,
-    // },
-    // {
-    //   title: "Corporate Integrity PDF",
-    //   value: data?.corporate_integrity_pdf,
-    // },
-    // {
-    //   title: "CI File",
-    //   value: data?.corporate_integrity_pdf,
-    // },
     {
       title: "FV60",
       value: data?.fv60,
@@ -126,7 +110,7 @@ const DocumentDetail = (props: any) => {
           </View>
           <View style={styles.columnRight}>
             <TouchableOpacity
-              onPress={() => downloadFile({ setDownloading, id: data.id, value: "all", name: allDoc?.value, module: 'invoice' })}
+              onPress={() => downloadFile({ setDownloading, id: data.id, value: "all", name: allDoc?.value, module })}
               disabled={downloading}
             >
               <Text style={styles.valueAllDoc}>{allDoc.value}</Text>

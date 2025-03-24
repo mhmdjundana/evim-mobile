@@ -10,9 +10,7 @@ export default function Detail() {
   const [data, setData] = useState<any>([]);
   const [bastData, setBastData] = useState<any>([])
   const [historyData, setHistoryData] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState<any>(false);
-  // console.log(data, "Data bast view")
-  // console.log(bastData, "bastData")
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   
   const pathname = "/special-payment/detail",
     module = 'special-payment',

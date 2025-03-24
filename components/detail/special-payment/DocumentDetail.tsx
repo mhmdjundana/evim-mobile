@@ -1,4 +1,4 @@
-import { displayStringArray } from '@/utils/utils';
+import { displayPrice, displayStringArray } from '@/utils/utils';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import { downloadFile } from '../utils/downloadFile';
@@ -6,12 +6,12 @@ import { downloadFile } from '../utils/downloadFile';
 const { width } = Dimensions.get('window');
 
 const DocumentDetail = (props: any) => {
-  const { data } = props; // Destructure data from props
+  const { data, module } = props; // Destructure data from props
   const [downloading, setDownloading] = useState(false);
 
   const allDoc = {
     title: "All Document",
-    value: data?.doc_no ? data?.doc_no + ".pdf" : "-",
+    value: data?.special_payment_number ? data?.special_payment_number + ".pdf" : "",
     col: 1,
   }
   const bastDetailData = [
@@ -21,11 +21,11 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "SAP Company Number",
-      value: data?.company_number,
+      value: data?.company ? `${data?.company?.company_initial} ${data?.company?.company_code}` : "",
     },
     {
       title: "Mineral / Geothermal",
-      value: data?.company_sub_id === "1" ? "Mineral" : data?.company_sub_id === "2" ? "Geothermal" : "-",
+      value: data?.subcompany_code === "001" ? "Mineral" : data?.subcompany_code === "002" ? "Geothermal" : "",
     },
     {
       title: "Description",
@@ -37,7 +37,7 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "Vendor Name",
-      value: data?.vendor_name,
+      value: data?.vendor?.vendor_name,
     },
     {
       title: "Currency",
@@ -45,19 +45,19 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "Payment Amount",
-      value: data?.payment_amount,
+      value: data?.payment_amount && displayPrice(data?.payment_amount),
     },
     {
       title: "VAT Applicable",
-      value: data?.is_vat === "1" ? "Yes" : "No",
+      value: data?.is_vat === "1" ? "Yes" : data?.is_vat === "0" ? "No" : "",
     },
     {
       title: "Amount of VAT",
-      value: data?.vat_amount,
+      value: data?.vat_amount && displayPrice(data?.vat_amount),
     },
     {
       title: "Amount of WHT",
-      value: data?.amount_of_wht,
+      value: data?.amount_of_wht && displayPrice(data?.amount_of_wht),
     },
     {
       title: "WHT",
@@ -65,7 +65,7 @@ const DocumentDetail = (props: any) => {
     },
     {
       title: "Net Payment",
-      value: data?.net_payment,
+      value: data?.net_payment && displayPrice(data?.net_payment),
     },
     {
       title: "GL",
@@ -102,21 +102,21 @@ const DocumentDetail = (props: any) => {
       {
         allDoc?.value && (
           <View style={styles.row}>
-          <View style={styles.columnLeft}>
-            <Text style={styles.label}>{allDoc.title}</Text>
+            <View style={styles.columnLeft}>
+              <Text style={styles.label}>{allDoc.title}</Text>
+            </View>
+            <View style={styles.middle}>
+              <Text style={styles.label}>:</Text>
+            </View>
+            <View style={styles.columnRight}>
+              <TouchableOpacity
+                onPress={() => downloadFile({ setDownloading, id: data.id, value: "all", name: allDoc?.value, module })}
+                disabled={downloading}
+              >
+                <Text style={styles.valueAllDoc}>{allDoc.value}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.middle}>
-            <Text style={styles.label}>:</Text>
-          </View>
-          <View style={styles.columnRight}>
-            <TouchableOpacity
-              onPress={() => downloadFile({ setDownloading, id: data.id, value: "all", name: allDoc?.value, module: 'invoice' })}
-              disabled={downloading}
-            >
-              <Text style={styles.valueAllDoc}>{allDoc.value}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
         )
       }
       {bastDetailData.map((item, index) => (

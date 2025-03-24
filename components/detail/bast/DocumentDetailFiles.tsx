@@ -46,7 +46,7 @@ const FileItem = ({ item, index, bast_id, downloading, setDownloading }: any) =>
       <View style={styles.columnRight2}>
         {item.value ? (
           <TouchableOpacity
-            onPress={() => downloadFile({ setDownloading, id: bast_id, value: item.value, module: 'bast' })}
+            onPress={() => downloadFile({ setDownloading, id: bast_id, value: item.value, module: 'bast', name: item.text })}
             disabled={downloading}
           >
             <Text style={styles.valueFile}>{item.text}</Text>

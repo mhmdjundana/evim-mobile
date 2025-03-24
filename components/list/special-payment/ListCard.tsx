@@ -15,6 +15,7 @@ const ListCard = ({
 }: any) => {
   // console.log(data, 'listcard data')
   const pathname = usePathname();
+  console.log(pathname, 'pathname data')
 
   return (
     <TouchableOpacity
@@ -37,19 +38,19 @@ const ListCard = ({
           </View>
         }
         <View style={styles.row}>
-          <Text style={styles.label}>Employee Name</Text>
+          <Text style={styles.label}>Vendor Name</Text>
           <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> {data.employee_name}</Text>
+          <Text style={styles.value}> {data?.['vendor.vendor_name']}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Document No.</Text>
+          <Text style={styles.label}>Doc No.</Text>
           <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> {data.employee_claim_number}</Text>
+          <Text style={styles.value}> {data.referenceNumber}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Company To Pay</Text>
+          <Text style={styles.label}>Payment Amount</Text>
           <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> {changeUStoID(data.company_to_pay)}</Text>
+          <Text style={styles.value}> {changeUStoID(data.payment_amount)}</Text>
         </View>
         <StatusListCard data={data} />
         <ApprovalActionListCard
@@ -59,7 +60,7 @@ const ListCard = ({
           pathname={pathname}
           handleApproveButton={handleApproveButton}
           handleRejectButton={handleRejectButton}
-          module="employee-claim-cc"
+          module={pathname.split('/').pop()}
         />
       </View>
     </TouchableOpacity>

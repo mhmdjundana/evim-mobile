@@ -15,7 +15,7 @@ const DetailTable = ({
   data,
 }: any) => {
   const { claim_details } = data
-  console.log(claim_details, 'DetailTable data')
+  // console.log(claim_details, 'DetailTable data')
   const [details2, setDetails2] = useState([])
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const DetailTable = ({
         for (let j = 0; j < e.length; j++) {
           e[j].value = claim_details[i]?.[e[j].name]
         }
-        console.log(e)
+        // console.log(e)
         d.push(e)
       }
       setDetails2(d)
@@ -53,27 +53,27 @@ const DetailTable = ({
               <View style={styles.row}>
                 <Text style={styles.label}>Type of Expense</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.type_of_expense_id}</Text>
+                <Text style={styles.value}>{item.typeofexpense?.type_code}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Detail Expenditure</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.typeofexpense?.type_code}</Text>
+                <Text style={styles.value}>{item.justification}</Text>
               </View>
               {item.wbs && <View style={styles.row}>
                 <Text style={styles.label}>WBS (STM)</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.wbs?.wbs_name}</Text>
+                <Text style={styles.value}>{item.wbs && `${item.wbs.wbs_code} - ${item.wbs.wbs_name}`}</Text>
               </View>}
-              {item.coscenter && <View style={styles.row}>
+              {item.costcenter && <View style={styles.row}>
                 <Text style={styles.label}>Cost Center (VEI)</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.coscenter?.gl_account}</Text>
+                <Text style={styles.value}>{item.costcenter && `${item.costcenter.code} - ${item.costcenter.name}`}</Text>
               </View>}
               <View style={[styles.row]}>
                 <Text style={styles.label}>Cost Element</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.costelement?.gl_account}</Text>
+                <Text style={styles.value}>{item.costelement ? `${item.costelement.gl_code} - ${item.costelement.gl_name}` : '-'}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Currency</Text>
@@ -83,7 +83,7 @@ const DetailTable = ({
               <View style={styles.row}>
                 <Text style={styles.label}>Amount</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.amount && displayPrice(item.amount)}</Text>
+                <Text style={styles.value}>{item.amount}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Currency Rate</Text>
@@ -93,7 +93,7 @@ const DetailTable = ({
               <View style={styles.row}>
                 <Text style={styles.label}>Amount in IDR</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.amount_idr && displayPrice(item.amount_idr)}</Text>
+                <Text style={styles.value}>{item.amount_idr}</Text>
               </View>
               {item.reject_reason && <View style={styles.row}>
                 <Text style={styles.label}>Reason of Rejection</Text>
@@ -103,7 +103,7 @@ const DetailTable = ({
               <View style={styles.row}>
                 <Text style={styles.label}>Missing Receipt</Text>
                 <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}>{item.missing_receipts === 1 ? 'Yes' : item.missing_receipts === 0 ? 'No' : '-'}</Text>
+                <Text style={styles.value}>{item.missing_receipts === "1" ? 'Yes' : item.missing_receipts === "0" ? 'No' : '-'}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>File</Text>
@@ -115,7 +115,7 @@ const DetailTable = ({
                       setDownloading: () => { },
                       id: data?.id,
                       value: item.attachFile,
-                      name: `Receipt.pdf`,
+                      name: item.attachFile,
                       module: 'employee-claim-cc'
                     })
                   }

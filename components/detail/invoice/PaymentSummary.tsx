@@ -45,7 +45,7 @@ const PaymentSummary = ({ data }: any) => {
           <View style={[styles.card, styles.cardMargin]}>
             <View style={styles.row}>
               <Text style={styles.label}>WHT Amount</Text>
-              <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(data?.wht_amount)}</Text>
+              <Text style={styles.amount}>{data?.contract?.currency} {data?.wht_amount && parseFloat(data.wht_amount) > 0 ? "-" : ""}{displayPrice(data?.wht_amount)}</Text>
             </View>
             <Text style={styles.subLabel}>{data?.wht?.wht_code && `(${data?.wht?.wht_code})`} {data?.wht?.wht_rate}</Text>
           </View>
@@ -74,7 +74,7 @@ const PaymentSummary = ({ data }: any) => {
           <View style={[styles.card, styles.cardMargin]}>
             <View style={styles.row}>
               <Text style={styles.label}>Other Adjustment</Text>
-              <Text style={styles.amount}>{data?.contract?.currency} {displayPrice(item?.amount)}</Text>
+              <Text style={styles.amount}>{data?.contract?.currency} {item?.debit_or_credit === "C" ? "-" : ""}{displayPrice(item?.amount)}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.subLabel}>Description</Text>
@@ -82,7 +82,7 @@ const PaymentSummary = ({ data }: any) => {
             </View>
             <View style={styles.row}>
               <Text style={styles.subLabel}>Debit / Credit</Text>
-              <Text style={styles.detailText}>{item?.debit_or_credit === "D" ? "Debit" : "Credit"}</Text>
+              <Text style={styles.detailText}>{item?.debit_or_credit === "D" ? "Debit" : item?.debit_or_credit === "C" ? "Credit" : ""}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.subLabel}>{item.gl_no}</Text>

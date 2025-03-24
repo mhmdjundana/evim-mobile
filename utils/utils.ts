@@ -26,10 +26,8 @@ export function displayPrice(numberString: string) {
   let integerPart = parts[0] || '0';
   let decimalPart = parts[1] || '00';
 
-  // Add commas for thousands separators
   integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-  // Ensure decimal part has two digits
   if (decimalPart.length === 0) {
       decimalPart = "00";
   } else if (decimalPart.length === 1){
@@ -39,6 +37,25 @@ export function displayPrice(numberString: string) {
   }
 
   return integerPart + ',' + decimalPart;
+}
+
+export const changeUStoID = (num: string) => {
+  if(num) {
+    const a = num.toString().replace(/\./g, '').replace(',','.');
+    const b = Number(parseFloat(a.toString().replace('/\./g', '').replace('/\,/g', '.')).toFixed(2))
+    let c = b.toLocaleString("in-ID")
+    if (c.includes(',')){
+      const d = c.split(',');
+      if(d[1].length === 1) {
+        c+='0'
+      }
+    }else{
+      c += ',00';
+    }
+    return c
+  } else {
+    return '0,00'
+  }
 }
 
 export const displayStringArray = (str: string) => {

@@ -1,26 +1,27 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { router, usePathname } from "expo-router";
+import { RelativePathString, router, usePathname } from "expo-router";
 import { handleApproveButton, handleRejectButton } from "../bast/utils";
 import { Checkbox } from "react-native-paper";
-import { displayPrice } from "@/utils/utils";
+import { changeUStoID, displayPrice } from "@/utils/utils";
 import StatusListCard from "../StatusListCard";
 import ApprovalActionListCard from "../ApprovalActionListCard";
 
-const ListCardInvoice = ({
+const ListCard = ({
   data,
   listData,
   rowSelection,
   handleCheck = () => { }
 }: any) => {
-  // console.log(data, 'listcardInvoice data')
+  // console.log(data, 'listcard data')
   const pathname = usePathname();
+  console.log(pathname, 'listcard pathname')
 
   return (
     <TouchableOpacity
       style={styles.row}
       onPress={() => {
-        router.push({ pathname: `/invoice/detail`, params: { id: data.id } })
+        router.push({ pathname: `${pathname}/detail` as RelativePathString, params: { id: data.id } })
       }}
     >
       <View style={styles.card}>
@@ -37,24 +38,19 @@ const ListCardInvoice = ({
           </View>
         }
         <View style={styles.row}>
-          <Text style={styles.label}>Vendor Name</Text>
+          <Text style={styles.label}>Employee Name</Text>
           <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> {data.suplier_name}</Text>
+          <Text style={styles.value}> {data.employee_name}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Invoice No.</Text>
+          <Text style={styles.label}>Document No.</Text>
           <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> {data.referenceNumber}</Text>
+          <Text style={styles.value}> {data.p_card_number}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>PO No.</Text>
+          <Text style={styles.label}>Company To Pay</Text>
           <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> {data.po_no}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>DPP</Text>
-          <Text style={styles.colon}>:</Text>
-          <Text style={styles.value}> {displayPrice(data.grand_total)}</Text>
+          <Text style={styles.value}> {changeUStoID(data.company_to_pay)}</Text>
         </View>
         <StatusListCard data={data} />
         <ApprovalActionListCard
@@ -64,7 +60,7 @@ const ListCardInvoice = ({
           pathname={pathname}
           handleApproveButton={handleApproveButton}
           handleRejectButton={handleRejectButton}
-          module="invoice"
+          module={pathname.split('/').pop()}
         />
       </View>
     </TouchableOpacity>
@@ -154,4 +150,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListCardInvoice;
+export default ListCard;

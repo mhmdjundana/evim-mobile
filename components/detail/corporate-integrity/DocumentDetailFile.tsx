@@ -10,15 +10,24 @@ const DocumentDetailFile = (props: any) => {
 
   const bast_id = data.id
   const [bastDetailData, setBastDetailData] = useState([
-    { title: "Supporting Document", value: '', flag: 'supporting_document', text: 'Supporting Document.pdf' },
-    { title: 'Payment Advice', value: '', flag: 'payment_advice', text: 'Payment Advice.pdf' },
-    { title: 'Corporate Integrity PDF', value: '', flag: 'corporate_integrity_pdf', text: 'Corporate Integrity.pdf' },
-    { title: 'CI File', value: '', flag: 'ci_file', text: 'CI File.pdf' },
+    { title: "Supporting Document", value: '', flag: 'suporting_doc', text: 'Supporting Document.pdf' },
+    { title: "Reference File", value: '', flag: 'referenceFile', text: 'Reference File.pdf' },
+    { title: 'Payment Advice', value: '', flag: 'paymentAdvice', text: 'Payment Advice.pdf' },
+    { title: 'Corporate Integrity PDF', value: '', flag: 'corporate_integrity', text: 'Corporate Integrity.pdf' },
+    { title: 'CI File', value: '', flag: 'file_ci', text: 'CI File.pdf' },
   ])
 
   useEffect(() => {
     const newData = []
     for (let i = 0; i < bastDetailData.length; i++) {
+      if (bastDetailData[i].flag === 'corporate_integrity') {
+        newData.push({ 
+          ...bastDetailData[i], 
+          value: "corporate_integrity",
+          text: data?.corporate_integrity_number + '.pdf'
+         })
+        continue
+      }
       const val = data?.[bastDetailData[i].flag] ? data?.[bastDetailData[i].flag] : ""
       newData.push({ ...bastDetailData[i], value: val })
     }
@@ -43,7 +52,8 @@ const DocumentDetailFile = (props: any) => {
                     setDownloading,
                     id: bast_id,
                     value: item.value,
-                    module: 'invoice'
+                    module: 'corporate-integrity',
+                    name: item.text
                   })
                 }}
                 disabled={downloading}

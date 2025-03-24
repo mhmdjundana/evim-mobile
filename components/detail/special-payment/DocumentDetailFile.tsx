@@ -5,7 +5,7 @@ import { downloadFile } from '../utils/downloadFile';
 const { width } = Dimensions.get('window');
 
 const DocumentDetailFile = (props: any) => {
-  const { data } = props; // Destructure data from props
+  const { data, module } = props; // Destructure data from props
   const [downloading, setDownloading] = useState(false);
 
   const bast_id = data.id
@@ -13,12 +13,19 @@ const DocumentDetailFile = (props: any) => {
     { title: "Supporting Doc", value: '', flag: 'suporting_doc', text: 'Supporting Doc.pdf' },
     { title: 'Reference File', value: '', flag: 'referenceFile', text: 'Reference File.pdf' },
     { title: 'Payment Advice', value: '', flag: 'paymentAdvice', text: 'Payment Advice.pdf' },
-    { title: 'Special Payment', value: '', flag: 'referenceNumber', text: 'Special Payment.pdf' },
+    { title: 'Special Payment', value: '', flag: 'special_payment', text: 'Special Payment.pdf' },
   ])
 
   useEffect(() => {
-    const newData = []
+    const newData: any = []
     for (let i = 0; i < bastDetailData.length; i++) {
+      if (bastDetailData[i].flag === 'special_payment') {
+        newData.push({
+          ...bastDetailData[i],
+          value: "special_payment"
+        })
+        continue
+      }
       const val = data?.[bastDetailData[i].flag] ? data?.[bastDetailData[i].flag] : ""
       newData.push({ ...bastDetailData[i], value: val })
     }
@@ -43,7 +50,8 @@ const DocumentDetailFile = (props: any) => {
                     setDownloading,
                     id: bast_id,
                     value: item.value,
-                    module: 'invoice'
+                    module,
+                    name: item.text
                   })
                 }}
                 disabled={downloading}

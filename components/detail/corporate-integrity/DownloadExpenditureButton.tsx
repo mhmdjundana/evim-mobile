@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native"
 import { downloadFile } from "../utils/downloadFile";
 
-export const DownloadExpenditureButton = ({ id }: { id: number }) => {
+export const DownloadExpenditureButton = ({ id, module = 'invoice' }: { id: number, module?: string }) => {
   const [downloading, setDownloading] = useState(false);
   
   return (
@@ -29,9 +29,10 @@ export const DownloadExpenditureButton = ({ id }: { id: number }) => {
             id,
             value: 'expenditureExcel',
             name: 'Summary of Contract Expenditure.xlsx',
-            module: 'invoice'
+            module,
           })
         }}
+        disabled={downloading}
       >
         <Text
           style={{

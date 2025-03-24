@@ -17,6 +17,7 @@ export default function RootLayout() {
       <Stack.Screen name="corporate-integrity" options={{ headerShown: false }} />
       <Stack.Screen name="tnc" options={{ headerShown: false }} />
       <Stack.Screen name="menu" options={{ headerShown: false }} />
+      <Stack.Screen name="confirmation" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import TopBarLayout from '@/components/layout/TopBarLayout';
-import Detail from '@/components/detail/special-payment/Detail';
+import Detail from '@/components/detail/corporate-integrity/Detail';
 
-const DetailSpecialPayment = () => {
+const DetailPage = () => {
   return (
     <TopBarLayout>
       <Detail />
@@ -10,4 +10,4 @@ const DetailSpecialPayment = () => {
   );
 };
 
-export default DetailSpecialPayment;
+export default DetailPage;

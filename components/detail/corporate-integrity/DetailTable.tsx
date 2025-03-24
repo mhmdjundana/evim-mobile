@@ -15,7 +15,6 @@ const DetailTable = ({
 }: any) => {
   // console.log(data, 'DetailTableNew data')
   const { details } = data
-  console.log(details, 'DetailTableNew data')
   const [details2, setDetails2] = useState([])
 
   useEffect(() => {

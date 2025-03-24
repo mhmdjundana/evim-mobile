@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { getInvoiceList } from '@/fetch/invoice';
-import { useGetUserData } from '@/hooks/useGetUserData';
 import InvoiceListUi from './invoiceListUi';
-import { Text } from 'react-native';
 import useListData from '@/hooks/useListData';
 
 const filterInputInvoice = [
@@ -50,9 +48,6 @@ const filterInputInvoice = [
 
 
 const InvoiceList: React.FC = () => {
-  const { userData } = useGetUserData();
-  // console.log(userData, "userData")
-
   const listState = useListData({
     pageSize: 10,
     getList: getInvoiceList,
@@ -63,7 +58,6 @@ const InvoiceList: React.FC = () => {
   return (
     <InvoiceListUi
       listState={listState}
-      userData={userData}
     />
   )
 }

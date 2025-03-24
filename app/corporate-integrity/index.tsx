@@ -1,22 +1,18 @@
 // import ApproveButton from "@/components/button/ActionButton";
+import List from "@/components/list/corporate-integrity/List";
 import { ScrollView, Text, View } from "react-native";
 
 export default function Home() {
 
   return (
-    <ScrollView
+    <View
       style={{
         backgroundColor: "white",
         padding: 0,
         margin: 0,
       }}
-      contentContainerStyle={{
-        flexGrow: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
     >
-      <Text>CI Home</Text>
-    </ScrollView>
+      <List/>
+    </View>
   );
 }

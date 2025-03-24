@@ -6,50 +6,25 @@ import TopBarLayout from "@/components/layout/TopBarLayout";
 import FilterBast from "../filter/FilterBast";
 import ListCard from "./ListCard";
 import { EmptyList } from "../EmptyList";
-import { router } from "expo-router";
+import { RelativePathString, router } from "expo-router";
 
 const { height } = Dimensions.get('window');
-const statusOptions = [ // Define your status options
+const statusOptions = [
   { label: 'All', value: '' },
   {
-    label: "Validate Invoice",
-    value: "Validate Invoice",
+    label: "1st Approve",
+    value: "1st Approve",
   },
   {
-    label: "Validate Tax",
-    value: "Validate Tax",
+    label: "Validate Settlement",
+    value: "Validate Settlement",
   },
-  {
-    label: "Finance Approve",
-    value: "Finance Approve",
-  },
-  {
-    label: "Create MIRO",
-    value: "Create MIRO",
-  },
-  {
-    label: "Release",
-    value: "Release",
-  },
-  {
-    label: "Payment Advice",
-    value: "Payment Advice",
-  },
-  {
-    label: "Paid",
-    value: "Paid",
-  },
-  { label: "Completed", value: "Completed" },
   { label: "Rejected", value: "Rejected" },
-  { label: "Rejected > 30 days", value: "Rejected > 30 days" },
-  // Add more status options as needed
+  { label: "Completed", value: "Completed" },
 ]
 
 const ViewList = ({
   listState,
-  // filterState,
-  // setFilterState,
-
 }: any) => {
   const {
     data,
@@ -61,6 +36,7 @@ const ViewList = ({
     setApplyFilter,
     isRenderFilter,
     setIsRenderFilter,
+    module,
   } = listState;
   return (
     <TopBarLayout>
@@ -109,11 +85,11 @@ const ViewList = ({
                   <RefreshControl
                     refreshing={isLoading}
                     onRefresh={() => {
-                      // router.replace('/employee-claim-cc')
+                      router.replace(`/${module}` as RelativePathString)
                     }}
                   />
                 }
-                // ListFooterComponent={isLoading ? <View style={{ height: 100 }} /> : null}
+              // ListFooterComponent={isLoading ? <View style={{ height: 100 }} /> : null}
 
               />
             </>

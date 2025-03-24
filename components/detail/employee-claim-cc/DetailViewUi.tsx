@@ -20,6 +20,7 @@ export default function DetailViewUi({
   onApprove,
   onReject
 }: any) {
+  const module = pathname.split("/")[1];
   return (
     <ScrollView
       style={{
@@ -52,7 +53,7 @@ export default function DetailViewUi({
         statusColor={data?.approval_status?.status_color}
       />
       <View style={{ marginTop: 15 }}></View>
-      <DocumentDetail data={data} />
+      <DocumentDetail data={data} module={module} />
       <View style={{ marginTop: 10 }}></View>
       <DocumentDetailFile data={data} />
       <View style={{ marginTop: 25 }}></View>

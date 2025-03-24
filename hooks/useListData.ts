@@ -126,6 +126,7 @@ const useListData = ({
     setApplyFilter,
     isRenderFilter,
     setIsRenderFilter,
+    module,
   };
 };
 

@@ -5,13 +5,13 @@ import { downloadFile } from '../utils/downloadFile';
 const { width } = Dimensions.get('window');
 
 const DocumentDetailFile = (props: any) => {
-  const { data } = props; // Destructure data from props
+  const { data, module } = props; // Destructure data from props
   const [downloading, setDownloading] = useState(false);
 
   const bast_id = data.id
   const [bastDetailData, setBastDetailData] = useState([
-    { title: "Employee Claim", value: '', flag: 'employee_claim', text: 'Employee Claim.pdf' },
-    { title: 'Billing Statement', value: '', flag: 'billing_statement', text: 'Billing Statement.pdf' },
+    { title: "Attachment HR Document", value: '', flag: 'attachFile_hr', text: 'Attachment HR Document.pdf' },
+    { title: "Attachment P-Card Document", value: '', flag: 'billing_statement', text: 'Attachment P-Card Document.pdf' },
   ])
 
   useEffect(() => {
@@ -41,7 +41,8 @@ const DocumentDetailFile = (props: any) => {
                     setDownloading,
                     id: bast_id,
                     value: item.value,
-                    module: 'invoice'
+                    name: item.text,
+                    module: module,
                   })
                 }}
                 disabled={downloading}

@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useGetUserData } from '@/hooks/useGetUserData';
 import ListUi from './ListUi';
 import { Text } from 'react-native';
 import useListData from '@/hooks/useListData';
-import { getSpecialPaymentList } from '@/fetch/special-payment';
+import { getCorporateIntegrityList } from '@/fetch/corporate-integrity';
 
 const filterInputInvoice = [
   {
     label: "Vendor Name",
     placeholder: "Vendor Name",
-    name: "vendor.vendor_name",
-    id: "vendor.vendor_name",
+    name: "vendor_name",
+    id: "vendor_name",
     value: "",
   },
   {
     label: "Doc No.",
     placeholder: "Doc No.",
-    name: "referenceNumber",
-    id: "referenceNumber",
+    name: "corporate_integrity_number",
+    id: "corporate_integrity_number",
     value: "",
   },
   {
@@ -38,11 +37,11 @@ const filterInputInvoice = [
 
 
 const List: React.FC = () => {
-  const module: string = 'special-payment'
+  const module: string = 'corporate-integrity'
 
   const listState = useListData({
     pageSize: 10,
-    getList: getSpecialPaymentList,
+    getList: getCorporateIntegrityList,
     filterInput: filterInputInvoice,
     module,
   });

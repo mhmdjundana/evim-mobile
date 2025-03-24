@@ -7,7 +7,7 @@ export const downLoadPdfExcelBase64 = async ({id, filename, module}: any) => {
     params.append('file', filename);
 
     const response = await api.get(`${module}/read-file?${params.toString()}`);
-    console.log(response.data?.data, "response file: ", filename);
+    // console.log(response.data?.data, "response file: ", filename);
     return response.data?.data
   } catch (error) {
     console.error(error, "error file: ", filename);

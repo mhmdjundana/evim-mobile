@@ -47,9 +47,6 @@ const statusOptions = [ // Define your status options
 
 const ViewInvoiceList = ({
   listState,
-  // filterState,
-  // setFilterState,
-
 }: any) => {
   const {
     data,
@@ -58,8 +55,6 @@ const ViewInvoiceList = ({
     rowSelection,
     setRowSelection,
     handleCheck,
-    columnFilters,
-    setColumnFilters,
     setApplyFilter,
     isRenderFilter,
     setIsRenderFilter,
