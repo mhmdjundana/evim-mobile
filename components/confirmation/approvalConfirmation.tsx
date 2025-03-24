@@ -36,7 +36,7 @@ const invoiceList = [
 const specialPaymentList = [
   {
     title: "Vendor Name",
-    name: "vendor.vendor_name"
+    name: "vendor_name"
   },
   {
     title: "Doc No.",
