@@ -17,7 +17,7 @@ const DocumentDetail = (props: any) => {
   const bastDetailData = [
     {
       title: "Company",
-      value: data?.company_code,
+      value: data?.company_initial ? data?.company_initial : data?.company_code,
     },
     {
       title: "Mineral / Geothermal",

@@ -10,7 +10,6 @@ const filterInputInvoice = [
     name: "suplier_name",
     id: "suplier_name",
     value: "",
-    style: { marginBottom: 10 },
   },
   {
     label: "Invoice No.",
@@ -18,7 +17,6 @@ const filterInputInvoice = [
     name: "invoice_number",
     id: "invoice_number",
     value: "",
-    style: { marginBottom: 10 },
   },
   {
     label: "PO No.",
@@ -26,7 +24,6 @@ const filterInputInvoice = [
     name: "po_no",
     id: "po_no",
     value: "",
-    style: { marginBottom: 10 },
   },
   {
     label: "DPP",
@@ -34,7 +31,6 @@ const filterInputInvoice = [
     name: "grand_total",
     id: "grand_total",
     value: "",
-    style: { marginBottom: 10 },
   },
   {
     label: "Status",
@@ -42,7 +38,6 @@ const filterInputInvoice = [
     name: "status_name",
     id: "status_name",
     value: "",
-    style: { marginBottom: 10 },
   }
 ]
 

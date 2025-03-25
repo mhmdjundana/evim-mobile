@@ -10,7 +10,8 @@ import { RelativePathString, router } from "expo-router";
 
 const { height } = Dimensions.get('window');
 const statusOptions = [
-  { label: 'All', value: '' },
+  { label: 'All', value: 'All' },
+  { label: 'Draft', value: 'Draft' },
   {
     label: "Approve",
     value: "Approve",
@@ -48,6 +49,7 @@ const ViewList = ({
     isRenderFilter,
     setIsRenderFilter,
     module,
+    handleRefresh,
   } = listState;
   return (
     <TopBarLayout>
@@ -96,7 +98,8 @@ const ViewList = ({
                   <RefreshControl
                     refreshing={isLoading}
                     onRefresh={() => {
-                      router.replace(`/${module}` as RelativePathString)
+                      // router.replace(`/${module}` as RelativePathString)
+                      handleRefresh()
                     }}
                   />
                 }

@@ -55,9 +55,13 @@ const FilterPageUi = ({
             label={input.label}
             placeholder={input.placeholder}
             onValueChange={(value: any) => {
-              // console.log(value, 'value')
+              console.log(value, 'value')
+              let v = value
+              if (value === 'All') {
+                v = ''
+              }
               const updatedState = [...columnFilters];
-              updatedState[index].value = value;
+              updatedState[index].value = v;
               setColumnFilters(updatedState);
             }}
             value={input.value}

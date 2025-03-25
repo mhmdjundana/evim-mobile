@@ -10,7 +10,8 @@ import { RelativePathString, router } from "expo-router";
 
 const { height } = Dimensions.get('window');
 const statusOptions = [
-  { label: 'All', value: '' },
+  { label: 'All', value: 'All' },
+  { label: 'Draft', value: 'Draft' },
   {
     label: "FV60 Approve",
     value: "FV60 Approve",

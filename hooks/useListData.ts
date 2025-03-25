@@ -85,6 +85,10 @@ const useListData = ({
     setRowSelection(newSelection);
   };
 
+  const handleRefresh = () => {
+    setPageIndex(null)
+  }
+
   useEffect(() => {
     retrieveFilterKeychain(module)
       .then((filter) => {
@@ -127,6 +131,7 @@ const useListData = ({
     isRenderFilter,
     setIsRenderFilter,
     module,
+    handleRefresh,
   };
 };
 

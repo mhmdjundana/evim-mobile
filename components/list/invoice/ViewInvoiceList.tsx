@@ -10,7 +10,8 @@ import { router } from "expo-router";
 
 const { height } = Dimensions.get('window');
 const statusOptions = [ // Define your status options
-  { label: 'All', value: '' },
+  { label: 'All', value: 'All' },
+  { label: 'Draft', value: 'Draft' },
   {
     label: "Validate Invoice",
     value: "Validate Invoice",
