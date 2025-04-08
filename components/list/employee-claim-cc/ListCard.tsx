@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { RelativePathString, router, usePathname } from "expo-router";
 import { handleApproveButton, handleRejectButton } from "../bast/utils";
 import { Checkbox } from "react-native-paper";
-import { changeUStoID, displayPrice } from "@/utils/utils";
+import { changeUStoID, displayDate, displayPrice } from "@/utils/utils";
 import StatusListCard from "../StatusListCard";
 import ApprovalActionListCard from "../ApprovalActionListCard";
 
@@ -50,6 +50,11 @@ const ListCard = ({
           <Text style={styles.label}>Company To Pay</Text>
           <Text style={styles.colon}>:</Text>
           <Text style={styles.value}> {changeUStoID(data.company_to_pay)}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Create Date</Text>
+          <Text style={styles.colon}>:</Text>
+          <Text style={styles.value}> {displayDate(data.created_at)}</Text>
         </View>
         <StatusListCard data={data} />
         <ApprovalActionListCard

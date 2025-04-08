@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router, usePathname } from "expo-router";
 import { handleApproveButton, handleRejectButton } from "./utils";
 import { Checkbox } from "react-native-paper";
-import { displayPrice } from "@/utils/utils";
+import { displayDate, displayPrice } from "@/utils/utils";
 import StatusListCard from "../StatusListCard";
 import ApprovalActionListCard from "../ApprovalActionListCard";
 
@@ -55,6 +55,11 @@ const ListCard = ({
           <Text style={styles.label}>DPP</Text>
           <Text style={styles.colon}>:</Text>
           <Text style={styles.value}> {displayPrice(data.grand_total)}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Create Date</Text>
+          <Text style={styles.colon}>:</Text>
+          <Text style={styles.value}> {displayDate(data.created_at)}</Text>
         </View>
         <StatusListCard data={data} />
         <ApprovalActionListCard

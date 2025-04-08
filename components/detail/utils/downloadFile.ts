@@ -41,6 +41,17 @@ const downloadFile = async ({
   try {
     const base64Data = await downLoadPdfExcelBase64({ id: id, filename: value, module });
 
+    // if (base64Data?.catch_error) {
+    //   console.error("Error downloading file:", base64Data?.catch_error);
+    //   Alert.alert("Error catch", JSON.stringify(base64Data?.catch_error));
+    //   return;
+    // }
+    // if (base64Data?.response) {
+    //   console.error("No data received from server.");
+    //   Alert.alert("Error res", JSON.stringify(base64Data?.response));
+    //   return;
+    // }
+    
     if (!base64Data) {
       console.error("No data received from server.");
       Alert.alert("Error", "No file data received.");

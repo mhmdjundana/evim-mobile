@@ -13,13 +13,18 @@ module.exports = function androidNetworkSecurityConfig(config) {
   config = withStringsXml(config, (config) => {
     const filePath = path.join(config.modRequest.platformProjectRoot, 'app/src/main/res/xml/network_security_config.xml');
     const fileContent = `
-    <network-security-config>
-        <domain-config cleartextTrafficPermitted="true">
-            <domain includeSubdomains="false">10.10.26.47</domain>
-            <domain includeSubdomains="false">192.168</domain>
-            <domain includeSubdomains="true">evimdevbackend.sumbawatimurmining.com</domain>
-        </domain-config>
-    </network-security-config>
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.10.25.83</domain>
+        <domain includeSubdomains="true">192.168.101.192</domain>
+    </domain-config>
+</network-security-config>
     `;
 
     if (!fs.existsSync(path.dirname(filePath))) {
