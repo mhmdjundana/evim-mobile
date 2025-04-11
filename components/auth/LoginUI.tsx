@@ -207,24 +207,6 @@ const LoginUiNew = ({
           </TouchableRipple>
         </View>
       </KeyboardAvoidingView>
-      {/* <View>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>asdf</Text>
-        <Text>{debugMsg}</Text>
-      </View> */}
     </View>
   );
 };

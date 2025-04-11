@@ -31,7 +31,7 @@ api.defaults.timeout = 30000;
 api.interceptors.request.use(
   async (config) => {
     console.log("axios interceptor request started");
-    console.log(config)
+    console.log(JSON.stringify(config))
     // try {
     //   const token = await SecureStore.getItemAsync('jwtToken'); // Get JWT from secure storage
     //   if (token) {

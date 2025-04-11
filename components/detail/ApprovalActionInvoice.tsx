@@ -8,7 +8,7 @@ export default function ApprovalActionInvoice({
   router,
   isApproveItems,
   isEdit = false, // (data?.action?.is_edit)
-  
+
   isApprove = false, // (data?.action?.is_approve
   // (data?.action?.is_approve && !data?.details.some((item: any) => item?.checking_status === '2')) 
   isReject = false, // (data?.action?.is_reject)
@@ -19,34 +19,93 @@ export default function ApprovalActionInvoice({
   // console.log(pathname, "pathname")
   // console.log(params, "params")
   return (
-    <View
-      style={{
-        marginVertical: 5,
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        width: "100%",
-      }}
-    >
-      {
-        // isEdit && (
-        //   <View style={{ marginVertical: 5, flexDirection: "row", justifyContent: "flex-end", width: "100%", }}>
-        //     <ActionButton
-        //       type="editAdminAp" onPress={() => router.push({ pathname: `/bast/form`, params: { id: id } })} />
-        //   </View>
-        // )
-      }
-      {
-        isReject &&
-        <ActionButton
-          type="reject"
-          onPress={onReject}
+    <>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          width: "95%",
+          marginTop: 5,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "700",
+            textAlign: "center",
+            color: "#404040",
+            padding: 3,
+            marginLeft: 5
+          }}
+        >Approval Action</Text>
+      </View>
+      <View
+        style={{
+          marginVertical: 5,
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          width: "95%",
+          borderWidth: 1,
+          borderColor: "#ccc",
+          borderRadius: 10,
+          marginBottom: 5
+        }}
+      >
+        {
+          // isEdit && (
+          //   <View style={{ marginVertical: 5, flexDirection: "row", justifyContent: "flex-end", width: "100%", }}>
+          //     <ActionButton
+          //       type="editAdminAp" onPress={() => router.push({ pathname: `/bast/form`, params: { id: id } })} />
+          //   </View>
+          // )
+        }
+        {
+          isReject &&
+          <ActionButton
+            type="reject"
+            onPress={onReject}
+          // onPress={() => {
+          //   const payload: any = [{
+          //     // "bast_id": data?.id,
+          //     "id": data?.id,
+          //     // "approval_status_id": data?.approval_status?.id,
+          //     "module_id": 1,
+          //     type: "reject",
+          //     // "user_id": userData?.data?.id,
+          //     // "vendor_code": data?.vendor_code
+          //   }]
+          //   if (isApproveItems) {
+          //     payload[0].item = data?.details?.map((item: any) => ({
+          //       id: item?.id,
+          //       checking_status: item?.checking_status
+          //     }))
+          //   }
+          //   router.push({
+          //     pathname: `/confirmation`,
+          //     params: {
+          //       id: id,
+          //       data: JSON.stringify(payload),
+          //       module: "bast",
+          //       type: "rejection",
+          //       onSuccessNavigateTo: JSON.stringify({
+          //         pathname: pathname,
+          //         params: { id: id }
+          //       })
+          //     }
+          //   })
+          // }}
+          />
+        }
+        {isApprove && <ActionButton
+          type="approve"
+          onPress={onApprove}
         // onPress={() => {
         //   const payload: any = [{
         //     // "bast_id": data?.id,
         //     "id": data?.id,
         //     // "approval_status_id": data?.approval_status?.id,
         //     "module_id": 1,
-        //     type: "reject",
+        //     type: "approve",
         //     // "user_id": userData?.data?.id,
         //     // "vendor_code": data?.vendor_code
         //   }]
@@ -62,7 +121,7 @@ export default function ApprovalActionInvoice({
         //       id: id,
         //       data: JSON.stringify(payload),
         //       module: "bast",
-        //       type: "rejection",
+        //       type: "approval",
         //       onSuccessNavigateTo: JSON.stringify({
         //         pathname: pathname,
         //         params: { id: id }
@@ -71,42 +130,8 @@ export default function ApprovalActionInvoice({
         //   })
         // }}
         />
-      }
-      {isApprove && <ActionButton
-        type="approve"
-        onPress={onApprove}
-      // onPress={() => {
-      //   const payload: any = [{
-      //     // "bast_id": data?.id,
-      //     "id": data?.id,
-      //     // "approval_status_id": data?.approval_status?.id,
-      //     "module_id": 1,
-      //     type: "approve",
-      //     // "user_id": userData?.data?.id,
-      //     // "vendor_code": data?.vendor_code
-      //   }]
-      //   if (isApproveItems) {
-      //     payload[0].item = data?.details?.map((item: any) => ({
-      //       id: item?.id,
-      //       checking_status: item?.checking_status
-      //     }))
-      //   }
-      //   router.push({
-      //     pathname: `/confirmation`,
-      //     params: {
-      //       id: id,
-      //       data: JSON.stringify(payload),
-      //       module: "bast",
-      //       type: "approval",
-      //       onSuccessNavigateTo: JSON.stringify({
-      //         pathname: pathname,
-      //         params: { id: id }
-      //       })
-      //     }
-      //   })
-      // }}
-      />
-      }
-    </View>
+        }
+      </View>
+    </>
   )
 }

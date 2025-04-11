@@ -49,150 +49,165 @@ const DetailTable = ({
   //   <></>
   // )
   return (
-    <View style={[{
-      // backgroundColor: 'yellow',
-      paddingHorizontal: 16,
-      width: '100%'
-    }]}>
-      {
-        details?.map((item: any, idx: number) => {
-          return (
-            <View style={styles.card} key={idx}>
-              <View style={styles.row}>
-                <Text style={styles.label}>Description</Text>
-                <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.description}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>UOM</Text>
-                <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.uom?.uom_name}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>QTY</Text>
-                <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {displayPrice(item.qty)}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Currency</Text>
-                <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.currency?.currency_name}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Unit Price</Text>
-                <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {displayPrice(item.unit_price)}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Total Value</Text>
-                <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {displayPrice(item.total_value)}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}>Is Reimbursement</Text>
-                <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.is_reimbursement === "0" ? 'No' : item.is_reimbursement === "1" ? 'Yes' : '-'}</Text>
-              </View>
-              {item.reason_of_rejection && <View style={styles.row}>
-                <Text style={styles.label}>Reason of Rejection</Text>
-                <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.reason_of_rejection}</Text>
-              </View>}
-              {item.comment && <View style={styles.row}>
-                <Text style={styles.label}>Comment</Text>
-                <Text style={styles.colon}>:</Text>
-                <Text style={styles.value}> {item.comment}</Text>
-              </View>}
-              {
-                ((data?.action?.is_approve || data?.action?.is_reject) && data?.action?.is_approve_item) &&
-                <View style={styles.buttonContainer}>
-                  {
-                    data?.action?.is_approve &&
-                    <TouchableOpacity
-                      style={[
-                        styles.approveButton,
-                        styles.approvalButton,
-                        {
-                          // opacity: item?.checking_status === '1' ? 0.5 : 1,
-                          backgroundColor: item?.checking_status === '1' ? '#007E7A' : 'white',
-                          borderColor: '#007E7A',
-                          borderWidth: 3
-                        }]}
-                      onPress={() => {
-                        console.log("approve")
-                        setData((prev: any) => {
-                          return {
-                            ...prev,
-                            details: prev.details?.map((item: any, i: number) => {
-                              if (i === idx) {
-                                return {
-                                  ...item,
-                                  checking_status: '1'
-                                }
-                              } else {
-                                return item
-                              }
-                            })
-                          }
-                        })
-                        setIsApproveItems(true)
-                      }}
-                      disabled={item?.checking_status === '1'}
-                    >
-                      <FontAwesome6
-                        name="check"
-                        size={24}
-                        color={item?.checking_status === '1' ? 'white' : '#007E7A'}
-                      />
-                    </TouchableOpacity>
-                  }
-                  {
-                    data?.action?.is_reject &&
-                    <TouchableOpacity
-                      style={[
-                        styles.rejectButton,
-                        styles.approvalButton,
-                        {
-                          // opacity: item?.checking_status === '2' ? 0.5 : 1,
-                          backgroundColor: item?.checking_status === '2' ? '#E53935' : 'white',
-                          borderColor: '#E53935',
-                          borderWidth: 3
-                        }]}
-                      onPress={() => {
-                        console.log("reject")
-                        setData((prev: any) => {
-                          return {
-                            ...prev,
-                            details: prev.details?.map((item: any, i: number) => {
-                              if (i === idx) {
-                                return {
-                                  ...item,
-                                  checking_status: '2'
-                                }
-                              } else {
-                                return item
-                              }
-                            })
-                          }
-                        })
-                        setIsApproveItems(true)
-                      }}
-                      disabled={item?.checking_status === '2'}
-                    >
-                      <FontAwesome6
-                        name="xmark"
-                        size={24}
-                        color={item?.checking_status === '2' ? 'white' : '#E53935'}
-                      />
-                    </TouchableOpacity>
-                  }
+    <>
+      <View style={{
+        // backgroundColor: 'yellow',
+        paddingHorizontal: 16,
+        width: '100%',
+        marginBottom: 5,
+        marginLeft: 5,
+      }}>
+        <Text style={{
+          fontSize: 16,
+          fontWeight: 'bold',
+          color: '#404040',
+        }}>Item List</Text>
+      </View>
+      <View style={[{
+        // backgroundColor: 'yellow',
+        paddingHorizontal: 16,
+        width: '100%'
+      }]}>
+        {
+          details?.map((item: any, idx: number) => {
+            return (
+              <View style={styles.card} key={idx}>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Description</Text>
+                  <Text style={styles.colon}>:</Text>
+                  <Text style={styles.value}> {item.description}</Text>
                 </View>
-              }
-            </View>
-          )
-        })
-      }
-    </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>UOM</Text>
+                  <Text style={styles.colon}>:</Text>
+                  <Text style={styles.value}> {item.uom?.uom_name}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>QTY</Text>
+                  <Text style={styles.colon}>:</Text>
+                  <Text style={styles.value}> {displayPrice(item.qty)}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Currency</Text>
+                  <Text style={styles.colon}>:</Text>
+                  <Text style={styles.value}> {item.currency?.currency_name}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Unit Price</Text>
+                  <Text style={styles.colon}>:</Text>
+                  <Text style={styles.value}> {displayPrice(item.unit_price)}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Total Value</Text>
+                  <Text style={styles.colon}>:</Text>
+                  <Text style={styles.value}> {displayPrice(item.total_value)}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}>Is Reimbursement</Text>
+                  <Text style={styles.colon}>:</Text>
+                  <Text style={styles.value}> {item.is_reimbursement === "0" ? 'No' : item.is_reimbursement === "1" ? 'Yes' : '-'}</Text>
+                </View>
+                {item.reason_of_rejection && <View style={styles.row}>
+                  <Text style={styles.label}>Reason of Rejection</Text>
+                  <Text style={styles.colon}>:</Text>
+                  <Text style={styles.value}> {item.reason_of_rejection}</Text>
+                </View>}
+                {item.comment && <View style={styles.row}>
+                  <Text style={styles.label}>Comment</Text>
+                  <Text style={styles.colon}>:</Text>
+                  <Text style={styles.value}> {item.comment}</Text>
+                </View>}
+                {
+                  ((data?.action?.is_approve || data?.action?.is_reject) && data?.action?.is_approve_item) &&
+                  <View style={styles.buttonContainer}>
+                    {
+                      data?.action?.is_approve &&
+                      <TouchableOpacity
+                        style={[
+                          styles.approveButton,
+                          styles.approvalButton,
+                          {
+                            // opacity: item?.checking_status === '1' ? 0.5 : 1,
+                            backgroundColor: item?.checking_status === '1' ? '#007E7A' : 'white',
+                            borderColor: '#007E7A',
+                            borderWidth: 3
+                          }]}
+                        onPress={() => {
+                          console.log("approve")
+                          setData((prev: any) => {
+                            return {
+                              ...prev,
+                              details: prev.details?.map((item: any, i: number) => {
+                                if (i === idx) {
+                                  return {
+                                    ...item,
+                                    checking_status: '1'
+                                  }
+                                } else {
+                                  return item
+                                }
+                              })
+                            }
+                          })
+                          setIsApproveItems(true)
+                        }}
+                        disabled={item?.checking_status === '1'}
+                      >
+                        <FontAwesome6
+                          name="check"
+                          size={24}
+                          color={item?.checking_status === '1' ? 'white' : '#007E7A'}
+                        />
+                      </TouchableOpacity>
+                    }
+                    {
+                      data?.action?.is_reject &&
+                      <TouchableOpacity
+                        style={[
+                          styles.rejectButton,
+                          styles.approvalButton,
+                          {
+                            // opacity: item?.checking_status === '2' ? 0.5 : 1,
+                            backgroundColor: item?.checking_status === '2' ? '#E53935' : 'white',
+                            borderColor: '#E53935',
+                            borderWidth: 3
+                          }]}
+                        onPress={() => {
+                          console.log("reject")
+                          setData((prev: any) => {
+                            return {
+                              ...prev,
+                              details: prev.details?.map((item: any, i: number) => {
+                                if (i === idx) {
+                                  return {
+                                    ...item,
+                                    checking_status: '2'
+                                  }
+                                } else {
+                                  return item
+                                }
+                              })
+                            }
+                          })
+                          setIsApproveItems(true)
+                        }}
+                        disabled={item?.checking_status === '2'}
+                      >
+                        <FontAwesome6
+                          name="xmark"
+                          size={24}
+                          color={item?.checking_status === '2' ? 'white' : '#E53935'}
+                        />
+                      </TouchableOpacity>
+                    }
+                  </View>
+                }
+              </View>
+            )
+          })
+        }
+      </View>
+    </>
   )
   return (
     <View style={[styles.container, style]}>

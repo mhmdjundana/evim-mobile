@@ -11,7 +11,6 @@ const filterInputBast = [
     name: "suplier_name",
     id: "suplier_name",
     value: "",
-    style: { marginBottom: 10 },
   },
   {
     label: "BAST No.",
@@ -19,7 +18,6 @@ const filterInputBast = [
     name: "bast_no",
     id: "bast_no",
     value: "",
-    style: { marginBottom: 10 },
   },
   {
     label: "PO No.",
@@ -27,7 +25,6 @@ const filterInputBast = [
     name: "po_no",
     id: "po_no",
     value: "",
-    style: { marginBottom: 10 },
   },
   {
     label: "DPP",
@@ -35,7 +32,13 @@ const filterInputBast = [
     name: "grand_total",
     id: "grand_total",
     value: "",
-    style: { marginBottom: 10 },
+  },
+  {
+    label: "Create Date",
+    placeholder: "Create Date",
+    name: "created_at",
+    id: "created_at",
+    value: "",
   },
   {
     label: "Status",
@@ -43,7 +46,6 @@ const filterInputBast = [
     name: "status_name",
     id: "status_name",
     value: "",
-    style: { marginBottom: 10 },
   }
 ] 
 

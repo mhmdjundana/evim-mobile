@@ -18,7 +18,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   // const forceRefresh = useForceRefresh();
-  const [checkTnC, setCheckTnC] = useState(true)
+  const [checkTnC, setCheckTnC] = useState(false)
   const [isInvalidCred, setIsInvalidCred] = useState(false)
   const [loginMsgTitle, setLoginMsgTitle] = useState('')
   const [loginMsg, setLoginMsg] = useState('')

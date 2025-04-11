@@ -27,6 +27,13 @@ const filterInputInvoice = [
     value: "",
   },
   {
+    label: "Create Date",
+    placeholder: "Create Date",
+    name: "created_at",
+    id: "created_at",
+    value: "",
+  },
+  {
     label: "Status",
     placeholder: "Status",
     name: "status_name",

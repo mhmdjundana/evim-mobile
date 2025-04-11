@@ -1,7 +1,9 @@
 import { InputSelect, InputText } from '@/components/form/input';
 import { FontAwesome6 } from '@expo/vector-icons';
 import React, { useState } from 'react';
+import { Button } from 'react-native';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
+import DatePicker from 'react-native-date-picker'
 
 const { width } = Dimensions.get('window');
 
@@ -13,8 +15,8 @@ const FilterPageUi = ({
 }: any) => {
 
   const { columnFilters, setColumnFilters } = listState
-  console.log(columnFilters, 'columnFilters')
-  const [status, setStatus] = useState('');
+  // console.log(columnFilters, 'columnFilters')
+  const [openInputCreate, setOpenInputCreate] = useState(false)
 
   return (
     <KeyboardAvoidingView
@@ -68,6 +70,42 @@ const FilterPageUi = ({
             style={{ marginBottom: 10 }}
             options={statusOptions}
           />
+        )
+        if (input.id === 'created_at') return (
+          <>
+            <Text style={{ fontSize: 14, fontWeight: '500', color: '#444', paddingLeft: 4 }}>{input.label}</Text>
+            <TouchableOpacity
+              onPress={() => setOpenInputCreate(true)}
+            >
+              <Text
+                style={{
+                  height: 40,
+                  borderColor: '#444',
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  padding: 10,
+                  backgroundColor: 'white',
+                  marginBottom: 10
+                }}
+              >{input.value ? new Date(input.value).toLocaleDateString() : ''}</Text>
+            </TouchableOpacity>
+            <DatePicker
+              modal
+              open={openInputCreate}
+              date={input.value ? new Date(input.value) : new Date()}
+              mode="date"
+              maximumDate={new Date(Date.now())}
+              onConfirm={(date) => {
+                setOpenInputCreate(false)
+                const updatedState = [...columnFilters];
+                updatedState[index].value = date.toISOString();
+                setColumnFilters(updatedState);
+              }}
+              onCancel={() => {
+                setOpenInputCreate(false)
+              }}
+            />
+          </>
         )
         return (
           <InputText
